@@ -3,6 +3,37 @@
 
 var wechat = {
     debug: false,
+    cache: false,
+    api: {
+        // 用code换取openId(程序写在服务端)
+        // https://api.weixin.qq.com/sns/jscode2session?appid=APPID&secret=SECRET&js_code=JSCODE&grant_type=authorization_code
+        openIdUrl: ''
+    },
+
+    request: function(req_url, req_data, callback, req_method, req_header, req_data_type)
+    {
+        req_header = this.hasVar(req_header, {'content-type': 'application/json'});
+        req_method = this.hasVar(req_method, 'GET');
+        req_data_type = this.hasVar(req_data_type, '');
+        wx.request({
+            url: req_url,
+            data: req_data,
+            header: req_header,
+            method: req_method,
+            dataType: req_data_type,
+            success: function(result)
+            {
+                callback(result);
+            },
+            fail: function(result)
+            {
+                wechat.log('Error: request->wx.request', result);
+            },
+            complete: function (result) {
+                // code
+            }
+        });
+    },
 
     /**
      * 分享
@@ -74,20 +105,45 @@ var wechat = {
     },
 
     /**
+     * 获取用户信息加密数据
+     * 此数据不可写缓存
+     * @param function callback
+     */
+    getEncryptedData: function(callback)
+    {
+        var self = this;
+        wx.getUserInfo({
+            withCredentials: true,
+            success: function(result)
+            {
+                callback(result);
+            },
+            fail: function(result)
+            {
+                self.log('Error: getRawData->wx.getUserInfo', result);
+            },
+            complete: function(result)
+            {
+                // code
+            }
+        });
+    },
+
+    /**
      * 获取用户信息
      * @param mixed callback
      */
     getUserInfo: function(callback)
     {
         var self = this,
-            userInfo = self.getCache('userInfo');
+            user_info = self.getCache('user_info');
 
-        if (!userInfo) {
+        if (!user_info) {
             wx.getUserInfo({
                 withCredentials: true,
                 success: function(result)
                 {
-                    self.setCache('userInfo', result.userInfo);
+                    self.setCache('user_info', result.userInfo);
                     callback(result.userInfo);
                 },
                 fail: function(result)
@@ -105,53 +161,117 @@ var wechat = {
     },
 
     /**
+     * 获取用户联合ID(微信开放平台)
+     * @param mixed callback
+     */
+    getUnionId: function(callback) {
+        var self = this,
+            union_id = self.getCache('union_id');
+        if (!union_id) {
+            self.getOSU(
+                function(result) {
+                    union_id = result.unionid;
+                    // 缓存session_key
+                    self.setCache('union_id', result.unionid);
+                    callback(union_id);
+                },
+                self.api.openIdUrl
+            );
+        } else {
+            callback(union_id);
+        }
+    },
+
+    /**
+     * 获取用户session_key
+     * @param mixed  callback
+     */
+    getSessionKey: function(callback) {
+        var self = this,
+            session_key = self.getCache('session_key');
+        if (!session_key) {
+            self.getOSU(
+                function(result) {
+                    session_key = result.session_key;
+                    // 缓存session_key
+                    self.setCache('session_key', result.session_key);
+                    callback(session_key);
+                },
+                self.api.openIdUrl
+            );
+        } else {
+            callback(session_key);
+        }
+    },
+
+    /**
      * 获取用户信息
      * @param function callback
-     * @param string   openIdUrl
      */
-    getOpenId: function(callback, openIdUrl)
+    getOpenId: function(callback)
     {
         var self = this,
-            openId = self.getCache('openId');
+            open_id = self.getCache('open_id');
 
-        if (!openId) {
-            wx.login({
-                success: function(result)
-                {
-                    // 用code换取openid
-                    wx.request({
-                        url: openIdUrl,
-                        data: {code: result.code},
-                        success: function(res)
-                        {
-                            // 缓存openId
-                            self.setCache('openId', res.data.openid);
-                            // 缓存sessionKey
-                            self.setCache('sessionKey', res.data.session_key);
-                            // 缓存unionId
-                            if (self.hasVar(res.data.unionid)) {
-                                self.setCache('unionId', res.data.unionid);
-                            }
-                            callback(res.data.openid);
-                        },
-                        fail: function(res)
-                        {
-                            self.log('Error: getOpenId->wx.login->wx.request', result);
-                        }
-                    });
+        if (!open_id) {
+            self.getOSU(
+                function(result) {
+                    open_id = result.openid;
+                    // 缓存open_id
+                    self.setCache('open_id', result.openid);
+                    callback(open_id);
                 },
-                fail: function(result)
-                {
-                    self.log('Error: getOpenId->wx.login', result);
-                },
-                complete: function(result)
-                {
-                    // code
-                }
-            });
+                self.api.openIdUrl
+            );
         } else {
-            callback(openId);
+            callback(open_id);
         }
+    },
+
+    /**
+     * 获取用户openid|session_key|unionid
+     * 此数据不可写缓存
+     * @param function callback
+     */
+    getOSU: function(callback)
+    {
+        var self = this;
+        if (!self.api.openIdUrl) {
+            self.log('Error: getOSU api.openIdUrl fail invalid url', self.api.openIdUrl);
+        }
+
+        wx.login({
+            success: function(result)
+            {
+                // 用code换取openid
+                wx.request({
+                    url: self.api.openIdUrl,
+                    data: {code: result.code},
+                    success: function(res)
+                    {
+                        // 缓存open_id
+                        self.setCache('open_id', res.data.openid);
+                        // 缓存union_id
+                        self.setCache('union_id', res.data.unionid);
+                        // 缓存session_key
+                        self.setCache('session_key', res.data.session_key);
+                        callback(res.data);
+                    },
+                    fail: function(res)
+                    {
+                        self.log('Error: getOSU->wx.login->wx.request', result);
+                    }
+                });
+            },
+            fail: function(result)
+            {
+                self.log('Error: getOSU->wx.login', result);
+            },
+            complete: function(result)
+            {
+                // code
+            }
+        });
     },
 
     /**
@@ -161,10 +281,12 @@ var wechat = {
      */
     setCache: function(key, data)
     {
-        try {
-            wx.setStorageSync('wechat::' + key, data);
-        } catch (e) {
-            this.log('Error: setCache->wx.setStorageSync', e);
+        if (this.cache) {
+            try {
+                wx.setStorageSync('wechat::' + key, data);
+            } catch (e) {
+                this.log('Error: setCache->wx.setStorageSync', e);
+            }
         }
     },
 
@@ -175,7 +297,11 @@ var wechat = {
      */
     getCache: function(key)
     {
-        return wx.getStorageSync('wechat::' + key);
+        if (this.cache) {
+            return wx.getStorageSync('wechat::' + key);
+        } else {
+            return '';
+        }
     },
 
     /**

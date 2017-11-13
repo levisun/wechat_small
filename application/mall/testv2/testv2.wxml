@@ -1,0 +1,2 @@
+<view>{{sessionKey}}</view>
+<view>{{openId}}</view>

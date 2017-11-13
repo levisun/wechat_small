@@ -1,12 +1,26 @@
-<view>
-    <text>{{openId}}</text>
-</view>
+
 
 <view>
     <text bindtap="testTap" data-t="test">事件tap</text>
 </view>
 
+<view>
+    <text>openId: </text>
+    <text>{{openId}}</text>
+</view>
+<view>
+    <text>sessionKey: </text>
+    <text>{{sessionKey}}</text>
+</view>
+<view>
+    <text>unionId: </text>
+    <text>{{unionId}}</text>
+</view>
+
+
 <view wx:for="{{userInfo}}"  wx:for-index="key" wx:for-item="value">
     <text>{{key}}: </text>
     <text>{{value}}</text>
 </view>
+
+<button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">getPhoneNumber</button>

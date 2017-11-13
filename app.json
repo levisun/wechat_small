@@ -1,6 +1,7 @@
 {
     "pages": [
-        "application/mall/test/test",
+
+        "application/mall/testv2/testv2",
         "pages/index/index",
         "pages/logs/logs"
     ],
@@ -25,6 +26,12 @@
             {
                 "pagePath": "application/mall/test/test",
                 "text": "首页",
+                "iconPath": "static/image/icon_component.png",
+                "selectedIconPath": "static/image/icon_component_HL.png"
+            },
+            {
+                "pagePath": "application/mall/testv2/testv2",
+                "text": "testv2",
                 "iconPath": "static/image/icon_component.png",
                 "selectedIconPath": "static/image/icon_component_HL.png"
             },
