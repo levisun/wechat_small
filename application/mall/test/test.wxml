@@ -1,0 +1,12 @@
+<view>
+    <text>{{openId}}</text>
+</view>
+
+<view>
+    <text bindtap="testTap" data-t="test">事件tap</text>
+</view>
+
+<view wx:for="{{userInfo}}"  wx:for-index="key" wx:for-item="value">
+    <text>{{key}}: </text>
+    <text>{{value}}</text>
+</view>

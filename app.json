@@ -1,0 +1,48 @@
+{
+    "pages": [
+        "application/mall/test/test",
+        "pages/index/index",
+        "pages/logs/logs"
+    ],
+
+    "window": {
+        "navigationBarBackgroundColor": "#fff",
+        "navigationBarTextStyle": "black",
+        "navigationBarTitleText": "实验",
+        "backgroundColor": "#fff",
+        "backgroundTextStyle": "light",
+        "enablePullDownRefresh": true,
+        "onReachBottomDistance": 50
+    },
+
+    "tabBar": {
+        "color": "#000",
+        "selectedColor": "#f00",
+        "backgroundColor": "#fff",
+        "borderStyle": "black",
+        "position": "bottom",
+        "list": [
+            {
+                "pagePath": "application/mall/test/test",
+                "text": "首页",
+                "iconPath": "static/image/icon_component.png",
+                "selectedIconPath": "static/image/icon_component_HL.png"
+            },
+            {
+                "pagePath": "pages/logs/logs",
+                "text": "日志",
+                "iconPath": "static/image/icon_component.png",
+                "selectedIconPath": "static/image/icon_component_HL.png"
+            }
+        ]
+    },
+
+    "networkTimeout": {
+        "request": 60000,
+        "connectSocket": 60000,
+        "uploadFile": 60000,
+        "downloadFile": 60000
+    },
+
+    "debug": true
+}
