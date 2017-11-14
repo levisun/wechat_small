@@ -20,8 +20,4 @@ App({
     onError: function (options) {
 
     },
-
-    setData: function (name, value) {
-        this.data[name] = value;
-    }
 });

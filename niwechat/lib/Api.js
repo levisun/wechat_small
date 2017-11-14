@@ -2,13 +2,6 @@
  *
  */
 
-/*
-login,getOpenId,getUnionId,getSessionKey,getOUS
-中request_url是请求服务器端
-$url = https://api.weixin.qq.com/sns/jscode2session?appid=APPID&secret=SECRET&js_code=JSCODE&grant_type=authorization_code
-echo file_get_contents($url);
- */
-
 import Cache from './Cache';
 import Log from './Log';
 
@@ -151,7 +144,7 @@ export default class
 
     /**
      * 获取用户信息加密数据
-     * 此数据不可写缓存
+     * 此数据不可缓存实时获取
      * @param function callback
      */
     getEncryptedData(callback)
@@ -176,6 +169,8 @@ export default class
 
     /**
      * 获取openid unionid session_key
+     * 需服务器端调用微信接口使用code返回信息
+     * https://api.weixin.qq.com/sns/jscode2session?appid=APPID&secret=SECRET&js_code=JSCODE&grant_type=authorization_code
      * @param function callback
      * @param string   request_url
      */
@@ -223,25 +218,80 @@ export default class
         }
     }
 
-    pay(callback)
+    /**
+     * 支付
+     * 需服务器端
+     * @param function callback
+     * @param string   request_url
+     */
+    // pay(callback)
+    // {
+    //     wx.requestPayment({
+    //         'timeStamp': '',
+    //         'nonceStr': '',
+    //         'package': '',
+    //         'signType': 'MD5',
+    //         'paySign': '',
+    //         'success': function(result)
+    //         {
+    //         },
+    //         'fail': function(result)
+    //         {
+    //             // code...
+    //         },
+    //         'complete': function(result)
+    //         {
+    //            // code...
+    //         }
+    //     });
+    // }
+
+    /**
+     * 分享
+     * 需配合Page.onShareAppMessage使用
+     * 注:按钮使用需加open-type="share"
+     * @param object   params
+     * @param function callback
+     */
+    share(params, callback)
     {
-        wx.requestPayment({
-            'timeStamp': '',
-            'nonceStr': '',
-            'package': '',
-            'signType': 'MD5',
-            'paySign': '',
-            'success': function(result)
+        var self = this;
+
+        if (typeof params.title == 'undefined') {
+            self.log.error('Api->share::wx.onShareAppMessage undefined title', params);
+            return false;
+        }
+
+        if (typeof params.path == 'undefined') {
+            self.log.error('Api->share::wx.onShareAppMessage undefined path', params);
+            return false;
+        }
+
+        if (typeof params.desc == 'undefined') {
+            params.desc = '';
+        }
+
+        if (typeof params.img == 'undefined') {
+            params.img = '';
+        }
+
+        return {
+            title: params.title,
+            desc: params.desc,
+            path: params.path,
+            imageUrl: params.img,
+            success: function(result)
             {
+                callback(result);
             },
-            'fail': function(result)
+            fail: function(result)
             {
-                // code...
+                callback(false);
+                self.log.error('Api->share::Page.onShareAppMessage', result);
             },
-            'complete': function(result)
-            {
-               // code...
+            complete: function (result) {
+                // code
             }
-        });
+        };
     }
 }

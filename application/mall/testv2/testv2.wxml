@@ -1,2 +1,72 @@
-<view>{{sessionKey}}</view>
-<view>{{openId}}</view>
+<import src="/niwechat/template/showToast.wxml" />
+<template is="showToast" data="{{showToast: showToast}}" />
+
+<view class="container">
+    <view class="session">
+        <text>session:</text>
+        <text>{{sessionKey}}</text>
+    </view>
+
+    <view class="openid">
+        <text>openid:</text>
+        <text>{{openId}}</text>
+    </view>
+
+    <view class="userinfo" wx:for="{{userInfo}}" wx:for-index="key" wx:for-item="value">
+        <text>{{key}}:</text>
+        <image wx:if="{{key == 'avatarUrl'}}" src="{{value}}" style="width: 200px; height: 200px; background-color: #eeeeee;"></image>
+        <text wx:else>{{value}}</text>
+    </view>
+</view>
+
+
+
+
+
+
+
+<view>
+    <scroll-view scroll-y="true" lower-threshold="100" bindscroll="loadingMore">
+
+    <button open-type="share" bindtap="onShareAppMessage">分享</button>
+
+    <button bindtap="showToast">提示</button>
+
+    <button bindtap="alert">自动提示</button>
+
+    <button bindtap="showLoading">加载</button>
+
+    <button bindtap="showModal">弹窗</button>
+
+    <button bindtap="menu">菜单</button>
+
+    <button bindtap="navigate" data-url="/application/mall/test/test" data-type="to">跳转</button>
+
+    <button bindtap="switchTab" data-url="/pages/logs/logs">跳转Tab</button>
+
+    <button bindtap="redirect" data-url="/pages/logs/logs">关闭页面跳转</button>
+
+
+
+    <button open-type="share" bindtap="onShareAppMessage">分享</button>
+
+    <button bindtap="showToast">提示</button>
+
+    <button bindtap="alert">自动提示</button>
+
+    <button bindtap="showLoading">加载</button>
+
+    <button bindtap="showModal">弹窗</button>
+
+    <button bindtap="menu">菜单</button>
+
+    <button bindtap="navigate" data-url="/application/mall/test/test" data-type="to">跳转</button>
+
+    <button bindtap="switchTab" data-url="/pages/logs/logs">跳转Tab</button>
+
+    <button bindtap="redirect" data-url="/pages/logs/logs">关闭页面跳转</button>
+
+    </scroll-view>
+</view>
+
+
