@@ -28,7 +28,7 @@ export default class
      */
     request(_params, _callback)
     {
-        var self = this;
+        let self = this;
 
         if (typeof _params.url == 'undefined') {
             self.log.error('Network->request::wx.request undefined url', _params);
@@ -77,7 +77,7 @@ export default class
 
     loadingMore(_params, _callback)
     {
-        var self = this,
+        let self = this,
             interfaces = new Interfaces(self.config.cache, self.config.debug),
             that = getCurrentPages()[getCurrentPages().length - 1];
 

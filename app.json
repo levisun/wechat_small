@@ -1,15 +1,15 @@
 {
     "pages": [
-        "application/mall/testv2/testv2",
-        "application/mall/test/test",
-        "pages/index/index",
-        "pages/logs/logs"
+        "application/test/index/index",
+        "application/test/cart/cart",
+        "application/test/user/user",
+        "application/test/item/item"
     ],
 
     "window": {
         "navigationBarBackgroundColor": "#fff",
         "navigationBarTextStyle": "black",
-        "navigationBarTitleText": "实验",
+        "navigationBarTitleText": "实例",
         "backgroundColor": "#fff",
         "backgroundTextStyle": "light",
         "enablePullDownRefresh": true,
@@ -24,14 +24,20 @@
         "position": "bottom",
         "list": [
             {
-                "pagePath": "application/mall/testv2/testv2",
-                "text": "testv2",
+                "pagePath": "application/test/index/index",
+                "text": "首页",
                 "iconPath": "static/image/icon_component.png",
                 "selectedIconPath": "static/image/icon_component_HL.png"
             },
             {
-                "pagePath": "pages/logs/logs",
-                "text": "日志",
+                "pagePath": "application/test/cart/cart",
+                "text": "购物车",
+                "iconPath": "static/image/icon_component.png",
+                "selectedIconPath": "static/image/icon_component_HL.png"
+            },
+            {
+                "pagePath": "application/test/user/user",
+                "text": "会员",
                 "iconPath": "static/image/icon_component.png",
                 "selectedIconPath": "static/image/icon_component_HL.png"
             }

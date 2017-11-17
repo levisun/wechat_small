@@ -1,6 +1,4 @@
-/**
- * 缓存
- */
+
 import Log from './Log';
 
 export default class

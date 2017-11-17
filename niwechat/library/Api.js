@@ -29,11 +29,11 @@ export default class
      */
     login(_callback)
     {
-        var self = this;
+        let self = this;
         wx.checkSession({
             success: function(result)
             {
-                var ous = self.cache.get('ous');
+                let ous = self.cache.get('ous');
                 _callback(ous);
             },
             fail: function(result)
@@ -53,7 +53,7 @@ export default class
      */
     getUserInfo(_callback)
     {
-        var self = this,
+        let self = this,
             user_info = self.cache.get('user_info');
         if (!user_info) {
             wx.getUserInfo({
@@ -84,7 +84,7 @@ export default class
      */
     getOpenId(_callback)
     {
-        var self = this,
+        let self = this,
             open_id = self.cache.get('open_id');
 
         if (!open_id) {
@@ -104,7 +104,7 @@ export default class
      */
     getUnionId(_callback)
     {
-        var self = this,
+        let self = this,
             union_id = self.cache.get('union_id');
 
         if (!union_id) {
@@ -124,7 +124,7 @@ export default class
      */
     getSessionKey(_callback)
     {
-        var self = this,
+        let self = this,
             session_key = self.cache.get('session_key');
 
         if (!session_key) {
@@ -144,7 +144,7 @@ export default class
      */
     getEncryptedData(_callback)
     {
-        var self = this;
+        let self = this;
         wx.getUserInfo({
             withCredentials: true,
             success: function(result)
@@ -170,12 +170,12 @@ export default class
      */
     getOUS(_callback)
     {
-        var self = this,
+        let self = this,
             ous = self.cache.get('ous');
         if (!ous) {
             wx.login({
                 success: function(result) {
-                    var network = new Network(self.config);
+                    let network = new Network(self.config);
                     network.request({
                         url: self.config.open_id_url,
                         data: {code: result.code}
@@ -211,7 +211,7 @@ export default class
      */
     pay(_params, _callback)
     {
-        var self = this,
+        let self = this,
             network = new Network(self.config);
 
         // 获得用户openid
@@ -255,7 +255,7 @@ export default class
      */
     share(_params, _callback)
     {
-        var self = this;
+        let self = this;
 
         if (typeof _params.title == 'undefined') {
             self.log.error('Api->share::wx.onShareAppMessage undefined title', _params);

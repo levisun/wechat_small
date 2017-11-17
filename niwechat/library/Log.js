@@ -1,9 +1,6 @@
-/**
- * 日志
- */
+
 export default class
 {
-
     debug = false;
 
     constructor(_config)

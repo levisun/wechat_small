@@ -1,0 +1,20 @@
+<view class="container">
+    <view>
+        <block wx:if="{{userInfo}}">
+        <view>
+            <image src="{{userInfo.avatarUrl}}"></image>
+            <text>{{userInfo.nickName}}</text>
+        </view>
+        </block>
+        <button bindtap="getUserInfo">获得用户信息</button>
+    </view>
+
+    <view>
+        <block wx:if="{{openId}}">
+        <view>
+            <text>{{openId}}</text>
+        </view>
+        </block>
+        <button bindtap="getOpenId">获得用户openId</button>
+    </view>
+</view>

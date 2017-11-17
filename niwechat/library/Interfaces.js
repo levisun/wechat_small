@@ -1,62 +1,64 @@
 /**
- *
+ * 界面
  */
-
-import Cache from './Cache';
 import Log from './Log';
 
 export default class
 {
+    // 设置
+    config = {};
+
     // 缓存类
     cache = null;
     // 日志类
     log = null;
 
-    constructor(cache = false, debug = false)
+    constructor(_config)
     {
-        this.cache = new Cache(cache);
-        this.log = new Log(debug);
+        this.config = _config;
+
+        this.log = new Log(this.config);
     }
 
     /**
      * 隐藏消息提示框
-     * @param object   params
-     * @param function callback
+     * @param object   _params
+     * @param function _callback
      */
-    showToast(params, callback)
+    showToast(_params, _callback)
     {
-        var self = this;
+        let self = this;
 
-        if (typeof params.title == 'undefined') {
-            self.log.error('Page->showToast::wx.showToast undefined title', params);
+        if (typeof _params.title == 'undefined') {
+            self.log.error('Page->showToast::wx.showToast undefined title', _params);
             return false;
         }
 
-        if (typeof params.icon == 'undefined') {
-            params.icon = '';
+        if (typeof _params.icon == 'undefined') {
+            _params.icon = '';
         }
 
-        if (typeof params.image == 'undefined') {
-            params.image = '';
+        if (typeof _params.image == 'undefined') {
+            _params.image = '';
         }
 
-        if (typeof params.duration == 'undefined') {
-            params.duration = 1500;
+        if (typeof _params.duration == 'undefined') {
+            _params.duration = 1500;
         }
 
-        if (typeof params.mask == 'undefined') {
-            params.mask = true;
+        if (typeof _params.mask == 'undefined') {
+            _params.mask = true;
         }
 
         wx.showToast({
-            title: params.title,
-            icon: params.icon,
-            image: params.image,
-            duration: params.duration,
-            mask: params.mask,
+            title: _params.title,
+            icon: _params.icon,
+            image: _params.image,
+            duration: _params.duration,
+            mask: _params.mask,
             success: function(result)
             {
-                callback(result);
+                _callback(result);
             },
             fail: function(result) {
                 self.log.error('Page->showToast::wx.showToast', result);
@@ -77,17 +79,17 @@ export default class
 
     /**
      * 显示加载提示框
-     * @param string   title
-     * @param function callback
+     * @param string   _title
+     * @param function _callback
      */
-    showLoading(title, callback)
+    showLoading(_title, _callback)
     {
         wx.showLoading({
-            title: title,
+            title: _title,
             mask: true,
             success: function(result)
             {
-                callback(result);
+                _callback(result);
             },
             fail: function(result) {
                 self.log.error('Page->showLoading::wx.showLoading', result);
@@ -108,58 +110,58 @@ export default class
 
     /**
      * 弹窗
-     * @param object   params
-     * @param function callback
+     * @param object   _params
+     * @param function _callback
      */
-    showModal(params, callback)
+    showModal(_params, _callback)
     {
-        var self = this;
+        let self = this;
 
-        if (typeof params.title == 'undefined') {
-            self.log.error('Page->showModal::wx.showModal undefined title', params);
+        if (typeof _params.title == 'undefined') {
+            self.log.error('Page->showModal::wx.showModal undefined title', _params);
             return false;
         }
 
-        if (typeof params.content == 'undefined') {
-            self.log.error('Page->showModal::wx.showModal undefined content', params);
+        if (typeof _params.content == 'undefined') {
+            self.log.error('Page->showModal::wx.showModal undefined content', _params);
             return false;
         }
 
-        if (typeof params.showCancel == 'undefined') {
-            params.showCancel = true;
+        if (typeof _params.showCancel == 'undefined') {
+            _params.showCancel = true;
         }
 
-        if (typeof params.cancelText == 'undefined') {
-            params.cancelText = '取消';
+        if (typeof _params.cancelText == 'undefined') {
+            _params.cancelText = '取消';
         }
 
-        if (typeof params.cancelColor == 'undefined') {
-            params.cancelColor = '#000000';
+        if (typeof _params.cancelColor == 'undefined') {
+            _params.cancelColor = '#000000';
         }
 
-        if (typeof params.confirmText == 'undefined') {
-            params.confirmText = '确定';
+        if (typeof _params.confirmText == 'undefined') {
+            _params.confirmText = '确定';
         }
 
-        if (typeof params.confirmColor == 'undefined') {
-            params.confirmColor = '#3CC51F';
+        if (typeof _params.confirmColor == 'undefined') {
+            _params.confirmColor = '#3CC51F';
         }
 
         wx.showModal({
-            title: params.title,
-            content: params.content,
-            showCancel: params.showCancel,
-            cancelText: params.cancelText,
-            cancelColor: params.cancelColor,
-            confirmText: params.confirmText,
-            confirmColor: params.confirmColor,
+            title: _params.title,
+            content: _params.content,
+            showCancel: _params.showCancel,
+            cancelText: _params.cancelText,
+            cancelColor: _params.cancelColor,
+            confirmText: _params.confirmText,
+            confirmColor: _params.confirmColor,
             success: function(result)
             {
                 var status = false;
                 if (result.confirm == true) {
                     status = true;
                 }
-                callback(status);
+                _callback(status);
             },
             fail: function(result) {
                 self.log.error('Page->showModal::wx.showModal', result);
@@ -172,28 +174,28 @@ export default class
 
     /**
      * 操作菜单
-     * @param object   params
-     * @param function callback
+     * @param object   _params
+     * @param function _callback
      */
-    menu(params, callback)
+    menu(_params, _callback)
     {
-        var self = this;
+        let self = this;
 
-        if (typeof params.itemList == 'undefined') {
-            self.log.error('Page->showModal::wx.showModal undefined itemList', params);
+        if (typeof _params.itemList == 'undefined') {
+            self.log.error('Page->showModal::wx.showModal undefined itemList', _params);
             return false;
         }
 
-        if (typeof params.itemColor == 'undefined') {
-            params.itemColor = '#000000';
+        if (typeof _params.itemColor == 'undefined') {
+            _params.itemColor = '#000000';
         }
 
         wx.showActionSheet({
-            itemList: params.itemList,
-            itemColor: params.itemColor,
+            itemList: _params.itemList,
+            itemColor: _params.itemColor,
             success: function(result)
             {
-                callback(result);
+                _callback(result);
             },
             fail: function(result) {
                 self.log.error('Page->menu::wx.showActionSheet', result);
@@ -206,14 +208,14 @@ export default class
 
     /**
      * 设置置顶栏文字内容
-     * @param string text
+     * @param string _text
      */
-    setTopBar(text)
+    setTopBar(_text)
     {
-        var self = this;
+        let self = this;
 
         wx.setTopBarText({
-            text: text,
+            text: _text,
             success: function(result)
             {
                 // code...
@@ -229,14 +231,14 @@ export default class
 
     /**
      * 设置当前页面的标题
-     * @param string title
+     * @param string _title
      */
-    setBarTitle(title)
+    setBarTitle(_title)
     {
-        var self = this;
+        let self = this;
 
         wx.setNavigationBarTitle({
-            title: title,
+            title: _title,
             success: function(result)
             {
                 // code...
@@ -252,16 +254,16 @@ export default class
 
     /**
      * 跳转到应用内的某个非tabBar的页面
-     * @param string status back|to
-     * @param string url_delta
+     * @param string _status back|to
+     * @param string _url_delta
      */
-    navigate(status, url_delta = 1)
+    navigate(_status, _url_delta = 1)
     {
-        var self = this;
+        let self = this;
 
-        if (status == 'back') {
+        if (_status == 'back') {
             wx.navigateBack({
-                delta: url_delta,
+                delta: _url_delta,
                 success: function(result)
                 {
                     // code...
@@ -275,7 +277,7 @@ export default class
             });
         } else {
             wx.navigateTo({
-                url: url_delta,
+                url: _url_delta,
                 success: function(result)
                 {
                     // code...
@@ -292,14 +294,14 @@ export default class
 
     /**
      * 跳转到tabBar页面,并关闭其他所有非tabBar页面
-     * @param string url
+     * @param string _url
      */
-    switchTab(url)
+    switchTab(_url)
     {
-        var self = this;
+        let self = this;
 
         wx.switchTab({
-            url: url,
+            url: _url,
             success: function(result)
             {
                 // code...
@@ -315,16 +317,16 @@ export default class
 
     /**
      * 跳转非tabBar页面
-     * @param string url
-     * @param string type redirectTo关闭当前页面,跳转页面  reLaunch关闭所有页面,打开页面
+     * @param string _url
+     * @param string _type redirectTo关闭当前页面,跳转页面  reLaunch关闭所有页面,打开页面
      */
-    redirect(url, type = 'redirectTo')
+    redirect(_url, _type = 'redirectTo')
     {
-        var self = this;
+        let self = this;
 
-        if (type == 'redirectTo') {
+        if (_type == 'redirectTo') {
             wx.redirectTo({
-                url: url,
+                url: _url,
                 success: function(result)
                 {
                     // code...
@@ -338,7 +340,7 @@ export default class
             });
         } else {
             wx.reLaunch({
-                url: url,
+                url: _url,
                 success: function(result)
                 {
                     // code...
@@ -354,37 +356,37 @@ export default class
     }
 
     /**
-     * 提示信息
+     * 自定义提示信息
      * @param string title
      * @param string status
      */
-    alert(params, callback)
+    alert(_params, _callback)
     {
-        if (typeof params == 'object' && params.title) {
+        if (typeof _params == 'object' && _params.title) {
 
-            var that = getCurrentPages()[getCurrentPages().length - 1];
+            let that = getCurrentPages()[getCurrentPages().length - 1];
 
-            if (!params.duration || typeof params.duration != 'number') {
-                params.duration = 1500;
+            if (!_params.duration || typeof _params.duration != 'number') {
+                _params.duration = 1500;
             }
 
-            params.isShow = true;
+            _params.isShow = true;
 
-            if (params.duration < 10000) {
+            if (_params.duration < 10000) {
                 setTimeout(function (){
-                    params.isShow = false;
-                    callback();
+                    _params.isShow = false;
+                    _callback();
                     that.setData({
-                        'showToast.isShow': params.isShow
+                        'showToast.isShow': _params.isShow
                     });
-                }, params.duration);
+                }, _params.duration);
             }
 
             that.setData({
-                showToast: params
+                showToast: _params
             });
         } else {
-            self.log.error('Api->showMsg:: undefined title', params);
+            self.log.error('Api->showMsg:: undefined title', _params);
         }
     }
 }
