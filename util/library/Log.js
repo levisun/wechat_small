@@ -1,9 +1,9 @@
 /**
  * 日志
  */
+
 export default class
 {
-
     debug = false;
 
     constructor(_config)
@@ -15,9 +15,9 @@ export default class
      * 调试
      * @param mixed _data 调试输出数据
      */
-    bug(_data)
+    bug(_data, _module = 'self')
     {
-        console.log('调试', _data);
+        console.log(_module+'::DEBUG', _data);
     }
 
     /**

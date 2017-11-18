@@ -33,8 +33,7 @@ export default class
         wx.checkSession({
             success: function(result)
             {
-                let ous = self.cache.get('ous');
-                _callback(ous);
+                self.getOUS(_callback);
             },
             fail: function(result)
             {
@@ -88,10 +87,9 @@ export default class
             open_id = self.cache.get('open_id');
 
         if (!open_id) {
-            self.getOUS(
-                function(result) {
-                    _callback(result.openid);
-                });
+            self.getOUS(function(result) {
+                _callback(result.openid);
+            });
         } else {
             _callback(open_id);
         }
@@ -172,6 +170,7 @@ export default class
     {
         let self = this,
             ous = self.cache.get('ous');
+
         if (!ous) {
             wx.login({
                 success: function(result) {
@@ -214,11 +213,6 @@ export default class
         let self = this,
             network = new Network(self.config);
 
-        // 获得用户openid
-        self.getOpenId(function(result){
-            _params.openid = result;
-        });
-
         network.request({
             url: self.config.payment_url,
             data: _params,
@@ -236,7 +230,8 @@ export default class
                 },
                 fail: function(result)
                 {
-                    self.log.error('Api->pay::wx.requestPayment', _params);
+                    self.log.error('Api->pay::wx.requestPayment[params]', _params);
+                    self.log.error('Api->pay::wx.requestPayment[result]', result);
                 },
                 complete: function(result)
                 {
@@ -293,5 +288,28 @@ export default class
                 // code
             }
         };
+    }
+
+    /**
+     * 收货地址
+     * @param function _callback
+     */
+    address(_callback)
+    {
+        let self = this;
+
+        wx.chooseAddress({
+            success: function(result)
+            {
+                _callback(result);
+            },
+            fail: function(result)
+            {
+                self.log.error('Api->address::wx.chooseAddress', result);
+            },
+            complete: function (result) {
+                // code
+            }
+        });
     }
 }

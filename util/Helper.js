@@ -9,9 +9,11 @@ import Log from './library/Log';
 import Network from './library/Network';
 // import Storage from './library/Storage';
 
-var Config = require('./Config');
+let Config = require('./Config');
 
-var Helper = {
+let Helper = {
+    Config: Config,
+
     Api: new Api(Config),
     Cache: new Cache(Config),
     // Device: new Device(Config),

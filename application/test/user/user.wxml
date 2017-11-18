@@ -1,20 +1,44 @@
 <view class="container">
+    <block wx:if="{{userInfo}}">
     <view>
-        <block wx:if="{{userInfo}}">
         <view>
             <image src="{{userInfo.avatarUrl}}"></image>
             <text>{{userInfo.nickName}}</text>
         </view>
-        </block>
-        <button bindtap="getUserInfo">获得用户信息</button>
-    </view>
 
-    <view>
-        <block wx:if="{{openId}}">
         <view>
-            <text>{{openId}}</text>
+            <text bindtap="goToOrder">订单</text>
+            <text bindtap="goToAddress">收货地址</text>
         </view>
-        </block>
-        <button bindtap="getOpenId">获得用户openId</button>
+
+        <view>
+            <button bindtap="logout">注销</button>
+        </view>
     </view>
+    </block>
+
+    <block wx:else>
+    <view>
+        <view><button bindtap="login">登录</button></view>
+    </view>
+    </block>
+
+
+
+    <block wx:if="{{bindingUser}}">
+        <view class="modal-bg"></view>
+        <view class="modal-center">
+            <view class="modal-title">
+                <text class="modal-text">为保证帐号安全，请绑定手机号码</text>
+            </view>
+            <view class="modal-content">
+                <input type="number" value="请输入手机号码" />
+                <input type="text" value="请输入验证码" />
+                <button bindtap="sendSms">发送验证码</button>
+            </view>
+            <view class="modal-button">
+                <button bindtap="bindingUser">确定</button>
+            </view>
+        </view>
+    </block>
 </view>

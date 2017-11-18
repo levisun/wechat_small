@@ -1,3 +1,0 @@
-<button bindtap="navigate" data-url="/application/mall/testv2/testv2" data-type="to">跳转</button>
-
-<button bindtap="switchTab" data-url="/application/mall/testv2/testv2" data-type="to">跳转tab</button>
