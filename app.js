@@ -1,4 +1,4 @@
-let Helper = require('./niwechat/Helper');
+let Helper = require('./util/Helper');
 
 App({
     data: {
@@ -13,7 +13,7 @@ App({
     onLaunch: function (options) {
         let self = this;
 
-        Helper.Api.login(function(result){
+        Helper.class('Api').login(function(result){
             self.data.openId = result.openid;
             self.data.unionId = result.unionid;
             self.data.sessionKey = result.session_key;

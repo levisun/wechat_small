@@ -9,20 +9,116 @@ import Log from './library/Log';
 import Network from './library/Network';
 // import Storage from './library/Storage';
 
+import UI_Modal from './ui/modal/Modal';
+import UI_Toast from './ui/toast/Toast';
+
 let Config = require('./Config');
 
 let Helper = {
+    // 配置
     Config: Config,
 
-    Api: new Api(Config),
-    Cache: new Cache(Config),
-    // Device: new Device(Config),
-    Interfaces: new Interfaces(Config),
-    // Location: new Location(Config),
-    Log: new Log(Config),
-    // Media: new Media(Config),
-    Network: new Network(Config)
-    // Storage: new Storage(Config)
+    // 获得变量
+    input: function(_result, _type = '')
+    {
+        let val;
+
+        if (_type == 'input') {
+            val = _result.datail.value;
+        } else {
+            val = _result.currentTarget.dataset;
+        }
+
+        return val;
+    },
+
+    // API方法
+    class: function(_name)
+    {
+        let obj;
+
+        switch (_name) {
+            case 'Api':
+            case 'api':
+                obj = new Api(Config);
+                break;
+
+            case 'Cache':
+            case 'cache':
+                obj = new Cache(Config);
+                break;
+
+            case 'Device':
+            case 'device':
+                obj = new Device(Config);
+                break;
+
+            case 'Interfaces':
+            case 'interfaces':
+                obj = new Interfaces(Config);
+                break;
+
+            case 'Location':
+            case 'location':
+                obj = new Location(Config);
+                break;
+
+            case 'Log':
+            case 'log':
+                obj = new Log(Config);
+                break;
+
+            case 'Media':
+            case 'media':
+                obj = new Media(Config);
+                break;
+
+            case 'Network':
+            case 'network':
+                obj = new Network(Config);
+                break;
+
+            case 'Storage':
+            case 'storage':
+                obj = new Storage(Config);
+                break;
+
+            // 微信小程序Page()方法
+            case 'Page':
+            case 'page':
+                obj = getCurrentPages()[getCurrentPages().length - 1];
+                break;
+
+            default:
+                // code...
+                break;
+        }
+
+        return obj;
+    },
+
+    // UI方法
+    ui: function(_name)
+    {
+        let obj;
+        switch (_name) {
+            case 'Toast':
+            case 'toast':
+                obj = new UI_Toast();
+                break;
+
+            default:
+                // code...
+                break;
+        }
+
+        return obj;
+    },
+
+    UI: {
+        modal: new UI_Modal(),
+        toast: new UI_Toast()
+    }
 };
 
 module.exports = Helper;

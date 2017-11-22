@@ -43,3 +43,8 @@ Temporary Items
 .apdisk
 
 #Project
+application/game/
+application/test/
+application/user/
+images/
+static/

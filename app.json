@@ -3,7 +3,9 @@
         "application/test/index/index",
         "application/test/cart/cart",
         "application/test/user/user",
-        "application/test/item/item"
+        "application/test/item/item",
+        "application/user/user",
+        "application/game/red/red"
     ],
 
     "window": {
@@ -26,20 +28,26 @@
             {
                 "pagePath": "application/test/index/index",
                 "text": "首页",
-                "iconPath": "static/image/icon_component.png",
-                "selectedIconPath": "static/image/icon_component_HL.png"
+                "iconPath": "util/image/icon_API_HL.png",
+                "selectedIconPath": "util/image/icon_API_HL.png"
             },
             {
                 "pagePath": "application/test/cart/cart",
                 "text": "购物车",
-                "iconPath": "static/image/icon_component.png",
-                "selectedIconPath": "static/image/icon_component_HL.png"
+                "iconPath": "util/image/icon_API_HL.png",
+                "selectedIconPath": "util/image/icon_API_HL.png"
             },
             {
-                "pagePath": "application/test/user/user",
+                "pagePath": "application/game/red/red",
+                "text": "游戏",
+                "iconPath": "util/image/icon_API_HL.png",
+                "selectedIconPath": "util/image/icon_API_HL.png"
+            },
+            {
+                "pagePath": "application/user/user",
                 "text": "会员",
-                "iconPath": "static/image/icon_component.png",
-                "selectedIconPath": "static/image/icon_component_HL.png"
+                "iconPath": "util/image/icon_API_HL.png",
+                "selectedIconPath": "util/image/icon_API_HL.png"
             }
         ]
     },

@@ -1,1 +1,2 @@
-@import "/niwechat/template/showToast.wxss";
+/*@import "/util/zanui/index.wxss";*/
+@import "/util/ui/ui.wxss";

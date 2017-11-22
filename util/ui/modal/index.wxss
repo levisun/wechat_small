@@ -1,0 +1,32 @@
+.ui-modal-portal {
+    position: fixed;
+    top: 35%;
+    left: 10%;
+    transform: translateZ(0) translateY(-100%);
+    background-color: #fff;
+    font-size: 14px;
+    width: 80%;
+    line-height: 1.5em;
+    margin: 0 auto;
+    box-sizing: border-box;
+    text-align: center;
+    border-radius: 4px;
+    z-index: 100;
+}
+.ui-modal-header,
+.ui-modal-body {
+    padding: 15px 15px 0;
+}
+.ui-modal-body {
+    padding-bottom: 15px;
+}
+.ui-modal-footer button {
+    width: 50%;
+    display: inline-block;
+    font-size: 14px;
+    overflow: initial;
+    border-radius: 0;
+}
+.ui-modal-footer button::after {
+    border-radius: 0;
+}

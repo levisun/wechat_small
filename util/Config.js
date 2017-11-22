@@ -7,7 +7,7 @@ let config = {
     debug: true,
 
     // 服务器
-    host: '${host}',
+    host: `https://${host}/`,
     // 用code换取openId
     open_id_url: `https://${host}/openid.php`,
     // 支付接口

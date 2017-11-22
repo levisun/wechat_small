@@ -272,7 +272,7 @@ export default class
 
         return {
             title: _params.title,
-            desc: _params.desc,
+            // desc: _params.desc,
             path: _params.path,
             imageUrl: _params.img,
             success: function(result)

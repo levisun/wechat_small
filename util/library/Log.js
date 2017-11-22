@@ -17,7 +17,7 @@ export default class
      */
     bug(_data, _module = 'self')
     {
-        console.log(_module+'::DEBUG', _data);
+        console.info(_module+'::DEBUG', _data);
     }
 
     /**
@@ -28,7 +28,7 @@ export default class
     error(_msg, _data)
     {
         if (this.debug) {
-            console.log('Error::' + _msg, _data);
+            console.warn('Error::' + _msg, _data);
         }
         // 缺少日志记录
     }

@@ -113,7 +113,7 @@ export default class
      * @param object   _params
      * @param function _callback
      */
-    showModal(_params, _callback)
+    modal(_params, _callback)
     {
         let self = this;
 
