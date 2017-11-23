@@ -1,0 +1,96 @@
+<view class="ui-container">
+    <view class="ui-row">
+        <view class="ui-title">col 栅格</view>
+    </view>
+    <view class="ui-row">
+        <view class="ui-col-2">2</view>
+        <view class="ui-col-2">2</view>
+        <view class="ui-col-2">2</view>
+        <view class="ui-col-2">2</view>
+        <view class="ui-col-2">2</view>
+        <view class="ui-col-2">2</view>
+    </view>
+
+    <view class="ui-row">
+        <view class="ui-col-3">3</view>
+        <view class="ui-col-3">3</view>
+        <view class="ui-col-3">3</view>
+        <view class="ui-col-3">3</view>
+    </view>
+
+    <view class="ui-row">
+        <view class="ui-col-4">4</view>
+        <view class="ui-col-4">4</view>
+        <view class="ui-col-4">4</view>
+    </view>
+
+    <view class="ui-row">
+        <view class="ui-col-2">2</view>
+        <view class="ui-col-5">5</view>
+        <view class="ui-col-5">5</view>
+    </view>
+
+    <view class="ui-row">
+        <view class="ui-col-6">6</view>
+        <view class="ui-col-6">6</view>
+    </view>
+
+    <view class="ui-row">
+        <view class="ui-col-5">5</view>
+        <view class="ui-col-7">7</view>
+    </view>
+
+    <view class="ui-row">
+        <view class="ui-col-4">4</view>
+        <view class="ui-col-8">8</view>
+    </view>
+
+    <view class="ui-row">
+        <view class="ui-col-3">3</view>
+        <view class="ui-col-9">9</view>
+    </view>
+
+    <view class="ui-row">
+        <view class="ui-col-2">2</view>
+        <view class="ui-col-10">10</view>
+    </view>
+
+    <view class="ui-row">
+        <view class="ui-col-11">11</view>
+    </view>
+
+    <view class="ui-row">
+        <view class="ui-col-12">12</view>
+    </view>
+
+    <view class="ui-row">
+        <view class="ui-col-11 ui-col-offset-1">1</view>
+    </view>
+    <view class="ui-row">
+        <view class="ui-col-10 ui-col-offset-2">2</view>
+    </view>
+    <view class="ui-row">
+        <view class="ui-col-9 ui-col-offset-3">3</view>
+    </view>
+    <view class="ui-row">
+        <view class="ui-col-8 ui-col-offset-4">4</view>
+    </view>
+    <view class="ui-row">
+        <view class="ui-col-7 ui-col-offset-5">5</view>
+    </view>
+    <view class="ui-row">
+        <view class="ui-col-6 ui-col-offset-6">6</view>
+    </view>
+    <view class="ui-row">
+        <view class="ui-col-5 ui-col-offset-7">7</view>
+    </view>
+    <view class="ui-row">
+        <view class="ui-col-4 ui-col-offset-8">8</view>
+    </view>
+    <view class="ui-row">
+        <view class="ui-col-3 ui-col-offset-9">9</view>
+    </view>
+    <view class="ui-row">
+        <view class="ui-col-2 ui-col-offset-10">10</view>
+    </view>
+</view>

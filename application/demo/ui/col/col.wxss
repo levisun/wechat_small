@@ -1,0 +1,6 @@
+.ui-row view {
+    border: 1px solid #ccc;
+    /*background-color: #ccc;*/
+    padding-top: 15px;
+    padding-bottom: 15px;
+}

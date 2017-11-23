@@ -6,7 +6,13 @@
 
 
         "application/demo/ui/index/index",
+        "application/demo/ui/btn/btn",
+        "application/demo/ui/cell/cell",
+        "application/demo/ui/col/col",
+        "application/demo/ui/input/input",
         "application/demo/ui/modal/modal",
+        "application/demo/ui/panel/panel",
+        "application/demo/ui/popup/popup",
         "application/demo/ui/toast/toast"
     ],
 

@@ -1,3 +1,15 @@
-<import src="/util/ui/toast/index.wxml" />
-<button bindtap="showToast">轻提示</button>
+<import src="/util/ui/template/toast.wxml" />
+<view class="ui-container">
+    <view class="ui-row">
+        <view class="ui-title">toast 轻提示</view>
+    </view>
+    <view class="ui-row">
+        <view class="ui-panel">
+            <view class="ui-panel-title">toast 轻提示</view>
+            <view class="ui-panel-body">
+                <button class="ui-btn ui-btn-large ui-btn-primary" bindtap="showToast">显示</button>
+            </view>
+        </view>
+    </view>
+</view>
 <template is="ui-toast" data="{{ui}}"></template>

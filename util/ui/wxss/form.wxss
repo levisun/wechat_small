@@ -1,0 +1,17 @@
+.ui-field {
+    padding: 7px 15px;
+    color: #333
+}
+.ui-field .ui-field-title {
+    color: #333;
+    min-width: 65px;
+    padding-right: 10px;
+}
+.ui-field .ui-field-input {
+    flex: 1;
+    line-height: 1.6;
+    padding: 4px 0;
+    min-height: 22px;
+    height: auto;
+    font-size: 14px;
+}

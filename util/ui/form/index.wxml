@@ -1,9 +1,0 @@
-<view class="ui-field-container">
-    <text class="ui-field-label">ffff</text>
-    <input type="text" class="ui-field-input"/>
-</view>
-
-<view class="ui-field-container ui-field-group">
-    <text class="ui-field-label">ffff</text>
-    <input type="text" class="ui-field-input"/>
-</view>

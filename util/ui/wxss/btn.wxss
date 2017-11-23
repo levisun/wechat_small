@@ -13,7 +13,7 @@
     box-sizing: border-box;
     text-decoration: none;
     text-align: center;
-    vertical-align: middle
+    vertical-align: middle;
 }
 
 .ui-btn::after {
@@ -26,7 +26,7 @@
     line-height: 30px;
     font-size: 12px;
     margin-right: 5px;
-    margin-bottom: 0
+    margin-bottom: 0;
 }
 
 .ui-btn-mini {
@@ -37,7 +37,7 @@
     margin-right: 5px;
     margin-bottom: 0;
     padding-left: 5px;
-    padding-right: 5px
+    padding-right: 5px;
 }
 
 .ui-btn-large {
@@ -45,12 +45,12 @@
     margin-bottom: 0;
     border: none;
     line-height: 50px;
-    height: 50px
+    height: 50px;
 }
 
 .ui-btn-loading {
     color: transparent;
-    opacity: 1
+    opacity: 1;
 }
 
 .ui-btn-loading::before {
@@ -67,7 +67,7 @@
     border-radius: 8px;
     box-sizing: border-box;
     animation: btn-spin .6s linear;
-    animation-iteration-count: infinite
+    animation-iteration-count: infinite;
 }
 
 .ui-btn-disabled {
@@ -75,33 +75,33 @@
     background: #f8f8f8!important;
     border-color: #e5e5e5!important;
     cursor: not-allowed!important;
-    opacity: 1!important
+    opacity: 1!important;
 }
 
 .ui-btn-primary {
     color: #fff;
     background-color: #4b0;
-    border-color: #0a0
+    border-color: #0a0;
 }
 
 .ui-btn-warn {
     color: #fff;
     background-color: #f85;
-    border-color: #f85
+    border-color: #f85;
 }
 
 .ui-btn-danger {
     color: #fff;
     background-color: #f44;
-    border-color: #e33
+    border-color: #e33;
 }
 
 @keyframes btn-spin {
     0% {
-        transform: rotate(0)
+        transform: rotate(0);
     }
 
     100% {
-        transform: rotate(360deg)
+        transform: rotate(360deg);
     }
 }

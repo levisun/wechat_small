@@ -20,8 +20,8 @@ Page({
     },
     uiModalBtn: function(result)
     {
-        let status = Helper.input(result);
-        if (status.type == 'confirm') {
+        let r = Helper.input(result);
+        if (r.type == 'confirm') {
 
         } else {
             Helper.ui('Modal').clear();

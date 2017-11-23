@@ -3,7 +3,7 @@ export default class
     constructor()
     {}
 
-    show(_title, _callback, _timeout = 1500)
+    show(_title, _timeout = 1500)
     {
         let that = getCurrentPages()[getCurrentPages().length - 1];
 
@@ -16,7 +16,6 @@ export default class
         that.setData({'ui.toast': toast});
 
         setTimeout(function (){
-            _callback();
             that.setData({
                 'ui.toast.show': false
             });

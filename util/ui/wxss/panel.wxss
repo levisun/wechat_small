@@ -3,7 +3,7 @@
 }
 .ui-panel-title {
     font-size: 14px;
-    line-height: 1;
+    line-height: 1em;
     color: #999;
     padding: 20px 15px 0 15px
 }

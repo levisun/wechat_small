@@ -1,9 +1,13 @@
-<import src="/util/ui/modal/index.wxml" />
+<import src="/util/ui/template/modal.wxml" />
 
 <view class="ui-container">
     <view class="ui-row">
+        <view class="ui-title">modal 弹出框</view>
+    </view>
+
+    <view class="ui-row">
         <view class="ui-panel">
-            <view class="ui-panel-title">Modal 弹出框</view>
+            <view class="ui-panel-title">modal 弹出框</view>
             <view class="ui-panel-body">
                 <button class="ui-btn ui-btn-large ui-btn-primary" bindtap="showModal">显示</button>
             </view>

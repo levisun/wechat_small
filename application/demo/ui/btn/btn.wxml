@@ -1,0 +1,77 @@
+<view class="ui-container">
+    <view class="ui-row">
+        <view class="ui-title">btn 按钮</view>
+    </view>
+
+    <view class="ui-row">
+        <view class="ui-panel">
+            <view class="ui-panel-title">普通</view>
+            <view class="ui-panel-body" style="padding: 15px;">
+                <button class="ui-btn">Button</button>
+                <button class="ui-btn ui-btn-primary">Button</button>
+                <button class="ui-btn ui-btn-warn">Button</button>
+                <button class="ui-btn ui-btn-danger">Button</button>
+            </view>
+        </view>
+    </view>
+
+    <view class="ui-row">
+        <view class="ui-panel">
+            <view class="ui-panel-title">大按钮</view>
+            <view class="ui-panel-body" style="padding: 15px 0;">
+                <button class="ui-btn ui-btn-large ">Button</button>
+                <button class="ui-btn ui-btn-large ui-btn-primary">Button</button>
+                <button class="ui-btn ui-btn-large ui-btn-warn">Button</button>
+                <button class="ui-btn ui-btn-large ui-btn-danger">Button</button>
+            </view>
+        </view>
+    </view>
+
+    <view class="ui-row">
+        <view class="ui-panel">
+            <view class="ui-panel-title">小按钮</view>
+            <view class="ui-panel-body" style="padding: 15px;">
+                <button class="ui-btn ui-btn-small ">Button</button>
+                <button class="ui-btn ui-btn-small ui-btn-primary">Button</button>
+                <button class="ui-btn ui-btn-small ui-btn-warn">Button</button>
+                <button class="ui-btn ui-btn-small ui-btn-danger">Button</button>
+            </view>
+        </view>
+    </view>
+
+    <view class="ui-row">
+        <view class="ui-panel">
+            <view class="ui-panel-title">迷你按钮</view>
+            <view class="ui-panel-body" style="padding: 15px;">
+                <button class="ui-btn ui-btn-mini ">Button</button>
+                <button class="ui-btn ui-btn-mini ui-btn-primary">Button</button>
+                <button class="ui-btn ui-btn-mini ui-btn-warn">Button</button>
+                <button class="ui-btn ui-btn-mini ui-btn-danger">Button</button>
+            </view>
+        </view>
+    </view>
+
+    <view class="ui-row">
+        <view class="ui-panel">
+            <view class="ui-panel-title">加载</view>
+            <view class="ui-panel-body" style="padding: 15px;">
+                <button class="ui-btn ui-btn-loading "></button>
+                <button class="ui-btn ui-btn-loading ui-btn-primary"></button>
+                <button class="ui-btn ui-btn-loading ui-btn-warn"></button>
+                <button class="ui-btn ui-btn-loading ui-btn-danger"></button>
+            </view>
+        </view>
+    </view>
+
+    <view class="ui-row">
+        <view class="ui-panel">
+            <view class="ui-panel-title">disabled</view>
+            <view class="ui-panel-body" style="padding: 15px;">
+                <button class="ui-btn ui-btn-disabled " disabled>Button</button>
+                <button class="ui-btn ui-btn-disabled ui-btn-primary" disabled>Button</button>
+                <button class="ui-btn ui-btn-disabled ui-btn-warn" disabled>Button</button>
+                <button class="ui-btn ui-btn-disabled ui-btn-danger" disabled>Button</button>
+            </view>
+        </view>
+    </view>
+</view>

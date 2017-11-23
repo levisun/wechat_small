@@ -1,0 +1,139 @@
+<view class="ui-container">
+    <view class="ui-row">
+        <view class="ui-title">单元格</view>
+    </view>
+
+    <view class="ui-row">
+        <view class="ui-panel">
+            <view class="ui-panel-title">单行列表</view>
+            <view class="ui-panel-body">
+                <view class="ui-cell">
+                    <view class="ui-cell-body">cell</view>
+                </view>
+            </view>
+        </view>
+
+        <view class="ui-panel">
+            <view class="ui-panel-title">单行列表2</view>
+            <view class="ui-panel-body">
+                <view class="ui-cell ui-cell-access">
+                    <view class="ui-cell-body">cell</view>
+                    <view class="ui-cell-ft"></view>
+                </view>
+            </view>
+        </view>
+
+        <view class="ui-panel">
+            <view class="ui-panel-title">描述</view>
+            <view class="ui-panel-body">
+                <view class="ui-cell">
+                    <view class="ui-cell-body">cell</view>
+                    <view class="ui-cell-ft">more</view>
+                </view>
+            </view>
+        </view>
+
+        <view class="ui-panel">
+            <view class="ui-panel-title">描述2</view>
+            <view class="ui-panel-body">
+                <view class="ui-cell ui-cell-access">
+                    <view class="ui-cell-body">cell</view>
+                    <view class="ui-cell-ft">more</view>
+                </view>
+            </view>
+        </view>
+
+        <view class="ui-panel">
+            <view class="ui-panel-title">小图标</view>
+            <view class="ui-panel-body">
+                <view class="ui-cell">
+                    <view class="ui-cell-icon ui-icon ui-icon-checked" style="color:#38f;"></view>
+                    <view class="ui-cell-body">cell</view>
+                    <view class="ui-cell-ft">more</view>
+                </view>
+            </view>
+        </view>
+
+        <view class="ui-panel">
+            <view class="ui-panel-title">附加描述</view>
+            <view class="ui-panel-body">
+                <view class="ui-cell">
+                    <view class="ui-cell-body">
+                        <view class="ui-cell-text">cell</view>
+                        <view class="ui-cell-desc">desc</view>
+                    </view>
+                    <view class="ui-cell-ft">more</view>
+                </view>
+            </view>
+        </view>
+
+        <view class="ui-panel">
+            <view class="ui-panel-title">多行列表</view>
+            <view class="ui-panel-body">
+                <view class="ui-cell">
+                    <view class="ui-cell-body">cell</view>
+                </view>
+                <view class="ui-cell">
+                    <view class="ui-cell-body">cell</view>
+                </view>
+                <view class="ui-cell">
+                    <view class="ui-cell-body">cell</view>
+                </view>
+            </view>
+        </view>
+
+        <view class="ui-panel">
+            <view class="ui-panel-title">多行列表2</view>
+            <view class="ui-panel-body">
+                <view class="ui-cell">
+                    <view class="ui-cell-body">cell</view>
+                    <view class="ui-cell-ft">more</view>
+                </view>
+                <view class="ui-cell">
+                    <view class="ui-cell-body">cell</view>
+                    <view class="ui-cell-ft">more</view>
+                </view>
+                <view class="ui-cell">
+                    <view class="ui-cell-body">cell</view>
+                    <view class="ui-cell-ft">more</view>
+                </view>
+            </view>
+        </view>
+
+        <view class="ui-panel">
+            <view class="ui-panel-title">多行列表3</view>
+            <view class="ui-panel-body">
+                <view class="ui-cell ui-cell-access">
+                    <view class="ui-cell-body">cell</view>
+                    <view class="ui-cell-ft"></view>
+                </view>
+                <view class="ui-cell ui-cell-access">
+                    <view class="ui-cell-body">cell</view>
+                    <view class="ui-cell-ft"></view>
+                </view>
+                <view class="ui-cell ui-cell-access">
+                    <view class="ui-cell-body">cell</view>
+                    <view class="ui-cell-ft"></view>
+                </view>
+            </view>
+        </view>
+
+        <view class="ui-panel">
+            <view class="ui-panel-title">多行列表4</view>
+            <view class="ui-panel-body">
+                <view class="ui-cell ui-cell-access">
+                    <view class="ui-cell-body">cell</view>
+                    <view class="ui-cell-ft">more</view>
+                </view>
+                <view class="ui-cell ui-cell-access">
+                    <view class="ui-cell-body">cell</view>
+                    <view class="ui-cell-ft">more</view>
+                </view>
+                <view class="ui-cell ui-cell-access">
+                    <view class="ui-cell-body">cell</view>
+                    <view class="ui-cell-ft">more</view>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>

@@ -9,8 +9,9 @@ import Log from './library/Log';
 import Network from './library/Network';
 // import Storage from './library/Storage';
 
-import UI_Modal from './ui/modal/Modal';
-import UI_Toast from './ui/toast/Toast';
+import UI_Modal from './ui/js/Modal';
+import UI_Popup from './ui/js/Popup';
+import UI_Toast from './ui/js/Toast';
 
 let Config = require('./Config');
 
@@ -112,6 +113,11 @@ let Helper = {
                 obj = new UI_Modal();
                 break;
 
+            case 'Popup':
+            case 'popup':
+                obj = new UI_Popup();
+                break;
+
             case 'Toast':
             case 'toast':
                 obj = new UI_Toast();
@@ -123,11 +129,6 @@ let Helper = {
         }
 
         return obj;
-    },
-
-    UI: {
-        modal: new UI_Modal(),
-        toast: new UI_Toast()
     }
 };
 

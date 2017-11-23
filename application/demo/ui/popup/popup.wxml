@@ -1,0 +1,26 @@
+<view class="ui-container">
+    <view class="ui-row">
+        <view class="ui-title">popup 弹出层</view>
+    </view>
+
+    <view class="ui-row">
+        <button class="ui-btn" bindtap="showPopup" data-type="left">从左边弹出popup</button>
+
+        <button class="ui-btn" bindtap="showPopup" data-type="right">从右边弹出popup</button>
+    </view>
+</view>
+<view class="ui-popup ui-popup-left {{ ui.popupLeft ? 'ui-popup-show' : ''}}">
+    <view style="padding: 15px;">
+        <button class="ui-btn" bindtap="clearPopup" data-type="left">
+            关闭 left popup
+        </button>
+    </view>
+</view>
+
+<view class="ui-popup ui-popup-right {{ ui.popupRight ? 'ui-popup-show' : ''}}">
+    <view style="padding: 15px;">
+        <button class="ui-btn" bindtap="clearPopup" data-type="right">
+            关闭 right popup
+        </button>
+    </view>
+</view>

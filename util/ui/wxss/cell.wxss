@@ -4,7 +4,7 @@
     display: flex;
     align-items: center;
     line-height: 1.4;
-    font-size: 14px
+    font-size: 14px;
 }
 
 .ui-cell::after {
@@ -14,36 +14,36 @@
     bottom: 0;
     border-top: 1rpx solid #e5e5e5;
     background: #e5e5e5;
-    content: ' '
+    content: ' ';
 }
 
 .ui-cell-icon {
-    margin-right: 5px
+    margin-right: 5px;
 }
 
 .ui-cell-body {
-    flex: 1
+    flex: 1;
 }
 
 .ui-cell-body .ui-cell-text {
     line-height: 24px;
-    font-size: 14px
+    font-size: 14px;
 }
 
 .ui-cell-body .ui-cell-desc {
     line-height: 1.2;
     font-size: 12px;
-    color: #666
+    color: #666;
 }
 
 .ui-cell-ft {
     position: relative;
     text-align: right;
-    color: #666
+    color: #666;
 }
 
 .ui-cell-access .ui-cell-ft {
-    padding-right: 13px
+    padding-right: 13px;
 }
 
 .ui-cell-access .ui-cell-ft::after {
@@ -57,10 +57,10 @@
     border-width: 2px 2px 0 0;
     border-color: #c8c8c8;
     border-style: solid;
-    transform: translateY(-50%) matrix(.71,.71,-.71,.71,0,0)
+    transform: translateY(-50%) matrix(.71, .71, -.71, .71, 0, 0);
 }
 
 .ui-cell-switch {
     padding-top: 6px;
-    padding-bottom: 6px
+    padding-bottom: 6px;
 }
