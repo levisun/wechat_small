@@ -277,7 +277,7 @@ export default class
             imageUrl: _params.img,
             success: function(result)
             {
-                _callback(result);
+                _callback(true);
             },
             fail: function(result)
             {

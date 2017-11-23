@@ -1,17 +1,21 @@
+@import "/util/ui/btn/index.wxss";
+@import "/util/ui/cell/index.wxss";
+@import "/util/ui/col/index.wxss";
 @import "/util/ui/icon/index.wxss";
 @import "/util/ui/layout/index.wxss";
 @import "/util/ui/modal/index.wxss";
+@import "/util/ui/panel/index.wxss";
 @import "/util/ui/toast/index.wxss";
 page {
     font-size: 14px;
     color: #595959;
 }
 .ui-mask{
-    position:fixed;
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
     z-index: 99;
-    background: rgba(0, 0, 0, .3);
+    background: rgba(0, 0, 0, .2);
 }

@@ -1,8 +1,8 @@
-let host = "www.youtuiyou.cn/wxxcx";
+let host = 'www.youtuiyou.cn/wxxcx';
 
 let config = {
     // 缓存
-    cache: false,
+    cache: true,
     // 调试
     debug: true,
 
@@ -15,6 +15,8 @@ let config = {
     // 登录
     login_url: `https://${host}/login.php`,
     // upload
+
+    game_url: `https://${host}/game.php`,
 
     // 小程序信息
     appid: 'wxe2ce060d72f9cc70',

@@ -25,7 +25,11 @@ let Helper = {
 
         if (_type == 'input') {
             val = _result.datail.value;
+        } else if (_type == 'rec') {
+            // 返回变量
+            val = _result.data;
         } else {
+            // 点击页面变量
             val = _result.currentTarget.dataset;
         }
 
@@ -86,6 +90,7 @@ let Helper = {
             // 微信小程序Page()方法
             case 'Page':
             case 'page':
+            case 'self':
                 obj = getCurrentPages()[getCurrentPages().length - 1];
                 break;
 
@@ -102,6 +107,11 @@ let Helper = {
     {
         let obj;
         switch (_name) {
+            case 'Modal':
+            case 'modal':
+                obj = new UI_Modal();
+                break;
+
             case 'Toast':
             case 'toast':
                 obj = new UI_Toast();

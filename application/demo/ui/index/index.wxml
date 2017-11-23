@@ -1,0 +1,41 @@
+<view class="ui-container">
+    <view class="ui-row">
+        <view class="ui-panel">
+            <view class="ui-panel-title">基础</view>
+            <view class="ui-panel-body">
+                <view class="ui-cell ui-cell-access">
+                    <view class="ui-cell-body">cell 单元格</view>
+                    <view class="ui-cell-ft"></view>
+                </view>
+                <view class="ui-cell ui-cell-access">
+                    <view class="ui-cell-body">col 栅格</view>
+                    <view class="ui-cell-ft"></view>
+                </view>
+                <view class="ui-cell ui-cell-access">
+                    <view class="ui-cell-body">icon 图标</view>
+                    <view class="ui-cell-ft"></view>
+                </view>
+
+                <view class="ui-cell ui-cell-access">
+                    <view class="ui-cell-body">panel 面板</view>
+                    <view class="ui-cell-ft"></view>
+                </view>
+
+            </view>
+        </view>
+
+        <view class="ui-panel">
+            <view class="ui-panel-title">操作反馈</view>
+            <view class="ui-panel-body">
+                <navigator class="ui-cell ui-cell-access" url="/application/demo/ui/modal/modal">
+                    <view class="ui-cell-body">modal 弹出框</view>
+                    <view class="ui-cell-ft"></view>
+                </navigator>
+                <navigator class="ui-cell ui-cell-access" url="/application/demo/ui/toast/toast">
+                    <view class="ui-cell-body">toast 轻提示</view>
+                    <view class="ui-cell-ft"></view>
+                </navigator>
+            </view>
+        </view>
+    </view>
+</view>

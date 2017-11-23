@@ -6,18 +6,12 @@ export default class
     show()
     {
         let that = getCurrentPages()[getCurrentPages().length - 1];
-
-        let modal = {
-            show: true
-        };
-
-        that.setData({'ui.modal': modal});
+        that.setData({'ui.modal.show': true});
     }
 
     clear()
     {
         let that = getCurrentPages()[getCurrentPages().length - 1];
-
         that.setData({'ui.modal.show': false});
     }
 }

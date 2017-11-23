@@ -1,4 +1,4 @@
-.ui-modal-portal {
+.ui-modal {
     position: fixed;
     top: 35%;
     left: 10%;
@@ -20,13 +20,14 @@
 .ui-modal-body {
     padding-bottom: 15px;
 }
-.ui-modal-footer button {
+.ui-modal-footer .ui-btn {
     width: 50%;
     display: inline-block;
-    font-size: 14px;
-    overflow: initial;
-    border-radius: 0;
+    border-top: 1rpx solid #e5e5e5;
 }
-.ui-modal-footer button::after {
-    border-radius: 0;
+.ui-modal-footer .ui-btn-cancel {
+    border-right: 1rpx solid #e5e5e5;
+}
+.ui-modal-footer .ui-btn-confirm {
+    color: red;
 }

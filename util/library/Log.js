@@ -17,7 +17,13 @@ export default class
      */
     bug(_data, _module = 'self')
     {
-        console.info(_module+'::DEBUG', _data);
+        console.group('Debug');
+        console.warn(_module);
+        // console.trace();
+        for (var key in _data) {
+            console.log(key+': ', _data[key]);
+        }
+        console.groupEnd();
     }
 
     /**
@@ -28,7 +34,12 @@ export default class
     error(_msg, _data)
     {
         if (this.debug) {
-            console.warn('Error::' + _msg, _data);
+            console.group('Error');
+            console.error(_msg);
+            for (var key in _data) {
+                console.log(key+': ', _data[key]);
+            }
+            console.groupEnd();
         }
         // 缺少日志记录
     }

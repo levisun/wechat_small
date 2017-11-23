@@ -1,0 +1,107 @@
+.ui-btn {
+    position: relative;
+    color: #333;
+    background-color: #fff;
+    margin-bottom: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-radius: 2px;
+    border: 1rpx solid #e5e5e5;
+    font-size: 16px;
+    line-height: 45px;
+    height: 45px;
+    box-sizing: border-box;
+    text-decoration: none;
+    text-align: center;
+    vertical-align: middle
+}
+
+.ui-btn::after {
+    display: none
+}
+
+.ui-btn-small {
+    display: inline-block;
+    height: 30px;
+    line-height: 30px;
+    font-size: 12px;
+    margin-right: 5px;
+    margin-bottom: 0
+}
+
+.ui-btn-mini {
+    display: inline-block;
+    line-height: 21px;
+    height: 22px;
+    font-size: 10px;
+    margin-right: 5px;
+    margin-bottom: 0;
+    padding-left: 5px;
+    padding-right: 5px
+}
+
+.ui-btn-large {
+    border-radius: 0;
+    margin-bottom: 0;
+    border: none;
+    line-height: 50px;
+    height: 50px
+}
+
+.ui-btn-loading {
+    color: transparent;
+    opacity: 1
+}
+
+.ui-btn-loading::before {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    content: ' ';
+    width: 16px;
+    height: 16px;
+    margin-left: -8px;
+    margin-top: -8px;
+    border: 3px solid #e5e5e5;
+    border-color: #666 #e5e5e5 #e5e5e5 #e5e5e5;
+    border-radius: 8px;
+    box-sizing: border-box;
+    animation: btn-spin .6s linear;
+    animation-iteration-count: infinite
+}
+
+.ui-btn-disabled {
+    color: #999!important;
+    background: #f8f8f8!important;
+    border-color: #e5e5e5!important;
+    cursor: not-allowed!important;
+    opacity: 1!important
+}
+
+.ui-btn-primary {
+    color: #fff;
+    background-color: #4b0;
+    border-color: #0a0
+}
+
+.ui-btn-warn {
+    color: #fff;
+    background-color: #f85;
+    border-color: #f85
+}
+
+.ui-btn-danger {
+    color: #fff;
+    background-color: #f44;
+    border-color: #e33
+}
+
+@keyframes btn-spin {
+    0% {
+        transform: rotate(0)
+    }
+
+    100% {
+        transform: rotate(360deg)
+    }
+}
