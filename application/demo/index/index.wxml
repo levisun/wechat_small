@@ -1,5 +1,11 @@
 <view class="ui-container">
     <view class="ui-row">
+        <view class="ui-title">API</view>
+    </view>
+
+    <view class="ui-row">
+        <view class="ui-title">UI</view>
+
         <view class="ui-panel">
             <view class="ui-panel-title">基础</view>
             <view class="ui-panel-body">

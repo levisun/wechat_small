@@ -6,7 +6,8 @@ App({
         unionId: '',
         sessionKey: '',
         userId: 0,
-        userInfo: {}
+        userInfo: {},
+        host: ''
     },
 
     // 监听小程序初始化
@@ -37,6 +38,8 @@ App({
                 self.data.userInfo = result;
             });
         });
+
+        self.data.host = Helper.Config.host;
     },
 
     // 监听小程序显示

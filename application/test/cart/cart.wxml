@@ -1,5 +1,0 @@
-<view class="container">
-    <view>
-        <button bindtap="pay">付款</button>
-    </view>
-</view>
