@@ -8,15 +8,14 @@ let config = {
 
     // 服务器
     host: `https://${host}/`,
+
     // 用code换取openId
-    open_id_url: `https://${host}/openid.php`,
+    openid_url: `https://${host}/openid.php`,
     // 支付接口
     payment_url: `https://${host}/payment.php`,
     // 登录
     login_url: `https://${host}/login.php`,
     // upload
-
-    game_url: `https://${host}/game.php`,
 
     // 小程序信息
     appid: 'wxe2ce060d72f9cc70',
