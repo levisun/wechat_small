@@ -4,6 +4,7 @@
 @import "/util/ui/wxss/form.wxss";
 @import "/util/ui/wxss/icon.wxss";
 @import "/util/ui/wxss/layout.wxss";
+@import "/util/ui/wxss/loadmore.wxss";
 @import "/util/ui/wxss/modal.wxss";
 @import "/util/ui/wxss/panel.wxss";
 @import "/util/ui/wxss/popup.wxss";

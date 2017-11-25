@@ -1,0 +1,24 @@
+<template name="ui-loadmore">
+
+    <block wx:if="{{loadmore == 'nomore'}}">
+    <view class="ui-loadmore ui-loadmore-nomore">
+        <view class="ui-loadmore-tips">
+            <view class="ui-loadmore-dot"></view>
+        </view>
+    </view>
+    </block>
+
+    <block wx:elif="{{loadmore == 'nodata'}}">
+    <view class="ui-loadmore ui-loadmore-nodata">
+        <view class="ui-loadmore-tips">{{nodata_str ? nodata_str : '暂无数据'}}</view>
+    </view>
+    </block>
+
+    <block wx:elif="{{loadmore == 'loading'}}">
+    <view class="ui-loadmore">
+        <view class="ui-loading"></view>
+        <view class="ui-loadmore-tips">加载中...</view>
+    </view>
+    </block>
+
+</template>

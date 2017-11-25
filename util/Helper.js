@@ -44,54 +44,43 @@ let Helper = {
 
         switch (_name) {
             case 'Api':
-            case 'api':
                 obj = new Api(Config);
                 break;
 
             case 'Cache':
-            case 'cache':
                 obj = new Cache(Config);
                 break;
 
             case 'Device':
-            case 'device':
                 obj = new Device(Config);
                 break;
 
             case 'Interfaces':
-            case 'interfaces':
                 obj = new Interfaces(Config);
                 break;
 
             case 'Location':
-            case 'location':
                 obj = new Location(Config);
                 break;
 
             case 'Log':
-            case 'log':
                 obj = new Log(Config);
                 break;
 
             case 'Media':
-            case 'media':
                 obj = new Media(Config);
                 break;
 
             case 'Network':
-            case 'network':
                 obj = new Network(Config);
                 break;
 
             case 'Storage':
-            case 'storage':
                 obj = new Storage(Config);
                 break;
 
             // 微信小程序Page()方法
             case 'Page':
-            case 'page':
-            case 'self':
                 obj = getCurrentPages()[getCurrentPages().length - 1];
                 break;
 

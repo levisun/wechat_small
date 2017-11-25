@@ -1,0 +1,15 @@
+<import src="/util/ui/template/loadmore.wxml" />
+
+<view class="ui-container">
+    <view class="ui-row">
+        <view class="ui-title">
+            loadmore 加载
+        </view>
+    </view>
+
+    <view class="ui-row">
+        <template is="ui-loadmore" data="{{loadmore: 'loading'}}" />
+        <template is="ui-loadmore" data="{{loadmore: 'nodata'}}" />
+        <template is="ui-loadmore" data="{{loadmore: 'nomore'}}" />
+    </view>
+</view>

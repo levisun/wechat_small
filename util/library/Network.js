@@ -78,7 +78,7 @@ export default class
     loadingMore(_params, _callback)
     {
         let self = this,
-            interfaces = new Interfaces(self.config.cache, self.config.debug),
+            interfaces = new Interfaces(self.config),
             that = getCurrentPages()[getCurrentPages().length - 1];
 
         if (typeof _params.loading == 'undefined') {
@@ -86,7 +86,7 @@ export default class
             return false;
         }
 
-        if (typeof _params.page == 'undefined') {
+        if (typeof _params.params.page == 'undefined') {
             self.log.error('Page->loadingMore undefined page', _params);
             return false;
         }
@@ -96,27 +96,23 @@ export default class
             return false;
         }
 
-        if (_params.loading == 'true') {
-            that.setData({
-                loading: 'false'
-            });
+        if (typeof _params.method == 'undefined') {
+            _params.method = 'GET';
+        }
 
-            interfaces.showLoading('正在玩命加载中...', function(){});
+        if (_params.loading == true) {
+            that.setData({loading: false});
+
             self.request({
+                method: _params.method,
                 url: _params.url,
-                data: {page: _params.page}
+                data: _params.params
             }, function(result){
-                if (result.data) {
-                    _callback(result);
+                _callback(result);
 
-                    setTimeout(function(){
-                        interfaces.hideLoading();
-                        that.setData({
-                            loading: 'true',
-                            page: ++_params.page
-                        });
-                    }, 1500);
-                }
+                setTimeout(function(){
+                    that.setData({loading: true, page: ++_params.params.page});
+                }, 1500);
             });
         }
     }

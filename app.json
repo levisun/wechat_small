@@ -2,8 +2,6 @@
     "pages": [
         "application/game/index/index",
         "application/game/task/red/red",
-        "application/game/user/index/index",
-        "application/game/user/task/task",
 
 
         "application/demo/index/index",
@@ -13,6 +11,7 @@
         "application/demo/ui/cell/cell",
         "application/demo/ui/col/col",
         "application/demo/ui/input/input",
+        "application/demo/ui/loadmore/loadmore",
         "application/demo/ui/modal/modal",
         "application/demo/ui/panel/panel",
         "application/demo/ui/popup/popup",
@@ -39,12 +38,6 @@
             {
                 "pagePath": "application/game/index/index",
                 "text": "游戏",
-                "iconPath": "util/image/icon_API_HL.png",
-                "selectedIconPath": "util/image/icon_API_HL.png"
-            },
-            {
-                "pagePath": "application/game/user/index/index",
-                "text": "会员",
                 "iconPath": "util/image/icon_API_HL.png",
                 "selectedIconPath": "util/image/icon_API_HL.png"
             },

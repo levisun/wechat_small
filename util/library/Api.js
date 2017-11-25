@@ -106,10 +106,9 @@ export default class
             union_id = self.cache.get('union_id');
 
         if (!union_id) {
-            self.getOUS(
-                function(result) {
-                    _callback(result.unionid);
-                });
+            self.getOUS(function(result) {
+                _callback(result.unionid);
+            });
         } else {
             _callback(union_id);
         }
@@ -126,10 +125,9 @@ export default class
             session_key = self.cache.get('session_key');
 
         if (!session_key) {
-            self.getOUS(
-                function(result) {
-                    _callback(result.session_key);
-                });
+            self.getOUS(function(result) {
+                _callback(result.session_key);
+            });
         } else {
             _callback(session_key);
         }
@@ -176,7 +174,7 @@ export default class
                 success: function(result) {
                     let network = new Network(self.config);
                     network.request({
-                        url: self.config.open_id_url,
+                        url: self.config.openid_url,
                         data: {code: result.code}
                     }, function(res){
                         // 缓存open_id

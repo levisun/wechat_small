@@ -21,6 +21,10 @@
                     <view class="ui-cell-body">icon 图标</view>
                     <view class="ui-cell-ft"></view>
                 </view>
+                <navigator class="ui-cell ui-cell-access" url="/application/demo/ui/loadmore/loadmore">
+                    <view class="ui-cell-body">loadmore 加载</view>
+                    <view class="ui-cell-ft"></view>
+                </navigator>
                 <navigator class="ui-cell ui-cell-access" url="/application/demo/ui/panel/panel">
                     <view class="ui-cell-body">panel 面板</view>
                     <view class="ui-cell-ft"></view>

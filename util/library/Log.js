@@ -20,8 +20,12 @@ export default class
         console.group('Debug');
         console.warn(_module);
         // console.trace();
-        for (var key in _data) {
-            console.log(key+': ', _data[key]);
+        if (typeof _data == 'object') {
+            for (var key in _data) {
+                console.log(key+': ', _data[key]);
+            }
+        } else {
+            console.log(_data);
         }
         console.groupEnd();
     }

@@ -4,6 +4,7 @@
     overflow: hidden;
     min-height: 100vh;
     box-sizing: border-box;
+    background-color: #f9f9f9;
 }
 .ui-container .ui-row {
     margin-left: -15px;

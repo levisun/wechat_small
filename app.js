@@ -20,23 +20,23 @@ App({
             self.data.sessionKey = result.session_key;
 
             // 获取用户信息并写入数据库
-            Helper.class('Api').getUserInfo(function(result){
-                let params = result;
-                params.appid = Helper.Config.appid;
-                params.openid = self.data.openId;
-                params.unionid = self.data.unionId;
+            // Helper.class('Api').getUserInfo(function(result){
+            //     let params = result;
+            //     params.appid = Helper.Config.appid;
+            //     params.openid = self.data.openId;
+            //     params.unionid = self.data.unionId;
 
-                // 写入数据库
-                Helper.class('Network').request({
-                    method: 'POST',
-                    data: params,
-                    url: Helper.Config.login_url
-                }, function(result){
-                    // 是否绑定用户
-                });
+            //     // 写入数据库
+            //     Helper.class('Network').request({
+            //         method: 'POST',
+            //         data: params,
+            //         url: Helper.Config.login_url
+            //     }, function(result){
+            //         // 是否绑定用户
+            //     });
 
-                self.data.userInfo = result;
-            });
+            //     self.data.userInfo = result;
+            // });
         });
 
         self.data.host = Helper.Config.host;
