@@ -1,45 +1,29 @@
-let Helper = require('./util/Helper');
+let Helper = require('./wechat/Helper');
 
 App({
     data: {
-        openId: '',
-        unionId: '',
-        sessionKey: '',
-        userId: 0,
-        userInfo: {},
-        host: ''
     },
 
     // 监听小程序初始化
     onLaunch: function (options) {
         let self = this;
 
-        Helper.class('Api').login(function(result){
-            self.data.openId = result.openid;
-            self.data.unionId = result.unionid;
-            self.data.sessionKey = result.session_key;
+        Helper.class('user').getOUS(function(ous){
+            Helper.class('user').getUserInfo(function(user_info){
+                let params = user_info;
+                params.openid = ous.openid;
+                params.unionid = ous.unionid;
+                params.appid = Helper.getData('config.appid');
+                params.method = 'hasUserAdded';
 
-            // 获取用户信息并写入数据库
-            // Helper.class('Api').getUserInfo(function(result){
-            //     let params = result;
-            //     params.appid = Helper.Config.appid;
-            //     params.openid = self.data.openId;
-            //     params.unionid = self.data.unionId;
+                Helper.class('request').post({
+                    url: Helper.getData('config.host')+'account.php',
+                    data: params
+                }, function(r){
 
-            //     // 写入数据库
-            //     Helper.class('Network').request({
-            //         method: 'POST',
-            //         data: params,
-            //         url: Helper.Config.login_url
-            //     }, function(result){
-            //         // 是否绑定用户
-            //     });
-
-            //     self.data.userInfo = result;
-            // });
+                });
+            });
         });
-
-        self.data.host = Helper.Config.host;
     },
 
     // 监听小程序显示

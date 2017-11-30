@@ -1,21 +1,9 @@
 {
     "pages": [
         "application/game/index/index",
+        "application/game/task/guard/guard",
         "application/game/task/red/red",
-
-
-        "application/demo/index/index",
-        "application/demo/api/index/index",
-
-        "application/demo/ui/btn/btn",
-        "application/demo/ui/cell/cell",
-        "application/demo/ui/col/col",
-        "application/demo/ui/input/input",
-        "application/demo/ui/loadmore/loadmore",
-        "application/demo/ui/modal/modal",
-        "application/demo/ui/panel/panel",
-        "application/demo/ui/popup/popup",
-        "application/demo/ui/toast/toast"
+        "application/game/task/rob/rob"
     ],
 
     "window": {
@@ -26,28 +14,6 @@
         "backgroundTextStyle": "light",
         "enablePullDownRefresh": true,
         "onReachBottomDistance": 50
-    },
-
-    "tabBar": {
-        "color": "#000",
-        "selectedColor": "#f00",
-        "backgroundColor": "#fff",
-        "borderStyle": "black",
-        "position": "bottom",
-        "list": [
-            {
-                "pagePath": "application/game/index/index",
-                "text": "游戏",
-                "iconPath": "util/image/icon_API_HL.png",
-                "selectedIconPath": "util/image/icon_API_HL.png"
-            },
-            {
-                "pagePath": "application/demo/index/index",
-                "text": "DEMO",
-                "iconPath": "util/image/icon_API_HL.png",
-                "selectedIconPath": "util/image/icon_API_HL.png"
-            }
-        ]
     },
 
     "networkTimeout": {

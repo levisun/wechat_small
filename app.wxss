@@ -1,2 +1,2 @@
 /*@import "/util/zanui/index.wxss";*/
-@import "/util/ui/ui.wxss";
+@import "/wechat/ui.wxss";

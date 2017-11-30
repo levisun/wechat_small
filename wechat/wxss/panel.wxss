@@ -8,6 +8,7 @@
     padding: 20px 15px 0 15px
 }
 .ui-panel-body {
+    font-size: 14px;
     background: #fff;
     border-top: 1rpx solid #e5e5e5;
     border-bottom: 1rpx solid #e5e5e5;

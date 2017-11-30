@@ -1,5 +1,14 @@
 /**
+ *
  * 开发接口
+ *
+ * @package   wechat_small
+ * @category  util/library
+ * @author    失眠小枕头 [levisun.mail@gmail.com]
+ * @copyright Copyright (c) 2013, 失眠小枕头, All rights reserved.
+ * @version   CVS: $Id: Api.js v1.0.1 $
+ * @link      www.NiPHP.com
+ * @since     2017/11
  */
 import Cache from './Cache';
 import Log from './Log';
@@ -240,7 +249,7 @@ export default class
     }
 
     /**
-     * 分享
+     * 转发分享
      * 需配合Page.onShareAppMessage使用
      * 注:按钮使用需加open-type="share"
      * @param object   _params
@@ -286,6 +295,20 @@ export default class
                 // code
             }
         };
+    }
+
+    /**
+     * 显示转发分享菜单
+     * @param boolean _params
+     */
+    shareMenu(_params = true)
+    {
+        if (_params) {
+            wx.showShareMenu({withShareTicket: true});
+        } else {
+            wx.hideShareMenu();
+        }
+
     }
 
     /**

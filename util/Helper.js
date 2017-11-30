@@ -1,4 +1,15 @@
-
+/**
+ *
+ * 助手类
+ *
+ * @package   wechat_small
+ * @category  util
+ * @author    失眠小枕头 [levisun.mail@gmail.com]
+ * @copyright Copyright (c) 2013, 失眠小枕头, All rights reserved.
+ * @version   CVS: $Id: Helper.js v1.0.1 $
+ * @link      www.NiPHP.com
+ * @since     2017/11
+ */
 import Api from './library/Api';
 import Cache from './library/Cache';
 // import Device from './library/Device';

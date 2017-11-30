@@ -1,4 +1,4 @@
-let App = getApp();
+let app = getApp();
 let Helper = require('./../../../../util/Helper');
 Page({
     onLoad: function()

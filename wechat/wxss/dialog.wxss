@@ -1,0 +1,29 @@
+.ui-dialog-mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10;
+    background: rgba(0,0,0,.7);
+    display: none
+}
+
+.ui-dialog-container {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 750rpx;
+    background: #fff;
+    transform: translateY(150%);
+    transition: all .4s ease;
+    z-index: 100;
+}
+
+.ui-dialog-show .ui-dialog-container {
+    transform: translateY(0);
+}
+
+.ui-dialog-show .ui-dialog-mask {
+    display: block;
+}

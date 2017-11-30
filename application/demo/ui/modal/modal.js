@@ -1,5 +1,5 @@
 let App = getApp();
-let Helper = require('./../../../../util/Helper');
+let Helper = require('./../../../../Helper');
 Page({
     data: {
         ui: {

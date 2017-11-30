@@ -1,6 +1,6 @@
 <template name="ui-loadmore">
 
-    <block wx:if="{{loadmore == 'nomore'}}">
+    <block wx:if="{{ui.loadmore == 'nomore'}}">
     <view class="ui-loadmore ui-loadmore-nomore">
         <view class="ui-loadmore-tips">
             <view class="ui-loadmore-dot"></view>
@@ -8,13 +8,13 @@
     </view>
     </block>
 
-    <block wx:elif="{{loadmore == 'nodata'}}">
+    <block wx:elif="{{ui.loadmore == 'nodata'}}">
     <view class="ui-loadmore ui-loadmore-nodata">
-        <view class="ui-loadmore-tips">{{nodata_str ? nodata_str : '暂无数据'}}</view>
+        <view class="ui-loadmore-tips">{{ui.nodata_str ? ui.nodata_str : '暂无数据'}}</view>
     </view>
     </block>
 
-    <block wx:elif="{{loadmore == 'loading'}}">
+    <block wx:elif="{{ui.loadmore == 'loading'}}">
     <view class="ui-loadmore">
         <view class="ui-loading"></view>
         <view class="ui-loadmore-tips">加载中...</view>
