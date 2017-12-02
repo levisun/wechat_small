@@ -18,6 +18,11 @@ export default class
     constructor(_config)
     {
         this.config = _config;
+
+        // 调试模式不开启缓存
+        this.config.cache = !this.config.debug;
+        // 缓存时效
+        this.config.cacheExpire = 1440;
     }
 
     /**
@@ -27,6 +32,8 @@ export default class
     setTopBar(_text)
     {
         let self = this;
+
+        self.logInfo('Base->setTopBar', _params);
 
         wx.setTopBarText({
             text: _text,
@@ -50,6 +57,8 @@ export default class
     setBarTitle(_title)
     {
         let self = this;
+
+        self.logInfo('Base->setBarTitle', _params);
 
         wx.setNavigationBarTitle({
             title: _title,
@@ -97,6 +106,7 @@ export default class
             let expire = wx.getStorageSync('wechat_' + _key + '_expire');
             if (expire && expire >= timestamp) {
                 return wx.getStorageSync('wechat_' + _key);
+
             } else {
                 return false;
             }
@@ -180,6 +190,5 @@ export default class
             }
             console.groupEnd();
         }
-        // 缺少日志记录
     }
 }

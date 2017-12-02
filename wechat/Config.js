@@ -1,9 +1,6 @@
 let host = 'www.youtuiyou.cn/wxxcx';
 
 let Config = {
-    // 缓存
-    cache: true,
-    cacheExpire: 1440,
     // 调试
     debug: true,
 

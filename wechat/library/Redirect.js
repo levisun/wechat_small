@@ -30,6 +30,8 @@ export default class extends Base
     {
         let self = this;
 
+        self.logInfo('Redirect->navigate', _status+':'+_url_delta);
+
         if (_status == 'back') {
             wx.navigateBack({
                 delta: _url_delta,
@@ -69,6 +71,8 @@ export default class extends Base
     {
         let self = this;
 
+        self.logInfo('Redirect->switchTab', _url);
+
         wx.switchTab({
             url: _url,
             success: function(result)
@@ -92,6 +96,8 @@ export default class extends Base
     redirect(_url, _type = 'reLaunch')
     {
         let self = this;
+
+        self.logInfo('Redirect->redirect', _url+':'+_type);
 
         if (_type == 'redirectTo') {
             wx.redirectTo({

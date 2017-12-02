@@ -60,6 +60,8 @@ export default class extends Base
             _params.confirmColor = '#3CC51F';
         }
 
+        self.logInfo('Interact->modal', _params);
+
         wx.showModal({
             title: _params.title,
             content: _params.content,
@@ -110,6 +112,8 @@ export default class extends Base
             _params.img = '';
         }
 
+        self.logInfo('Interact->share', _params);
+
         return {
             title: _params.title,
             path: _params.path,
@@ -121,7 +125,7 @@ export default class extends Base
             fail: function(result)
             {
                 _callback(false);
-                self.logError('Interact->share::Page.onShareAppMessage', result);
+                self.logInfo('Interact->share::Page.onShareAppMessage', result);
             },
             complete: function (result) {
                 // code

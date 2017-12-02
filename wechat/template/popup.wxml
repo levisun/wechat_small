@@ -1,4 +1,4 @@
-<!--
+<template name="ui-popup">
 <view class="ui-popup ui-popup-left {{ showPopup ? 'ui-popup-show' : ''}}">
     <view style="padding: 15px;">
         <button class="ui-btn" bindtap="togglePopup" data-type="left">
@@ -6,4 +6,4 @@
         </button>
     </view>
 </view>
- -->
+</template>

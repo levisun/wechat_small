@@ -30,6 +30,17 @@ export default class extends Base
         that.setData({'ui.modal.show': true});
     }
 
+    btnModal(_result)
+    {
+        let type = _result['currentTarget']['dataset']['type'];
+        if (type == 'cancel') {
+            this.clearModal();
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     clearModal()
     {
         let that = getCurrentPages()[getCurrentPages().length - 1];

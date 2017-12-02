@@ -1,6 +1,6 @@
 .ui-modal {
     position: fixed;
-    top: 35%;
+    top: 45%;
     left: 10%;
     transform: translateZ(0) translateY(-100%);
     background-color: #fff;

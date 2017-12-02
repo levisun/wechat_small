@@ -14,23 +14,23 @@ let Helper = {
 
         switch (_name) {
             case 'interact':
-                obj = new Interact(Config);
+                obj = new Interact(this.config);
                 break;
 
             case 'redirect':
-                obj = new Redirect(Config);
+                obj = new Redirect(this.config);
                 break;
 
             case 'request':
-                obj = new Request(Config);
+                obj = new Request(this.config);
                 break;
 
             case 'user':
-                obj = new User(Config);
+                obj = new User(this.config);
                 break;
 
             case 'ui':
-                obj = new Ui(Config);
+                obj = new Ui(this.config);
                 break;
         }
 
@@ -52,11 +52,12 @@ let Helper = {
         }
 
         // Page
-        else if (var_type == 'self') {
-            let that = getCurrentPages()[getCurrentPages().length - 1];
-            return that['data'][var_name];
-        }
+        // else if (var_type == 'self') {
+        //     let that = getCurrentPages()[getCurrentPages().length - 1];
+        //     return that['data'][var_name];
+        // }
 
+        // 配置
         else if (var_type == 'config') {
             return this.config[var_name];
         }
@@ -73,6 +74,7 @@ let Helper = {
     },
 
     /**
+     * 不建议使用
      * 微信小程序Page()方法
      */
     setData: function(_params)

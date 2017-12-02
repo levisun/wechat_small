@@ -3,7 +3,7 @@
 @import "/wechat/wxss/col.wxss";
 @import "/wechat/wxss/dialog.wxss";
 @import "/wechat/wxss/form.wxss";
-@import "/wechat/wxss/icon.wxss";
+/*@import "/wechat/wxss/icon.wxss";*/
 @import "/wechat/wxss/loadmore.wxss";
 @import "/wechat/wxss/modal.wxss";
 @import "/wechat/wxss/panel.wxss";

@@ -2,6 +2,8 @@ let Helper = require('./wechat/Helper');
 
 App({
     data: {
+        openId: '',
+        unionId: ''
     },
 
     // 监听小程序初始化
@@ -9,6 +11,9 @@ App({
         let self = this;
 
         Helper.class('user').getOUS(function(ous){
+            self.data.openId = ous.openid;
+            self.data.unionId = ous.unionid;
+
             Helper.class('user').getUserInfo(function(user_info){
                 let params = user_info;
                 params.openid = ous.openid;

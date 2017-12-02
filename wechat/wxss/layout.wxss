@@ -141,4 +141,35 @@
     -webkit-box-orient: vertical;
 }
 
+.ui-close {
+  position: relative;
+  display: inline-block;
+  width: 23px;
+  height: 23px;
+  overflow: hidden;
+}
+.ui-close::before, .ui-close::after {
+  content: '';
+  position: absolute;
+  height: 2px;
+  width: 100%;
+  top: 50%;
+  left: 0;
+  margin-top: -1px;
+  background: #000;
+}
+.ui-close::before {
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+.ui-close::after {
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
 
