@@ -1,4 +1,4 @@
-<import src="/util/ui/template/modal.wxml" />
+<import src="/wechat/template/template.wxml" />
 
 <view class="ui-container">
     <view class="ui-row">

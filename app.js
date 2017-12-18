@@ -3,7 +3,8 @@ let Helper = require('./wechat/Helper');
 App({
     data: {
         openId: '',
-        unionId: ''
+        unionId: '',
+        userId: 0,
     },
 
     // 监听小程序初始化
@@ -25,7 +26,7 @@ App({
                     url: Helper.getData('config.host')+'account.php',
                     data: params
                 }, function(r){
-
+                    self.data.userId = r.data.user_id;
                 });
             });
         });

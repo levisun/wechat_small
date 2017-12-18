@@ -1,1 +1,7 @@
-Page({});
+Page({
+    data: {
+        ui: {
+            loadmore: 'loading'
+        }
+    }
+});

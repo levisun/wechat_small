@@ -1,5 +1,5 @@
 let App = getApp();
-let Helper = require('./../../../../util/Helper');
+let Helper = require('./../../../../wechat/Helper');
 Page({
     onLoad: function()
     {
@@ -8,10 +8,10 @@ Page({
     showPopup: function(result)
     {
         let r = Helper.input(result);
-        Helper.ui('Popup').show(r.type);
+        Helper.class('ui').showPopup(r.type);
     },
     clearPopup: function(result)
     {
-        Helper.ui('Popup').clear();
+        Helper.class('ui').clearPopup();
     }
 });

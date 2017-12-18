@@ -8,6 +8,25 @@ import User from './library/User';
 import Ui from './library/Ui';
 
 let Helper = {
+    // 获得变量
+    input: function(_result, _type = 'bind')
+    {
+        let val;
+
+        if (_type == 'input') {
+            val = _result.datail.value;
+        } else if (_type == 'rec') {
+            // 返回变量
+            val = _result.data;
+        } else {
+            // 点击页面变量
+            val = _result.currentTarget.dataset;
+        }
+
+        return val;
+    },
+
+
     class: function(_name)
     {
         let obj;
@@ -102,6 +121,6 @@ let Helper = {
 
     // 配置
     config: Config
-}
+};
 
 module.exports = Helper;

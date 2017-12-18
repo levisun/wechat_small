@@ -1,4 +1,4 @@
-<import src="/util/ui/template/toast.wxml" />
+<import src="/wechat/template/template.wxml" />
 <view class="ui-container">
     <view class="ui-row">
         <view class="ui-title">toast 轻提示</view>

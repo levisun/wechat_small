@@ -1,5 +1,5 @@
 let App = getApp();
-let Helper = require('./../../../../Helper');
+let Helper = require('./../../../../wechat/Helper');
 Page({
     data: {
         ui: {
@@ -16,15 +16,10 @@ Page({
     },
     showModal: function()
     {
-        Helper.ui('Modal').show();
+        Helper.class('ui').showModal();
     },
     uiModalBtn: function(result)
     {
-        let r = Helper.input(result);
-        if (r.type == 'confirm') {
-
-        } else {
-            Helper.ui('Modal').clear();
-        }
+        Helper.class('ui').clearModal();
     }
 });

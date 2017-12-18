@@ -1,0 +1,21 @@
+<template name="ui-tab">
+<view class="ui-tab">
+    <block wx:if="{{tab.scroll}}">
+        <scroll-view class="ui-tab__bd ui-tab__bd--scroll {{uiTab.fixed ? 'ui-tab__bd--fixed' : ''}}" scroll-x="true" style="height: {{uiTab.tab.height ? tab.height + 'px' : 'auto'}}">
+            <template is="ui-tab-list" data="{{uiTab.tab, uiTab.componentId}}"></template>
+        </scroll-view>
+    </block>
+    <block wx:else>
+        <view class="ui-tab__bd {{fixed ? 'ui-tab__bd--fixed' : ''}}">
+            <template is="ui-tab-list" data="{{uiTab.tab, uiTab.componentId}}"></template>
+        </view>
+    </block>
+</view>
+</template>
+
+<template name="ui-tab-list">
+<view wx:for="{{uiTab.list}}" wx:key="id" wx:for-index="key" wx:for-item="item" class="ui-tab__item {{uiTab.selectedId == item.id ? 'ui-tab__item--selected' : ''}}" data-component-id="{{uiTab.componentId}}" data-item-id="{{item.id}}" bindtap="_handleUiTabChange"
+>
+    <view class="ui-tab__title">{{item.title}}</view>
+</view>
+</template>

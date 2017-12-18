@@ -144,9 +144,10 @@
 .ui-close {
   position: relative;
   display: inline-block;
-  width: 23px;
-  height: 23px;
+  width: 30px;
+  height: 30px;
   overflow: hidden;
+  /*padding: 0 15px;*/
 }
 .ui-close::before, .ui-close::after {
   content: '';

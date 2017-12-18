@@ -1,0 +1,56 @@
+.ui-tag {
+    display: inline-block;
+    box-sizing: border-box;
+    line-height: 16px;
+    padding: 0 5px;
+    border-radius: 2px;
+    font-size: 11px;
+    background: #c9c9c9;
+    border: 1rpx solid #e5e5e5;
+    text-align: center;
+    color: #fff
+}
+
+.ui-tag--plain {
+    color: #c9c9c9;
+    background: #fff
+}
+
+.ui-tag--primary {
+    color: #fff;
+    background-color: #4b0;
+    border: 1rpx solid #4b0
+}
+
+.ui-tag--primary.ui-tag--plain {
+    color: #4b0;
+    background: #fff
+}
+
+.ui-tag--danger {
+    color: #fff;
+    background: #f44;
+    border: 1rpx solid #f44
+}
+
+.ui-tag--danger.ui-tag--plain {
+    color: #f44;
+    background: #fff
+}
+
+.ui-tag--warn {
+    color: #fff;
+    background: #f85;
+    border: 1rpx solid #f85
+}
+
+.ui-tag--warn.ui-tag--plain {
+    color: #f85;
+    background: #fff
+}
+
+.ui-tag--disabled {
+    color: #cacaca!important;
+    background: #eee;
+    border: 1rpx solid #e5e5e5
+}

@@ -1,0 +1,69 @@
+<template name="ui-dialog">
+<view class="ui-dialog {{ui.dialog.show ? 'ui-dialog-show' : ''}}">
+    <view class="ui-dialog-mask" bindtap="clearDialog" />
+    <view class="ui-dialog-container">
+        <view class="ui-pull-right ui-close" style="margin: 10px" bindtap="clearDialog"></view>
+        {{ui.dialog.content}}
+    </view>
+</view>
+</template>
+
+<template name="ui-loadmore">
+    <block wx:if="{{ui.loadmore == 'nomore'}}">
+    <view class="ui-loadmore ui-loadmore-nomore">
+        <view class="ui-loadmore-tips">
+            <view class="ui-loadmore-dot"></view>
+        </view>
+    </view>
+    </block>
+
+    <block wx:elif="{{ui.loadmore == 'nodata'}}">
+    <view class="ui-loadmore ui-loadmore-nodata">
+        <view class="ui-loadmore-tips">{{ui.nodata_str ? ui.nodata_str : '暂无数据'}}</view>
+    </view>
+    </block>
+
+    <block wx:elif="{{ui.loadmore == 'loading'}}">
+    <view class="ui-loadmore">
+        <view class="ui-loading"></view>
+        <view class="ui-loadmore-tips">加载中...</view>
+    </view>
+    </block>
+</template>
+
+<template name="ui-modal">
+<block wx:if="{{ui.modal.show}}">
+<view class="ui-mask"></view>
+<view class="ui-modal">
+    <view class="ui-modal-header">
+        {{ui.modal.title}}
+    </view>
+    <view class="ui-modal-body">
+        {{ui.modal.content}}
+    </view>
+    <view class="ui-modal-footer">
+        <button class="ui-btn ui-btn-large ui-btn-cancel" data-type="cancel" bindtap="uiModalBtn">取消</button>
+        <button class="ui-btn ui-btn-large ui-btn-confirm" data-type="confirm" bindtap="uiModalBtn">确定</button>
+    </view>
+</view>
+</block>
+</template>
+
+<template name="ui-popup">
+<view class="ui-popup ui-popup-left {{ showPopup ? 'ui-popup-show' : ''}}">
+    <view style="padding: 15px;">
+        <button class="ui-btn" bindtap="togglePopup" data-type="left">
+            关闭 popup
+        </button>
+    </view>
+</view>
+</template>
+
+<template name="ui-toast">
+<block wx:if="{{ui.toast.show}}">
+<view class="ui-toast-portal">
+    <view class="ui-mask"></view>
+    <view class="ui-toast" bindtap="clearToast">{{ui.toast.title}}</view>
+</view>
+</block>
+</template>

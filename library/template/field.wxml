@@ -1,0 +1,10 @@
+<template name="ui-field">
+<view class="ui-cell ui-field {{error ? 'ui-field--error' : ''}} {{mode === 'wrapped' ? 'ui-field--wrapped' : ''}}">
+    <view wx:if="{{title}}" class="ui-cell__hd ui-field__title">
+        {{title}}
+    </view>
+    <textarea wx:if="{{type === 'textarea'}}" auto-height name="{{name || componentId || ''}}" value="{{value}}" placeholder="{{placeholder}}" class="ui-field__input ui-cell__bd {{right ? 'ui-field__input--right' : ''}}" placeholder-class="ui-field__placeholder" bindinput="_handleUiFieldChange" bindfocus="_handleUiFieldFocus" bindblur="_handleUiFieldBlur" data-component-id="{{componentId || ''}}"></textarea>
+
+    <input wx:else type="{{inputType || 'text'}}" name="{{name || componentId || ''}}" value="{{value}}" placeholder="{{placeholder}}" class="ui-field__input ui-cell__bd {{right ? 'ui-field__input--right' : ''}}" placeholder-class="ui-field__placeholder" bindinput="_handleUiFieldChange" bindfocus="_handleUiFieldFocus" bindblur="_handleUiFieldBlur" data-component-id="{{componentId || ''}}"/>
+</view>
+</template>

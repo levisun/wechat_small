@@ -13,21 +13,21 @@
 import Base from './Base';
 export default class extends Base
 {
-    config = {};
-
     constructor(_config)
     {
         super(_config);
-        this.config = _config;
     }
 
     /**
-     * Modal 弹出框
+     * Modal 弹出提示框
      */
-    showModal()
+    showModal(_title, _content)
     {
-        let that = getCurrentPages()[getCurrentPages().length - 1];
-        that.setData({'ui.modal.show': true});
+        this.thatPage.setData({
+            'ui.modal.show': true,
+            'ui.modal.title': _title,
+            'ui.modal.content': _content
+        });
     }
 
     btnModal(_result)
@@ -43,8 +43,7 @@ export default class extends Base
 
     clearModal()
     {
-        let that = getCurrentPages()[getCurrentPages().length - 1];
-        that.setData({'ui.modal.show': false});
+        this.thatPage.setData({'ui.modal.show': false});
     }
 
     /**
@@ -52,65 +51,66 @@ export default class extends Base
      */
     showPopup(_type)
     {
-        let that = getCurrentPages()[getCurrentPages().length - 1];
-
         if (_type == 'left') {
-            that.setData({'ui.popupLeft': true});
+            this.thatPage.setData({'ui.popupLeft': true});
         } else {
-            that.setData({'ui.popupRight': true});
+            this.thatPage.setData({'ui.popupRight': true});
         }
     }
 
     clearPopup()
     {
-        let that = getCurrentPages()[getCurrentPages().length - 1];
-
-        that.setData({
-            'ui.popupLeft': false,
-            'ui.popupRight': false
-        });
+        this.thatPage.setData({'ui.popupLeft': false, 'ui.popupRight': false});
     }
 
     /**
      * Toast 轻提示
      */
-    showToast(_title, _timeout = 1500)
+    showToast(_title, _timeout = 3)
     {
-        let that = getCurrentPages()[getCurrentPages().length - 1];
+        let self = this;
+        let toast = {show: true, title: _title, timeout: _timeout};
 
-        let toast = {
-            show: true,
-            title: _title,
-            timeout: _timeout
-        };
-
-        that.setData({'ui.toast': toast});
+        this.thatPage.setData({'ui.toast': toast});
 
         setTimeout(function (){
-            that.setData({
-                'ui.toast.show': false
-            });
-        }, _timeout);
+            self.thatPage.setData({'ui.toast.show': false});
+        }, _timeout * 1000);
     }
 
     clearToast()
     {
-        let that = getCurrentPages()[getCurrentPages().length - 1];
-
-        that.setData({'ui.toast.show': false});
+        this.thatPage.setData({'ui.toast.show': false});
     }
 
+    /**
+     * 弹出框
+     */
     showDialog(_content = '')
     {
-        let that = getCurrentPages()[getCurrentPages().length - 1];
-
-        that.setData({'ui.dialog.show': true, 'ui.dialog.content': _content});
+        this.thatPage.setData({'ui.dialog.show': true, 'ui.dialog.content': _content});
     }
 
     clearDialog()
     {
-        let that = getCurrentPages()[getCurrentPages().length - 1];
+        this.thatPage.setData({'ui.dialog.show': false});
+    }
 
-        that.setData({'ui.dialog.show': false});
+    /**
+     * 加载更多
+     */
+    showLoadmore(_type = 'loading')
+    {
+        this.thatPage.setData({'ui.loadmore': _type});
+    }
+
+    clearLoadmore()
+    {
+        this.thatPage.setData({'ui.loadmore': 'false'});
+    }
+
+    showLoading()
+    {
+
     }
 }

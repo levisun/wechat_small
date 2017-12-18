@@ -1,4 +1,4 @@
-<import src="/util/ui/template/loadmore.wxml" />
+<import src="/wechat/template/template.wxml" />
 
 <view class="ui-container">
     <view class="ui-row">
@@ -8,8 +8,8 @@
     </view>
 
     <view class="ui-row">
-        <template is="ui-loadmore" data="{{loadmore: 'loading'}}" />
-        <template is="ui-loadmore" data="{{loadmore: 'nodata'}}" />
-        <template is="ui-loadmore" data="{{loadmore: 'nomore'}}" />
+        <template is="ui-loadmore" data="{{ui}}" />
+        <!-- <template is="ui-loadmore" data="{{ui.loadmore: 'nodata'}}" /> -->
+        <!-- <template is="ui-loadmore" data="{{ui.loadmore: 'nomore'}}" /> -->
     </view>
 </view>

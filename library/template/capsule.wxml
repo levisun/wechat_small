@@ -1,0 +1,20 @@
+<template name="ui-capsule">
+<view class="ui-capsule ui-capsule--{{uiCapsule.type}}">
+    <block wx:if="{{uiCapsule.color}}">
+        <view class="ui-capsule__left" style="background: {{uiCapsule.color}}; border-color: {{uiCapsule.color}}">
+            {{uiCapsule.leftText}}
+        </view>
+        <view class="ui-capsule__right" style="color: {{uiCapsule.color}}; border-color: {{uiCapsule.color}}">
+            {{uiCapsule.rightText}}
+        </view>
+    </block>
+    <block wx:else>
+        <view class="ui-capsule__left">
+            {{uiCapsule.leftText}}
+        </view>
+        <view class="ui-capsule__right">
+            {{uiCapsule.rightText}}
+        </view>
+    </block>
+</view>
+</template>

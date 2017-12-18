@@ -14,6 +14,7 @@
 export default class
 {
     config = {};
+    thatPage;
 
     constructor(_config)
     {
@@ -23,6 +24,14 @@ export default class
         this.config.cache = !this.config.debug;
         // 缓存时效
         this.config.cacheExpire = 1440;
+        if (!this.config.cache) {
+            this.clearCache();
+        }
+
+        // 打开调试开关
+        wx.setEnableDebug({enableDebug: this.config.debug});
+
+        this.thatPage = getCurrentPages()[getCurrentPages().length - 1];
     }
 
     /**
@@ -106,7 +115,6 @@ export default class
             let expire = wx.getStorageSync('wechat_' + _key + '_expire');
             if (expire && expire >= timestamp) {
                 return wx.getStorageSync('wechat_' + _key);
-
             } else {
                 return false;
             }

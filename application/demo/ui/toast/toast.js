@@ -1,5 +1,4 @@
-let app = getApp();
-let Helper = require('./../../../../util/Helper');
+let Helper = require('./../../../../wechat/Helper');
 Page({
     onLoad: function()
     {
@@ -7,6 +6,6 @@ Page({
     },
     showToast: function()
     {
-        Helper.ui('Toast').show('toast');
+        Helper.class('ui').showToast('toast');
     }
 });

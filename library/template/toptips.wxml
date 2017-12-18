@@ -1,0 +1,5 @@
+<template name="ui-toptips">
+    <view class="ui-toptips {{uiToptips.show ? 'ui-toptips--show' : ''}}">
+        {{uiToptips.content}}
+    </view>
+</template>
