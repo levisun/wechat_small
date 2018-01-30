@@ -20,6 +20,10 @@ let Config = {
     // 小程序信息
     appid: 'wxe2ce060d72f9cc70',
     appsecret: '551e54e36c0410b9f231effe9c03b6fe',
+
+    requestApi: {
+        openid: `https://${host}/openid.php`,
+    },
 };
 
 module.exports = Config;

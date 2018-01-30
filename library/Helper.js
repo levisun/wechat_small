@@ -1,53 +1,28 @@
 let Config = require('./Config');
 
-import Interact from './library/Interact';
-import Redirect from './library/Redirect';
-import Request from './library/Request';
-import User from './library/User';
+import Base from './js/Base';
 
-import Ui from './library/Ui';
+/**
+切换
+_toggle
+
+操作
+_handle
+
+监听
+_monitor
+ */
 
 let Helper = {
+    // 配置
+    config: Config,
 
-    input: function(_result, _type = 'bind')
+    /**
+     * 设置配置数据
+     */
+    setConfig: function(_config)
     {
-        let val;
-
-        if (_type == 'bind') {
-            val = _result.currentTarget.dataset;
-        } else if (_type == 'rec') {
-            val = _result.data;
-        }
-        return val;
-    },
-
-    class: function(_name)
-    {
-        let obj;
-
-        switch (_name) {
-            case 'interact':
-                obj = new Interact(this.config);
-                break;
-
-            case 'redirect':
-                obj = new Redirect(this.config);
-                break;
-
-            case 'request':
-                obj = new Request(this.config);
-                break;
-
-            case 'user':
-                obj = new User(this.config);
-                break;
-
-            case 'ui':
-                obj = new Ui(this.config);
-                break;
-        }
-
-        return obj;
+        this.config = _config;
     },
 
     getData: function(_name, _result = {})
@@ -86,35 +61,11 @@ let Helper = {
         }
     },
 
-    /**
-     * 不建议使用
-     * 微信小程序Page()方法
-     */
-    setData: function(_params)
+    class: function ()
     {
-        let that = getCurrentPages()[getCurrentPages().length - 1];
-        that.setData(_params);
+        let object = new Base(this.config);
+        return object;
     },
-
-    /**
-     * 调试
-     */
-    bug: function(_data, _module = 'self')
-    {
-        console.group('Debug');
-        console.warn(_module);
-        if (typeof _data == 'object') {
-            for (var key in _data) {
-                console.log(key+': ', _data[key]);
-            }
-        } else {
-            console.log(_data);
-        }
-        console.groupEnd();
-    },
-
-    // 配置
-    config: Config
 };
 
 module.exports = Helper;

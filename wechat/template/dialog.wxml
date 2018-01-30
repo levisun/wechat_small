@@ -1,9 +1,0 @@
-<template name="ui-dialog">
-<view class="ui-dialog {{ui.dialog.show ? 'ui-dialog-show' : ''}}">
-    <view class="ui-dialog-mask" bindtap="clearDialog" />
-    <view class="ui-dialog-container">
-        <view class="ui-pull-right ui-close" style="margin: 10px" bindtap="clearDialog"></view>
-        {{ui.dialog.content}}
-    </view>
-</view>
-</template>

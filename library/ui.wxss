@@ -8,7 +8,7 @@
 @import "/library/wxss/dialog.wxss";
 @import "/library/wxss/field.wxss";
 @import "/library/wxss/label.wxss";
-@import "/library/wxss/loayout.wxss";
+@import "/library/wxss/layout.wxss";
 @import "/library/wxss/loadmore.wxss";
 @import "/library/wxss/noticebar.wxss";
 @import "/library/wxss/panel.wxss";

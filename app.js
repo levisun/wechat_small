@@ -1,34 +1,17 @@
-let Helper = require('./wechat/Helper');
+let Helper = require('./NiWxSmall/Helper');
 
 App({
-    data: {
-        openId: '',
-        unionId: '',
-        userId: 0,
-    },
+    data: {},
 
     // 监听小程序初始化
     onLaunch: function (options) {
-        let self = this;
-
-        Helper.class('user').getOUS(function(ous){
-            self.data.openId = ous.openid;
-            self.data.unionId = ous.unionid;
-
-            Helper.class('user').getUserInfo(function(user_info){
-                let params = user_info;
-                params.openid = ous.openid;
-                params.unionid = ous.unionid;
-                params.appid = Helper.getData('config.appid');
-                params.method = 'hasUserAdded';
-
-                Helper.class('request').post({
-                    url: Helper.getData('config.host')+'account.php',
-                    data: params
-                }, function(r){
-                    self.data.userId = r.data.user_id;
-                });
-            });
+        // 获取红包和数
+        Helper.class().ajax({
+            url: Helper.getData('config.host')+'account.php',
+            data: {method: 'getUserIntegral'},
+            method: "POST",
+        }, function(result){
+            Helper.class().bug(result);
         });
     },
 

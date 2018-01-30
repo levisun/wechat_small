@@ -1,17 +1,12 @@
 {
     "pages": [
-        "application/demo/index/index",
-
-        "application/demo/ui/btn/btn",
-        "application/demo/ui/cell/cell",
-        "application/demo/ui/col/col",
-        "application/demo/ui/dialog/dialog",
-        "application/demo/ui/input/input",
-        "application/demo/ui/loadmore/loadmore",
-        "application/demo/ui/modal/modal",
-        "application/demo/ui/panel/panel",
-        "application/demo/ui/popup/popup",
-        "application/demo/ui/toast/toast"
+        "application/demo/dialog/index",
+        "application/demo/col/index",
+        "application/demo/cell/index",
+        "application/demo/card/index",
+        "application/demo/capsule/index",
+        "application/demo/btn/index",
+        "application/demo/badge/index"
     ],
 
     "window": {

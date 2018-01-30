@@ -1,0 +1,11 @@
+.ui-row view {
+  line-height: 30px;
+  text-align: center;
+  background-color: #39a9ed;
+  font-size: 12px;
+  color: #fff;
+}
+
+.ui-row view:nth-child(even) {
+  background-color: #66c6f2;
+}

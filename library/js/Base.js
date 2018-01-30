@@ -1,84 +1,160 @@
-/**
- *
- * 基础类
- * 缓存、调试和错误输出
- *
- * @package   wechat
- * @category  library
- * @author    失眠小枕头 [levisun.mail@gmail.com]
- * @copyright Copyright (c) 2013, 失眠小枕头, All rights reserved.
- * @version   CVS: $Id: Base.js v1.0.1 $
- * @link      www.NiPHP.com
- * @since     2017/11
- */
-export default class
-{
-    config = {};
-    thatPage;
 
+const Md5 = require('./Md5');
+
+export default class {
+    config = {
+        cacheOpen: false,
+
+        requestApi: {
+            openid: '',
+        },
+    }
+
+    /**
+     * 构造方法
+     */
     constructor(_config)
     {
         this.config = _config;
-
-        // 调试模式不开启缓存
-        this.config.cache = !this.config.debug;
-        // 缓存时效
-        this.config.cacheExpire = 1440;
-
-        // 打开调试开关
-        // wx.setEnableDebug({enableDebug: this.config.debug});
-
-        this.thatPage = getCurrentPages()[getCurrentPages().length - 1];
     }
 
     /**
-     * 设置置顶栏文字内容
-     * @param string _text
+     * Ajax请求
+     * @param array _params
+     * @param func  _callback
      */
-    setTopBar(_text)
+    ajax(_params, _callback)
     {
         let self = this;
 
-        self.logInfo('Base->setTopBar', _params);
+        // 检查请求URL
+        if (typeof(_params.url) == 'undefined') {
+            self.error('Request->ajax::wx.request url undefined', _params);
+            return ;
+        }
 
-        wx.setTopBarText({
-            text: _text,
-            success: function(result)
-            {
-                // code...
-            },
-            fail: function(result) {
-                self.logError('Base->setTopBar::wx.setTopBarText', result);
-            },
-            complete: function(result) {
-                // code...
+        // 输出调试信息
+        self.log('ajax:'+_params.url, _params.data);
+
+        // 加载提示
+        if (typeof(_params.tips) == 'undefined') {
+            _params.tips = '正在拼命加载中...';
+        }
+        wx.showLoading({title: _params.tips, mask: true});
+
+        // 检查是否开启缓存
+        if (typeof(_params.cache) == 'undefined') {
+            _params.cache = false;
+        }
+        // 缓存开启，检查缓存是否存在
+        if (_params.cache) {
+            let cache_data = self.getCache(_params.cache);
+            if (cache_data) {
+                // 隐藏加载提示框
+                setTimeout(function(){wx.hideLoading();}, 700);
+
+                // 输出调试信息
+                self.log(cache_data);
+
+                _callback(cache_data);
+                return ;
             }
+        }
+
+        // 检查请求类型
+        if (typeof(_params.method) == 'undefined') {
+            _params.method = 'GET';
+        }
+
+        // 请求头信息
+        if (_params.method == 'GET') {
+            _params.header = {'Content-Type': 'application/json'};
+        } else {
+            _params.header = {'Content-Type': 'application/x-www-form-urlencoded'};
+        }
+
+        // SESSION设置
+        let session_id = wx.getStorageSync('wechat_PHPSESSID');
+        session_id = session_id ? session_id : true;
+        if (session_id !== false) {
+            _params.header.Cookie = 'PHPSESSID=' + session_id;
+        }
+
+        // 获得openid、unionid、session_key信息
+        self.getOpenId(function(ous){
+            // 请求数据追加openid等信息
+            _params.data.openid      = ous.openid;
+            _params.data.unionid     = ous.unionid;
+            _params.data.session_key = ous.session_key;
+            _params.data.open_id     = ous.openid;
+
+            wx.request({
+                url:      _params.url,
+                data:     _params.data,
+                header:   _params.header,
+                method:   _params.method,
+                dataType: 'json',
+                success: function(result)
+                {
+                    // 缓存数据
+                    if (_params.cache) {
+                        self.setCache(_params.cache, result);
+                    }
+                    // 当有返回session_id时保存数据
+                    if (session_id === false && typeof(result.data.session_id) != 'undefined') {
+                        wx.setStorageSync('wechat_PHPSESSID', result.data.session_id);
+                    }
+
+                    // 隐藏加载提示框
+                    setTimeout(function(){wx.hideLoading();}, 700);
+
+                    // 输出调试信息
+                    self.log(result);
+
+                    _callback(result);
+                },
+                fail: function(result)
+                {
+                    self.error('Request->ajax::wx.request', result);
+                },
+                complete: function (result) {
+                    // code
+                }
+            });
         });
     }
 
     /**
-     * 设置当前页面的标题
-     * @param string _title
+     * 获取openID unionId session_key
+     * @params func _callback
      */
-    setBarTitle(_title)
+    getOpenId(_callback)
     {
         let self = this;
 
-        self.logInfo('Base->setBarTitle', _params);
-
-        wx.setNavigationBarTitle({
-            title: _title,
-            success: function(result)
-            {
-                // code...
-            },
-            fail: function(result) {
-                self.logError('Base->setTopBar::wx.setTopBarText', result);
-            },
-            complete: function(result) {
-                // code...
-            }
-        });
+        let ous = self.getCache('ous');
+        if (!ous) {
+            wx.login({
+                success: function(login){
+                    wx.request({
+                        url:      self.config.requestApi.openid,
+                        data:     {code: login.code},
+                        header:   {'Content-Type': 'application/x-www-form-urlencoded'},
+                        method:   'POST',
+                        dataType: 'json',
+                        success: function(openid){
+                            if (typeof(openid.errcode) == 'undefined') {
+                                // 缓存OUS
+                                self.setCache('ous', openid.data);
+                            }
+                            _callback(openid.data);
+                        }
+                    });
+                }
+            });
+        } else {
+            _callback(ous);
+        }
     }
 
     /**
@@ -88,14 +164,15 @@ export default class
      */
     setCache(_key, _data)
     {
-        if (this.config.cache) {
+        if (this.config.cacheOpen) {
             try {
                 let timestamp = Date.parse(new Date());
-                let expire = timestamp + (this.config.cacheExpire * 1000);
-                wx.setStorageSync('wechat_' + _key + '_expire', expire);
-                wx.setStorageSync('wechat_' + _key, _data);
+                let expire = timestamp + (this.config.expire * 1000);
+                _key = Md5(_key);
+                wx.setStorageSync(_key + '_expire', expire);
+                wx.setStorageSync(_key, _data);
             } catch (e) {
-                this.log.error('Base->setCache::wx.setStorageSync', e);
+                this.log.error('Cache->setCache::wx.setStorageSync', e);
             }
         }
     }
@@ -107,11 +184,12 @@ export default class
      */
     getCache(_key)
     {
-        if (this.config.cache) {
+        if (this.config.cacheOpen) {
             let timestamp = Date.parse(new Date());
-            let expire = wx.getStorageSync('wechat_' + _key + '_expire');
+            _key = Md5(_key);
+            let expire = wx.getStorageSync(_key + '_expire');
             if (expire && expire >= timestamp) {
-                return wx.getStorageSync('wechat_' + _key);
+                return wx.getStorageSync(_key);
             } else {
                 return false;
             }
@@ -126,8 +204,8 @@ export default class
      */
     removeCache(_key)
     {
-        wx.removeStorageSync('wechat_' + _key + '_expire');
-        wx.removeStorageSync('wechat_' + _key);
+        wx.removeStorageSync(_key + '_expire');
+        wx.removeStorageSync(_key);
     }
 
     /**
@@ -138,7 +216,7 @@ export default class
         try {
             wx.clearStorageSync();
         } catch(e) {
-            this.log.error('Base->clearCache::wx.clearStorageSync', e);
+            this.log.error('Cache->clearCache::wx.clearStorageSync', e);
         }
     }
 
@@ -146,7 +224,7 @@ export default class
      * 调试
      * @param mixed _data 调试输出数据
      */
-    bug(_data, _module = 'self')
+    bug(_data, _module = '自定义调试信息')
     {
         console.group('Debug');
         console.warn(_module);
@@ -164,7 +242,7 @@ export default class
      * 信息
      * @param mixed _data 输出数据
      */
-    logInfo(_module, _data)
+    log(_data, _module = '自定义输出信息')
     {
         if (this.config.debug) {
             console.group('Info');
@@ -185,7 +263,7 @@ export default class
      * @param string _msg  日志信息
      * @param mixed  _data 日志输出数据
      */
-    logError(_msg, _data)
+    error(_msg, _data)
     {
         if (this.config.debug) {
             console.group('Error');
