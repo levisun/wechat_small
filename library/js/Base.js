@@ -1,7 +1,8 @@
 
 const Md5 = require('./Md5');
 
-export default class {
+export default class
+{
     config = {
         cacheOpen: false,
 
@@ -19,6 +20,136 @@ export default class {
     }
 
     /**
+     * 获得变量值
+     */
+    get(_params)
+    {
+        let self = this;
+
+        let string = _params.toString();
+        let array = string.split('.');
+        let type = name = '';
+        if (array.length == 2) {
+            type = array[0];
+            name = array[1];
+        } else if (array.length == 1) {
+            type = 'page';
+            name = array[0];
+        } else {
+            self.error('Base->get params error 格式：[类型.]名称');
+            return ;
+        }
+
+        // App
+        if (type == 'app') {
+            let App = getApp();
+            return App['data'][name];
+        }
+
+        // 配置
+        else if (type == 'config') {
+            return this.config[name];
+        }
+
+        // ...
+        else if (type == 'page') {
+            let that = getCurrentPages()[getCurrentPages().length - 1];
+            return that['data'][name];
+        }
+    }
+
+    /**
+     * 重定向
+     * @param array _params
+     * @param func  _callback
+     */
+    redirect(_params)
+    {
+        let self = this;
+
+        // 检查请求URL
+        if (typeof(_params.url) == 'undefined') {
+            self.error('Base->redirect url undefined', _params);
+            return ;
+        }
+
+        // 未设置跳转方法，默认为跳转非tabBar页面
+        if (typeof(_params.method) == 'undefined') {
+            _params.method = 'redirect';
+        }
+
+        if (_params.method == 'redirect') {
+            // 未设置跳转类型，默认为redirectTo
+            if (typeof(_params.type) == 'undefined') {
+                _params.type = 'redirectTo';
+            }
+
+            if (_params.type == 'redirectTo') {
+                // 关闭当前页面
+                 wx.redirectTo({
+                    url: _params.url,
+                    fail: function (result)
+                    {
+                        self.error('Base->redirect::wx.redirectTo', result);
+                    }
+                });
+            } else {
+                // 关闭所有页面
+                wx.reLaunch({
+                    url: _params.url,
+                    fail: function (result)
+                    {
+                        self.error('Base->redirect::wx.reLaunch', result);
+                    }
+                });
+            }
+        }
+
+        // 跳转tabBar的页面
+        else if (_params.method == 'tap') {
+            wx.switchTab({
+                url: _params.url,
+                fail: function (result)
+                {
+                    // 输出调试信息
+                    self.log(result);
+                }
+            });
+        }
+
+        else if (_params.method == 'navigate') {
+            // 未设置跳转类型，默认为to
+            if (typeof(_params.type) == 'undefined') {
+                _params.type = 'to';
+            }
+
+            if (_params.type == 'to') {
+                // 跳转非tabBar的页面
+                wx.navigateTo({
+                    url: _params.url,
+                    fail: function (result)
+                    {
+                        self.error('Base->redirect::wx.navigateTo', result);
+                    }
+                });
+            } else {
+                // 未设置返回页面数，默认为1
+                if (typeof(_params.delta) == 'undefined') {
+                    _params.delta = 1;
+                }
+                // 返回
+                wx.navigateBack({
+                    delta: _params.delta,
+                    fail: function (result)
+                    {
+                        self.error('Base->redirect::wx.navigateBack', result);
+                    }
+                });
+            }
+        }
+    }
+
+    /**
      * Ajax请求
      * @param array _params
      * @param func  _callback
@@ -29,7 +160,7 @@ export default class {
 
         // 检查请求URL
         if (typeof(_params.url) == 'undefined') {
-            self.error('Request->ajax::wx.request url undefined', _params);
+            self.error('Base->ajax::wx.request url undefined', _params);
             return ;
         }
 
@@ -73,20 +204,24 @@ export default class {
             _params.header = {'Content-Type': 'application/x-www-form-urlencoded'};
         }
 
-        // SESSION设置
-        let session_id = wx.getStorageSync('wechat_PHPSESSID');
-        session_id = session_id ? session_id : true;
-        if (session_id !== false) {
-            _params.header.Cookie = 'PHPSESSID=' + session_id;
-        }
-
         // 获得openid、unionid、session_key信息
         self.getOpenId(function(ous){
             // 请求数据追加openid等信息
             _params.data.openid      = ous.openid;
             _params.data.unionid     = ous.unionid;
             _params.data.session_key = ous.session_key;
-            _params.data.open_id     = ous.openid;
+
+            // SESSION设置
+            if (typeof(ous.sessionid) != 'undefined') {
+                _params.data.sessionid = ous.sessionid;
+                _params.header.Cookie = 'PHPSESSID=' + ous.sessionid;
+            }
+
+            if (typeof(_params.data.formid) != 'undefined') {
+                _params.data.formid = 'undefined';
+            }
+
+            _params.data.open_id = ous.openid;
 
             wx.request({
                 url:      _params.url,
@@ -94,15 +229,11 @@ export default class {
                 header:   _params.header,
                 method:   _params.method,
                 dataType: 'json',
-                success: function(result)
+                success: function (result)
                 {
                     // 缓存数据
                     if (_params.cache) {
                         self.setCache(_params.cache, result);
-                    }
-                    // 当有返回session_id时保存数据
-                    if (session_id === false && typeof(result.data.session_id) != 'undefined') {
-                        wx.setStorageSync('wechat_PHPSESSID', result.data.session_id);
                     }
 
                     // 隐藏加载提示框
@@ -113,12 +244,9 @@ export default class {
 
                     _callback(result);
                 },
-                fail: function(result)
+                fail: function (result)
                 {
-                    self.error('Request->ajax::wx.request', result);
-                },
-                complete: function (result) {
-                    // code
+                    self.error('Base->ajax::wx.request', result);
                 }
             });
         });
@@ -135,14 +263,16 @@ export default class {
         let ous = self.getCache('ous');
         if (!ous) {
             wx.login({
-                success: function(login){
+                success: function (login)
+                {
                     wx.request({
-                        url:      self.config.requestApi.openid,
+                        url:      self.config.openid,
                         data:     {code: login.code},
                         header:   {'Content-Type': 'application/x-www-form-urlencoded'},
                         method:   'POST',
                         dataType: 'json',
-                        success: function(openid){
+                        success: function (openid)
+                        {
                             if (typeof(openid.errcode) == 'undefined') {
                                 // 缓存OUS
                                 self.setCache('ous', openid.data);
@@ -172,7 +302,7 @@ export default class {
                 wx.setStorageSync(_key + '_expire', expire);
                 wx.setStorageSync(_key, _data);
             } catch (e) {
-                this.log.error('Cache->setCache::wx.setStorageSync', e);
+                this.log.error('Base->setCache::wx.setStorageSync', e);
             }
         }
     }
@@ -216,7 +346,7 @@ export default class {
         try {
             wx.clearStorageSync();
         } catch(e) {
-            this.log.error('Cache->clearCache::wx.clearStorageSync', e);
+            this.log.error('Base->clearCache::wx.clearStorageSync', e);
         }
     }
 
@@ -229,8 +359,8 @@ export default class {
         console.group('Debug');
         console.warn(_module);
         if (typeof _data == 'object') {
-            for (var key in _data) {
-                console.log(key+': ', _data[key]);
+            for (var index in _data) {
+                console.log(index+': ', _data[index]);
             }
         } else {
             console.log(_data);
@@ -248,8 +378,8 @@ export default class {
             console.group('Info');
             console.info(_module);
             if (typeof _data == 'object') {
-                for (var key in _data) {
-                    console.log(key+': ', _data[key]);
+                for (var index in _data) {
+                    console.log(index+': ', _data[index]);
                 }
             } else {
                 console.log(_data);
@@ -268,8 +398,8 @@ export default class {
         if (this.config.debug) {
             console.group('Error');
             console.error(_msg);
-            for (var key in _data) {
-                console.log(key+': ', _data[key]);
+            for (var index in _data) {
+                console.log(index+': ', _data[index]);
             }
             console.groupEnd();
         }
