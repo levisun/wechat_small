@@ -1,4 +1,4 @@
-// let Helper = require('./../../../library/Helper');
+let Helper = require('./../../../library/Helper');
 Page({
 
     _toggleBaseDialog: function()

@@ -1,4 +1,4 @@
-let Helper = require('./NiWxSmall/Helper');
+let Helper = require('./library/Helper');
 
 App({
     data: {},
@@ -6,12 +6,12 @@ App({
     // 监听小程序初始化
     onLaunch: function (options) {
         // 获取红包和数
-        Helper.class().ajax({
-            url: Helper.getData('config.host')+'account.php',
+        Helper.ajax({
+            url: Helper.get('config.host')+'wxxcx/account.php',
             data: {method: 'getUserIntegral'},
             method: "POST",
         }, function(result){
-            Helper.class().bug(result);
+            Helper.bug(result);
         });
     },
 

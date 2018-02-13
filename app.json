@@ -1,5 +1,6 @@
 {
     "pages": [
+        "application/demo/index/index",
         "application/demo/dialog/index",
         "application/demo/col/index",
         "application/demo/cell/index",

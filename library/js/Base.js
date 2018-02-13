@@ -24,11 +24,11 @@ export default class
      */
     get(_params)
     {
-        let self = this;
-
+        let self   = this;
         let string = _params.toString();
-        let array = string.split('.');
-        let type = name = '';
+        let array  = string.split('.');
+        let type   = name = '';
+
         if (array.length == 2) {
             type = array[0];
             name = array[1];
@@ -169,7 +169,7 @@ export default class
 
         // 加载提示
         if (typeof(_params.tips) == 'undefined') {
-            _params.tips = '正在拼命加载中...';
+            _params.tips = '加载中...';
         }
         wx.showLoading({title: _params.tips, mask: true});
 
@@ -217,7 +217,7 @@ export default class
                 _params.header.Cookie = 'PHPSESSID=' + ous.sessionid;
             }
 
-            if (typeof(_params.data.formid) != 'undefined') {
+            if (typeof(_params.data.formid) == 'undefined') {
                 _params.data.formid = 'undefined';
             }
 
@@ -236,13 +236,13 @@ export default class
                         self.setCache(_params.cache, result);
                     }
 
-                    // 隐藏加载提示框
-                    setTimeout(function(){wx.hideLoading();}, 700);
+                    _callback(result);
 
                     // 输出调试信息
                     self.log(result);
 
-                    _callback(result);
+                    // 隐藏加载提示框
+                    setTimeout(function(){wx.hideLoading();}, 700);
                 },
                 fail: function (result)
                 {
@@ -259,8 +259,8 @@ export default class
     getOpenId(_callback)
     {
         let self = this;
+        let ous  = self.getCache('ous');
 
-        let ous = self.getCache('ous');
         if (!ous) {
             wx.login({
                 success: function (login)
@@ -297,8 +297,9 @@ export default class
         if (this.config.cacheOpen) {
             try {
                 let timestamp = Date.parse(new Date());
-                let expire = timestamp + (this.config.expire * 1000);
-                _key = Md5(_key);
+                let expire    = timestamp + (this.config.expire * 1000);
+                _key          = Md5(_key);
+
                 wx.setStorageSync(_key + '_expire', expire);
                 wx.setStorageSync(_key, _data);
             } catch (e) {
@@ -316,7 +317,8 @@ export default class
     {
         if (this.config.cacheOpen) {
             let timestamp = Date.parse(new Date());
-            _key = Md5(_key);
+            _key          = Md5(_key);
+
             let expire = wx.getStorageSync(_key + '_expire');
             if (expire && expire >= timestamp) {
                 return wx.getStorageSync(_key);
