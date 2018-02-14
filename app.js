@@ -10,8 +10,9 @@ App({
             url: Helper.get('config.host')+'wxxcx/account.php',
             data: {method: 'getUserIntegral'},
             method: "POST",
+            cache: 'app.onLaunch',
         }, function(result){
-            Helper.bug(result);
+
         });
     },
 

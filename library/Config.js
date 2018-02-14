@@ -3,6 +3,10 @@ let host = 'https://www.youtuiyou.cn/';
 let Config = {
     // 调试
     debug: true,
+    cache: {
+        open: true,
+        expire: 1140,
+    },
 
 
     // 小程序信息

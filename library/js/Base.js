@@ -4,11 +4,15 @@ const Md5 = require('./Md5');
 export default class
 {
     config = {
-        cacheOpen: false,
-
-        requestApi: {
-            openid: '',
+        debug: true,
+        cache: {
+            open: true,
+            expire: 1140,
         },
+
+        // 小程序信息
+        appid: '',
+        appsecret: '',
     }
 
     /**
@@ -164,9 +168,6 @@ export default class
             return ;
         }
 
-        // 输出调试信息
-        self.log('ajax:'+_params.url, _params.data);
-
         // 加载提示
         if (typeof(_params.tips) == 'undefined') {
             _params.tips = '加载中...';
@@ -179,15 +180,16 @@ export default class
         }
         // 缓存开启，检查缓存是否存在
         if (_params.cache) {
-            let cache_data = self.getCache(_params.cache);
+            let cache_data = self.getCache(_params.url+_params.cache);
             if (cache_data) {
-                // 隐藏加载提示框
-                setTimeout(function(){wx.hideLoading();}, 700);
+                _callback(cache_data);
 
                 // 输出调试信息
-                self.log(cache_data);
+                self.log(_params, 'Base->ajax请求参数[缓存]');
+                self.log(cache_data, 'Base->ajax请求返回信息[缓存]');
 
-                _callback(cache_data);
+                // 隐藏加载提示框
+                setTimeout(function(){wx.hideLoading();}, 700);
                 return ;
             }
         }
@@ -214,7 +216,7 @@ export default class
             // SESSION设置
             if (typeof(ous.sessionid) != 'undefined') {
                 _params.data.sessionid = ous.sessionid;
-                _params.header.Cookie = 'PHPSESSID=' + ous.sessionid;
+                _params.header.Cookie  = 'PHPSESSID=' + ous.sessionid;
             }
 
             if (typeof(_params.data.formid) == 'undefined') {
@@ -233,13 +235,14 @@ export default class
                 {
                     // 缓存数据
                     if (_params.cache) {
-                        self.setCache(_params.cache, result);
+                        self.setCache(_params.url+_params.cache, result);
                     }
 
                     _callback(result);
 
                     // 输出调试信息
-                    self.log(result);
+                    self.log(_params, 'Base->ajax请求参数');
+                    self.log(result, 'Base->ajax请求返回信息');
 
                     // 隐藏加载提示框
                     setTimeout(function(){wx.hideLoading();}, 700);
@@ -262,6 +265,7 @@ export default class
         let ous  = self.getCache('ous');
 
         if (!ous) {
+            self.log('Base->getOpenId', '获得用户信息');
             wx.login({
                 success: function (login)
                 {
@@ -271,18 +275,19 @@ export default class
                         header:   {'Content-Type': 'application/x-www-form-urlencoded'},
                         method:   'POST',
                         dataType: 'json',
-                        success: function (openid)
+                        success: function (result)
                         {
-                            if (typeof(openid.errcode) == 'undefined') {
+                            if (typeof(result.errcode) == 'undefined') {
                                 // 缓存OUS
-                                self.setCache('ous', openid.data);
+                                self.setCache('ous', result.data);
                             }
-                            _callback(openid.data);
+                            _callback(result.data);
                         }
                     });
                 }
             });
         } else {
+            self.log('Base->getOpenId', '获得用户信息[缓存]');
             _callback(ous);
         }
     }
@@ -294,12 +299,11 @@ export default class
      */
     setCache(_key, _data)
     {
-        if (this.config.cacheOpen) {
+        if (this.config.cache.open) {
             try {
                 let timestamp = Date.parse(new Date());
-                let expire    = timestamp + (this.config.expire * 1000);
+                let expire    = timestamp + (this.config.cache.expire * 1000);
                 _key          = Md5(_key);
-
                 wx.setStorageSync(_key + '_expire', expire);
                 wx.setStorageSync(_key, _data);
             } catch (e) {
@@ -315,7 +319,7 @@ export default class
      */
     getCache(_key)
     {
-        if (this.config.cacheOpen) {
+        if (this.config.cache.open) {
             let timestamp = Date.parse(new Date());
             _key          = Md5(_key);
 
@@ -374,7 +378,7 @@ export default class
      * 信息
      * @param mixed _data 输出数据
      */
-    log(_data, _module = '自定义输出信息')
+    log(_data, _module = '请求返回信息')
     {
         if (this.config.debug) {
             console.group('Info');
