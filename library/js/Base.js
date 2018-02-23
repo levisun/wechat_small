@@ -1,4 +1,15 @@
-
+/**
+ *
+ * 微信小程序基础操作类
+ *
+ * @package   NiPHPCMS
+ * @category  wecaht\library
+ * @author    失眠小枕头 [levisun.mail@gmail.com]
+ * @copyright Copyright (c) 2013, 失眠小枕头, All rights reserved.
+ * @version   CVS: $Id: Base.js v1.0.1 $
+ * @link      www.NiPHP.com
+ * @since     2017/12
+ */
 const Md5 = require('./Md5');
 
 export default class
@@ -21,6 +32,11 @@ export default class
     constructor(_config)
     {
         this.config = _config;
+
+        // 关闭缓存时清空缓存
+        if (this.config.cache.open === false) {
+            this.clearCache();
+        }
     }
 
     /**
@@ -164,7 +180,7 @@ export default class
 
         // 检查请求URL
         if (typeof(_params.url) == 'undefined') {
-            self.error('Base->ajax::wx.request url undefined', _params);
+            this.error('Base->ajax::wx.request url undefined', _params);
             return ;
         }
 
@@ -177,21 +193,6 @@ export default class
         // 检查是否开启缓存
         if (typeof(_params.cache) == 'undefined') {
             _params.cache = false;
-        }
-        // 缓存开启，检查缓存是否存在
-        if (_params.cache) {
-            let cache_data = self.getCache(_params.url+_params.cache);
-            if (cache_data) {
-                _callback(cache_data);
-
-                // 输出调试信息
-                self.log(_params, 'Base->ajax请求参数[缓存]');
-                self.log(cache_data, 'Base->ajax请求返回信息[缓存]');
-
-                // 隐藏加载提示框
-                setTimeout(function(){wx.hideLoading();}, 700);
-                return ;
-            }
         }
 
         // 检查请求类型
@@ -207,9 +208,11 @@ export default class
         }
 
         // 获得openid、unionid、session_key信息
-        self.getOpenId(function(ous){
+        this.getOpenId(function(ous){
+
             // 请求数据追加openid等信息
             _params.data.openid      = ous.openid;
+            _params.data.open_id     = ous.openid;
             _params.data.unionid     = ous.unionid;
             _params.data.session_key = ous.session_key;
 
@@ -223,7 +226,21 @@ export default class
                 _params.data.formid = 'undefined';
             }
 
-            _params.data.open_id = ous.openid;
+            // 缓存开启，检查缓存是否存在
+            if (_params.cache) {
+                let cache_data = self.getCache(_params.url+_params.cache);
+                if (cache_data) {
+                    _callback(cache_data);
+
+                    // 输出调试信息
+                    self.log(_params, 'Base->ajax请求参数[缓存]');
+                    self.log(cache_data, 'Base->ajax请求返回信息[缓存]');
+
+                    // 隐藏加载提示框
+                    setTimeout(function(){wx.hideLoading();}, 700);
+                    return ;
+                }
+            }
 
             wx.request({
                 url:      _params.url,
@@ -262,10 +279,9 @@ export default class
     getOpenId(_callback)
     {
         let self = this;
-        let ous  = self.getCache('ous');
+        let ous  = this.getCache('ous');
 
         if (!ous) {
-            self.log('Base->getOpenId', '获得用户信息');
             wx.login({
                 success: function (login)
                 {
@@ -281,13 +297,15 @@ export default class
                                 // 缓存OUS
                                 self.setCache('ous', result.data);
                             }
+
+                            self.log(result.data, '获得用户信息');
                             _callback(result.data);
                         }
                     });
                 }
             });
         } else {
-            self.log('Base->getOpenId', '获得用户信息[缓存]');
+            this.log(ous, '获得用户信息[缓存]');
             _callback(ous);
         }
     }
@@ -307,7 +325,7 @@ export default class
                 wx.setStorageSync(_key + '_expire', expire);
                 wx.setStorageSync(_key, _data);
             } catch (e) {
-                this.log.error('Base->setCache::wx.setStorageSync', e);
+                this.error('Base->setCache::wx.setStorageSync', e);
             }
         }
     }
@@ -352,7 +370,7 @@ export default class
         try {
             wx.clearStorageSync();
         } catch(e) {
-            this.log.error('Base->clearCache::wx.clearStorageSync', e);
+            this.error('Base->clearCache::wx.clearStorageSync', e);
         }
     }
 
