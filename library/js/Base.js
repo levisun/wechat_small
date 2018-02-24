@@ -56,7 +56,7 @@ export default class
             type = 'page';
             name = array[0];
         } else {
-            self.error('Base->get params error 格式：[类型.]名称');
+            self.error('Base->get 参数错误 格式：[类型.]名称，不支持二级变量获取');
             return ;
         }
 
@@ -73,7 +73,7 @@ export default class
 
         // ...
         else if (type == 'page') {
-            let that = getCurrentPages()[getCurrentPages().length - 1];
+            let that = getCurrentPages()[getCurrentPages().length-1];
             return that['data'][name];
         }
     }
@@ -89,7 +89,7 @@ export default class
 
         // 检查请求URL
         if (typeof(_params.url) == 'undefined') {
-            self.error('Base->redirect url undefined', _params);
+            self.error('Base->redirect URL 未定义', _params);
             return ;
         }
 
@@ -180,7 +180,7 @@ export default class
 
         // 检查请求URL
         if (typeof(_params.url) == 'undefined') {
-            this.error('Base->ajax::wx.request url undefined', _params);
+            this.error('Base->ajax::wx.request URL 未定义', _params);
             return ;
         }
 
@@ -233,8 +233,8 @@ export default class
                     _callback(cache_data);
 
                     // 输出调试信息
-                    self.log(_params, 'Base->ajax请求参数[缓存]');
-                    self.log(cache_data, 'Base->ajax请求返回信息[缓存]');
+                    self.log(_params, 'Base->ajax 请求参数[缓存]');
+                    self.log(cache_data, 'Base->ajax 请求返回信息[缓存]');
 
                     // 隐藏加载提示框
                     setTimeout(function(){wx.hideLoading();}, 700);
@@ -258,8 +258,8 @@ export default class
                     _callback(result);
 
                     // 输出调试信息
-                    self.log(_params, 'Base->ajax请求参数');
-                    self.log(result, 'Base->ajax请求返回信息');
+                    self.log(_params, 'Base->ajax 请求参数');
+                    self.log(result, 'Base->ajax 请求返回信息');
 
                     // 隐藏加载提示框
                     setTimeout(function(){wx.hideLoading();}, 700);
@@ -380,9 +380,9 @@ export default class
      */
     bug(_data, _module = '自定义调试信息')
     {
-        console.group('Debug');
+        console.group('调试');
         console.warn(_module);
-        if (typeof _data == 'object') {
+        if (typeof(_data) == 'object') {
             for (var index in _data) {
                 console.log(index+': ', _data[index]);
             }
@@ -399,9 +399,9 @@ export default class
     log(_data, _module = '请求返回信息')
     {
         if (this.config.debug) {
-            console.group('Info');
+            console.group('信息');
             console.info(_module);
-            if (typeof _data == 'object') {
+            if (typeof(_data) == 'object') {
                 for (var index in _data) {
                     console.log(index+': ', _data[index]);
                 }
@@ -420,7 +420,7 @@ export default class
     error(_msg, _data)
     {
         if (this.config.debug) {
-            console.group('Error');
+            console.group('错误');
             console.error(_msg);
             for (var index in _data) {
                 console.log(index+': ', _data[index]);
