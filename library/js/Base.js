@@ -42,11 +42,11 @@ export default class
     /**
      * 获得变量值
      */
-    get(_params)
+    getData(_params)
     {
-        let self   = this;
+        // let self   = this;
         let string = _params.toString();
-        let array  = string.split('.');
+        let array  = string.split(':');
         let type   = name = '';
 
         if (array.length == 2) {
@@ -56,25 +56,52 @@ export default class
             type = 'page';
             name = array[0];
         } else {
-            self.error('Base->get 参数错误 格式：[类型.]名称，不支持二级变量获取');
+            this.error('Base->get 参数错误 格式：[类型:变量名.二级变量名]名称，不支持二级变量获取');
             return ;
         }
+
+        name = name.toString();
+        let arr_name = name.split('.');
 
         // App
         if (type == 'app') {
             let App = getApp();
-            return App['data'][name];
+            let value = '';
+            for (var i = 0; i < arr_name.length; i++) {
+                if (i == 0) {
+                    value = App.data[arr_name[i]];
+                } else {
+                    value = value[arr_name[i]];
+                }
+            }
+            return value;
         }
 
         // 配置
         else if (type == 'config') {
-            return this.config[name];
+            let value = '';
+            for (var i = 0; i < arr_name.length; i++) {
+                if (i == 0) {
+                    value = this.config[arr_name[i]];
+                } else {
+                    value = value[arr_name[i]];
+                }
+            }
+            return value;
         }
 
         // ...
         else if (type == 'page') {
             let that = getCurrentPages()[getCurrentPages().length-1];
-            return that['data'][name];
+            let value = '';
+            for (var i = 0; i < arr_name.length; i++) {
+                if (i == 0) {
+                    value = that['data'][arr_name[i]];
+                } else {
+                    value = value[arr_name[i]];
+                }
+            }
+            return value;
         }
     }
 
