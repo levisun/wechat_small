@@ -1,4 +1,4 @@
-let Helper = require('./library/Helper');
+var Helper = require('./library/Helper');
 
 App({
     data: {

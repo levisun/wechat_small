@@ -3,10 +3,9 @@
  * 微信小程序基础操作类
  *
  * @package   NiPHPCMS
- * @category  wecaht\library
+ * @category  wecaht\library\js
  * @author    失眠小枕头 [levisun.mail@gmail.com]
  * @copyright Copyright (c) 2013, 失眠小枕头, All rights reserved.
- * @version   CVS: $Id: Base.js v1.0.1 $
  * @link      www.NiPHP.com
  * @since     2017/12
  */
@@ -56,7 +55,7 @@ export default class
             type = 'page';
             name = array[0];
         } else {
-            this.error('Base->get 参数错误 格式：[类型:变量名.二级变量名]名称，不支持二级变量获取');
+            this.error('Base->get 参数错误 格式：[类型:变量名.二级变量名]名称');
             return ;
         }
 
@@ -235,18 +234,18 @@ export default class
         }
 
         // 获得openid、unionid、session_key信息
-        this.getOpenId(function(ous){
+        this.getOpenId(function(user){
 
             // 请求数据追加openid等信息
-            _params.data.openid      = ous.openid;
-            _params.data.open_id     = ous.openid;
-            _params.data.unionid     = ous.unionid;
-            _params.data.session_key = ous.session_key;
+            _params.data.openid      = user.openid;
+            _params.data.open_id     = user.openid;
+            _params.data.unionid     = user.unionid;
+            _params.data.session_key = user.session_key;
 
             // SESSION设置
-            if (typeof(ous.sessionid) != 'undefined') {
-                _params.data.sessionid = ous.sessionid;
-                _params.header.Cookie  = 'PHPSESSID=' + ous.sessionid;
+            if (typeof(user.sessionid) != 'undefined') {
+                _params.data.sessionid = user.sessionid;
+                _params.header.Cookie  = 'PHPSESSID=' + user.sessionid;
             }
 
             if (typeof(_params.data.formid) == 'undefined') {
@@ -306,9 +305,9 @@ export default class
     getOpenId(_callback)
     {
         let self = this;
-        let ous  = this.getCache('ous');
+        let user  = this.getCache('_user');
 
-        if (!ous) {
+        if (!user) {
             wx.login({
                 success: function (login)
                 {
@@ -322,7 +321,7 @@ export default class
                         {
                             if (typeof(result.errcode) == 'undefined') {
                                 // 缓存OUS
-                                self.setCache('ous', result.data);
+                                self.setCache('_user', result.data);
                             }
 
                             self.log(result.data, '获得用户信息');
@@ -332,8 +331,8 @@ export default class
                 }
             });
         } else {
-            this.log(ous, '获得用户信息[缓存]');
-            _callback(ous);
+            this.log(user, '获得用户信息[缓存]');
+            _callback(user);
         }
     }
 

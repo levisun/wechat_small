@@ -1,22 +1,33 @@
-let host = 'https://www.youtuiyou.cn/';
+/**
+ *
+ * 微信小程序设置
+ *
+ * @package   NiPHPCMS
+ * @category  wecaht\library
+ * @author    失眠小枕头 [levisun.mail@gmail.com]
+ * @copyright Copyright (c) 2013, 失眠小枕头, All rights reserved.
+ * @link      www.NiPHP.com
+ * @since     2017/12
+ */
 
 let Config = {
+    // 小程序信息
+    appid:     'wxe2ce060d72f9cc70',
+    appsecret: '551e54e36c0410b9f231effe9c03b6fe',
+
+    host:    'https://www.youtuiyou.cn/',
+    openid:  'https://www.youtuiyou.cn/wxxcx/openid.php',
+    payment: 'https://www.youtuiyou.cn/wxxcx/payment.php',
+
+
     // 调试
     debug: true,
+
+    // 缓存
     cache: {
         open: true,
         expire: 1140,
     },
-
-
-    // 小程序信息
-    appid: 'wxe2ce060d72f9cc70',
-    appsecret: '551e54e36c0410b9f231effe9c03b6fe',
-
-    host:    `${host}`,
-    openid:  `${host}wxxcx/openid.php`,
-    payment: `${host}wxxcx/payment.php`,
-
 };
 
 module.exports = Config;

@@ -1,4 +1,4 @@
-let Helper = require('./../../../library/Helper');
+// let Helper = require('./../../../library/Helper');
 Page({
     data: {
         test: {
@@ -7,7 +7,7 @@ Page({
     },
 
     onLoad: function(){
-        var v = Helper.getData('test.t');
-        Helper.bug(v)
+        // var v = Helper.getData('test.t');
+        // Helper.bug(v)
     }
 });
