@@ -9,8 +9,8 @@
  * @link      www.NiPHP.com
  * @since     2017/12
  */
-let Config = require('./Config');
-import Base from './js/Base';
+let Config = require('/Config');
+import Base from '/js/Base';
 let Helper = new Base(Config);
 module.exports = Helper;
 

@@ -15,7 +15,7 @@ let Config = {
     appid:     'wxe2ce060d72f9cc70',
     appsecret: '551e54e36c0410b9f231effe9c03b6fe',
 
-    host:    'https://www.youtuiyou.cn/',
+    host:    'https://www.youtuiyou.cn/wxxcx/',
     openid:  'https://www.youtuiyou.cn/wxxcx/openid.php',
     payment: 'https://www.youtuiyou.cn/wxxcx/payment.php',
 

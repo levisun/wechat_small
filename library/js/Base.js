@@ -13,17 +13,6 @@ const Md5 = require('./Md5');
 
 export default class
 {
-    config = {
-        debug: true,
-        cache: {
-            open: true,
-            expire: 1140,
-        },
-
-        // 小程序信息
-        appid: '',
-        appsecret: '',
-    }
 
     /**
      * 构造方法
@@ -31,6 +20,30 @@ export default class
     constructor(_config)
     {
         this.config = _config;
+
+        if (typeof(this.config.appid) == 'undefined') {
+            this.error('Base->constructor 未定义APPID[this.config.appid]', this.config);
+            return ;
+        }
+        if (typeof(this.config.appsecret) == 'undefined') {
+            this.error('Base->constructor 未定义APPSECRET[this.config.appsecret]', this.config);
+            return ;
+        }
+
+        // 设定默认值
+        if (typeof(this.config.debug) == 'undefined') {
+            this.config.debug = false;
+        }
+        if (typeof(this.config.cache) == 'undefined') {
+            this.config.cache = {
+                open: true,
+                expire: 1140
+            };
+        } else if (typeof(this.config.cache.open) == 'undefined') {
+            this.config.cache.open = true;
+        } else if (typeof(this.config.cache.expire) == 'undefined') {
+            this.config.cache.expire = 1140;
+        }
 
         // 关闭缓存时清空缓存
         if (this.config.cache.open === false) {
@@ -115,7 +128,7 @@ export default class
 
         // 检查请求URL
         if (typeof(_params.url) == 'undefined') {
-            self.error('Base->redirect URL 未定义', _params);
+            this.error('Base->redirect URL 未定义', _params);
             return ;
         }
 
@@ -193,6 +206,56 @@ export default class
                 });
             }
         }
+    }
+
+    /**
+     * 支付请求
+     * @param array _params
+     * @param func  _callback
+     */
+    pay(_params, _callback)
+    {
+        let self = this;
+
+        if (typeof(self.config.payment) == 'undefined') {
+            this.error('Base->pay 未定义支付请求URL地址[this.config.payment]', self.config);
+            return ;
+        }
+
+        // 检查支付金额
+        if (typeof(_params.amount) == 'undefined') {
+            this.error('Base->pay 支付金额未定义[amount]', _params);
+            return ;
+        }
+
+        // 创建支付订单
+        this.ajax({
+            url:    self.config.payment,
+            method: 'POST',
+            data: _params
+        }, function(pay){
+            if (typeof(pay.data.paySign) == 'undefined') {
+                self.error('Base->pay 返回参数错误', pay);
+            } else {
+                // 发起支付请求
+                wx.requestPayment({
+                    timeStamp: pay.data.timeStamp,
+                    nonceStr:  pay.data.nonceStr,
+                    package:   pay.data.package,
+                    signType:  pay.data.signType,
+                    paySign:   pay.data.paySign,
+                    success: function(result)
+                    {
+                        _callback(result);
+                    },
+                    fail: function(result)
+                    {
+                        _callback(result);
+                        self.error('Base->pay::wx.requestPayment', result);
+                    }
+                });
+            }
+        });
     }
 
     /**
@@ -305,9 +368,14 @@ export default class
     getOpenId(_callback)
     {
         let self = this;
-        let user  = this.getCache('_user');
+        let user = this.getCache('_user');
 
         if (!user) {
+            if (typeof(this.config.openid) == 'undefined') {
+                this.error('Base->getOpenId 未定义OPENID请求URL地址[this.config.openid]', this.config);
+                return ;
+            }
+
             wx.login({
                 success: function (login)
                 {

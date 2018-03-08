@@ -11,7 +11,7 @@ App({
     onLaunch: function (options) {
         // 获取红包和数
         Helper.ajax({
-            url: Helper.getData('config:host')+'wxxcx/account.php',
+            url: Helper.getData('config:host')+'account.php',
             data: {method: 'getUserIntegral'},
             method: "POST",
             cache: 'app.onLaunch',
@@ -19,7 +19,13 @@ App({
 
         });
 
+        /*Helper.pay({
+            amount: 1,
+            game_id: 12,
+            task_id: 221,
+        }, function(result){
 
+        });*/
     },
 
     // 监听小程序显示
