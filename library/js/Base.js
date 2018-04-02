@@ -56,10 +56,10 @@ export default class
      */
     getData(_params)
     {
-        // let self   = this;
-        let string = _params.toString();
-        let array  = string.split(':');
-        let type   = name = '';
+        // var self   = this;
+        var string = _params.toString();
+        var array  = string.split(':');
+        var type   = name = '';
 
         if (array.length == 2) {
             type = array[0];
@@ -73,12 +73,12 @@ export default class
         }
 
         name = name.toString();
-        let arr_name = name.split('.');
+        var arr_name = name.split('.');
 
         // App
         if (type == 'app') {
-            let App = getApp();
-            let value = '';
+            var App = getApp();
+            var value = '';
             for (var i = 0; i < arr_name.length; i++) {
                 if (i == 0) {
                     value = App.data[arr_name[i]];
@@ -91,7 +91,7 @@ export default class
 
         // 配置
         else if (type == 'config') {
-            let value = '';
+            var value = '';
             for (var i = 0; i < arr_name.length; i++) {
                 if (i == 0) {
                     value = this.config[arr_name[i]];
@@ -104,8 +104,8 @@ export default class
 
         // ...
         else if (type == 'page') {
-            let that = getCurrentPages()[getCurrentPages().length-1];
-            let value = '';
+            var that = getCurrentPages()[getCurrentPages().length-1];
+            var value = '';
             for (var i = 0; i < arr_name.length; i++) {
                 if (i == 0) {
                     value = that['data'][arr_name[i]];
@@ -124,7 +124,7 @@ export default class
      */
     redirect(_params)
     {
-        let self = this;
+        var self = this;
 
         // 检查请求URL
         if (typeof(_params.url) == 'undefined') {
@@ -215,7 +215,7 @@ export default class
      */
     pay(_params, _callback)
     {
-        let self = this;
+        var self = this;
 
         if (typeof(self.config.payment) == 'undefined') {
             this.error('Base->pay 未定义支付请求URL地址[this.config.payment]', self.config);
@@ -265,7 +265,7 @@ export default class
      */
     ajax(_params, _callback)
     {
-        let self = this;
+        var self = this;
 
         // 检查请求URL
         if (typeof(_params.url) == 'undefined') {
@@ -274,10 +274,7 @@ export default class
         }
 
         // 加载提示
-        if (typeof(_params.tips) == 'undefined') {
-            _params.tips = '加载中...';
-        }
-        wx.showLoading({title: _params.tips, mask: true});
+        this.toast();
 
         // 检查是否开启缓存
         if (typeof(_params.cache) == 'undefined') {
@@ -305,19 +302,18 @@ export default class
             _params.data.unionid     = user.unionid;
             _params.data.session_key = user.session_key;
 
-            // SESSION设置
-            if (typeof(user.sessionid) != 'undefined') {
-                _params.data.sessionid = user.sessionid;
-                _params.header.Cookie  = 'PHPSESSID=' + user.sessionid;
-            }
+            // 服务器SESSIONID设置
+            _params.data.sessionid   = user.sessionid;
+            _params.header.Cookie    = 'PHPSESSID=' + user.sessionid;
 
+            // formid 用于发送模板信息
             if (typeof(_params.data.formid) == 'undefined') {
                 _params.data.formid = 'undefined';
             }
 
             // 缓存开启，检查缓存是否存在
             if (_params.cache) {
-                let cache_data = self.getCache(_params.url+_params.cache);
+                var cache_data = self.getCache(_params.url+_params.cache);
                 if (cache_data) {
                     _callback(cache_data);
 
@@ -326,7 +322,7 @@ export default class
                     self.log(cache_data, 'Base->ajax 请求返回信息[缓存]');
 
                     // 隐藏加载提示框
-                    setTimeout(function(){wx.hideLoading();}, 700);
+                    self.toast(false);
                     return ;
                 }
             }
@@ -351,7 +347,7 @@ export default class
                     self.log(result, 'Base->ajax 请求返回信息');
 
                     // 隐藏加载提示框
-                    setTimeout(function(){wx.hideLoading();}, 700);
+                    self.toast(false);
                 },
                 fail: function (result)
                 {
@@ -363,12 +359,13 @@ export default class
 
     /**
      * 获取openID unionId session_key
+     * 服务器需要返回sessionid[PHP:session_id();]
      * @params func _callback
      */
     getOpenId(_callback)
     {
-        let self = this;
-        let user = this.getCache('_user');
+        var self = this;
+        var user = this.getCache('_user');
 
         if (!user) {
             if (typeof(this.config.openid) == 'undefined') {
@@ -381,13 +378,19 @@ export default class
                 {
                     wx.request({
                         url:      self.config.openid,
-                        data:     {code: login.code},
+                        data:     {
+                            code: login.code
+                        },
                         header:   {'Content-Type': 'application/x-www-form-urlencoded'},
                         method:   'POST',
                         dataType: 'json',
                         success: function (result)
                         {
                             if (typeof(result.errcode) == 'undefined') {
+                                if (typeof(result.data.sessionid) == 'undefined') {
+                                    self.error('Base->getOpenId::wx.login 服务器未返回SESSIONID', result.data);
+                                }
+
                                 // 缓存OUS
                                 self.setCache('_user', result.data);
                             }
@@ -399,8 +402,29 @@ export default class
                 }
             });
         } else {
+            if (typeof(user.sessionid) == 'undefined') {
+                this.error('Base->getOpenId::wx.login 服务器未返回SESSIONID', user);
+            }
             this.log(user, '获得用户信息[缓存]');
             _callback(user);
+        }
+    }
+
+    /**
+     * 提示信息
+     * @param
+     * @param
+     */
+    toast(_tips = '加载中...', _mask = true)
+    {
+        if (_tips !== false) {
+            // 加载提示
+            wx.showLoading({title: _tips, _mask: true});
+
+            // 请求超时隐藏加载提示框
+            setTimeout(function(){wx.hideLoading();}, 30000);
+        } else {
+            setTimeout(function(){wx.hideLoading();}, 700);
         }
     }
 
@@ -413,8 +437,8 @@ export default class
     {
         if (this.config.cache.open) {
             try {
-                let timestamp = Date.parse(new Date());
-                let expire    = timestamp + (this.config.cache.expire * 1000);
+                var timestamp = Date.parse(new Date());
+                var expire    = timestamp + (this.config.cache.expire * 1000);
                 _key          = Md5(_key);
                 wx.setStorageSync(_key + '_expire', expire);
                 wx.setStorageSync(_key, _data);
@@ -432,10 +456,10 @@ export default class
     getCache(_key)
     {
         if (this.config.cache.open) {
-            let timestamp = Date.parse(new Date());
+            var timestamp = Date.parse(new Date());
             _key          = Md5(_key);
 
-            let expire = wx.getStorageSync(_key + '_expire');
+            var expire = wx.getStorageSync(_key + '_expire');
             if (expire && expire >= timestamp) {
                 return wx.getStorageSync(_key);
             } else {
