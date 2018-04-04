@@ -1,2 +1,1 @@
-/*@import "/util/zanui/index.wxss";*/
-@import "/library/ui.wxss";
+@import "/utils/ui.wxss";

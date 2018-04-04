@@ -1,4 +1,4 @@
-var Helper = require('./library/Helper');
+var {helper, ui} = require('/utils/Helper');
 
 App({
     data: {
@@ -10,22 +10,23 @@ App({
     // 监听小程序初始化
     onLaunch: function (options) {
         // 获取红包和数
-        Helper.ajax({
-            url: Helper.getData('config:host')+'account.php',
+
+        helper.ajax({
+            url: helper.getData('config:host')+'account.php',
             data: {method: 'getUserIntegral'},
             method: "POST",
             cache: 'app.onLaunch',
-        }, function(result){
+        }).then(function(res){
 
-        });
+        }).then(
+            helper.getUser().then(function(res){
 
-        /*Helper.pay({
-            amount: 1,
-            game_id: 12,
-            task_id: 221,
-        }, function(result){
+            })
+        );
 
-        });*/
+        // helper.wxPromise();
+
+
     },
 
     // 监听小程序显示
@@ -42,4 +43,8 @@ App({
     onError: function (options) {
 
     },
+
+    test: function () {
+        helper.bug('app_test');
+    }
 });

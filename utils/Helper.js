@@ -11,8 +11,12 @@
  */
 let Config = require('/Config');
 import Base from '/js/Base';
-let Helper = new Base(Config);
-module.exports = Helper;
+import Ui from '/js/Ui';
+
+let helper = new Base(Config);
+let ui = new Ui();
+
+module.exports = {helper, ui};
 
 /**
 切换

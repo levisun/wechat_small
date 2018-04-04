@@ -3,16 +3,19 @@
  * 微信小程序基础操作类
  *
  * @package   NiPHPCMS
- * @category  wecaht\library\js
+ * @category  utils\js
  * @author    失眠小枕头 [levisun.mail@gmail.com]
  * @copyright Copyright (c) 2013, 失眠小枕头, All rights reserved.
  * @link      www.NiPHP.com
  * @since     2017/12
  */
-const Md5 = require('./Md5');
+const Md5 = require('/Md5');
+const Promise = require('/bluebird.min.js');
 
 export default class
 {
+    config = [];
+    app;
 
     /**
      * 构造方法
@@ -39,9 +42,11 @@ export default class
                 open: true,
                 expire: 1140
             };
-        } else if (typeof(this.config.cache.open) == 'undefined') {
+        }
+        if (typeof(this.config.cache.open) == 'undefined') {
             this.config.cache.open = true;
-        } else if (typeof(this.config.cache.expire) == 'undefined') {
+        }
+        if (typeof(this.config.cache.expire) == 'undefined') {
             this.config.cache.expire = 1140;
         }
 
@@ -52,7 +57,18 @@ export default class
     }
 
     /**
+     * 获得APP
+     * 可直接用[getApp()]使用实现
+     * 不建议使用此方法
+     */
+    getApp()
+    {
+        return getApp();
+    }
+
+    /**
      * 获得变量值
+     * 不建议使用
      */
     getData(_params)
     {
@@ -68,7 +84,7 @@ export default class
             type = 'page';
             name = array[0];
         } else {
-            this.error('Base->get 参数错误 格式：[类型:变量名.二级变量名]名称');
+            this.error('Base->get 参数错误 格式[类型:变量名.二级变量名]名称');
             return ;
         }
 
@@ -208,17 +224,66 @@ export default class
         }
     }
 
+    wxPromise(fn)
+    {
+        return function (obj = {}) {
+            return new Promise((resolve, reject) => {
+                obj.success = function (result) {
+                    resolve(result);
+                }
+
+                obj.fail = function (result) {
+                    resolve(result);
+                }
+
+                fn(obj);
+            });
+        }
+    }
+
+    /**
+     * 获得用户信息
+     */
+    getUser()
+    {
+        var self = this;
+
+        return new Promise(function(resolve, reject){
+            // 缓存开启，检查缓存是否存在
+            var cache_data = self.getCache('user');
+            if (cache_data) {
+                resolve(cache_data);
+
+                // 输出调试信息
+                self.log(cache_data, 'Base->getUser 请求返回信息[缓存]');
+            } else {
+                wx.getUserInfo({
+                    withCredentials: true,
+                    success: function(result)
+                    {
+                        self.setCache('user', result.userInfo);
+                        resolve(result.userInfo);
+                    },
+                    fail: function(result)
+                    {
+                        resolve(result);
+                    },
+                });
+            }
+        });
+    }
+
     /**
      * 支付请求
      * @param array _params
      * @param func  _callback
      */
-    pay(_params, _callback)
+    pay(_params)
     {
         var self = this;
 
         if (typeof(self.config.payment) == 'undefined') {
-            this.error('Base->pay 未定义支付请求URL地址[this.config.payment]', self.config);
+            this.error('Base->pay 未定义支付URL请求地址[this.config.payment]', self.config);
             return ;
         }
 
@@ -227,12 +292,43 @@ export default class
             this.error('Base->pay 支付金额未定义[amount]', _params);
             return ;
         }
+        return new Promise(function(resolve, reject){
+            self.ajax({
+                url:    self.config.payment,
+                method: 'POST',
+                data:   _params
+            }).then(function(pay){
+                if (typeof(pay.data.paySign) == 'undefined') {
+                    self.error('Base->pay 返回参数错误', pay);
+                } else {
+                    // 发起支付请求
+                    wx.requestPayment({
+                        timeStamp: pay.data.timeStamp,
+                        nonceStr:  pay.data.nonceStr,
+                        package:   pay.data.package,
+                        signType:  pay.data.signType,
+                        paySign:   pay.data.paySign,
+                        success: function(result)
+                        {
+                            resolve(result);
+                        },
+                        fail: function(result)
+                        {
+                            self.error('Base->pay::wx.requestPayment', result);
+                            resolve(result);
+                        }
+                    });
+                }
+            });
+        });
+
+
 
         // 创建支付订单
         this.ajax({
             url:    self.config.payment,
             method: 'POST',
-            data: _params
+            data:   _params
         }, function(pay){
             if (typeof(pay.data.paySign) == 'undefined') {
                 self.error('Base->pay 返回参数错误', pay);
@@ -261,9 +357,8 @@ export default class
     /**
      * Ajax请求
      * @param array _params
-     * @param func  _callback
      */
-    ajax(_params, _callback)
+    ajax(_params)
     {
         var self = this;
 
@@ -293,121 +388,119 @@ export default class
             _params.header = {'Content-Type': 'application/x-www-form-urlencoded'};
         }
 
-        // 获得openid、unionid、session_key信息
-        this.getOpenId(function(user){
+        return new Promise(function(resolve, reject){
+            var cache_data = self.getCache(_params.url+_params.cache);
+            if (cache_data) {
+                // 输出调试信息
+                self.log(_params, 'Base->ajax 请求参数[缓存]');
+                self.log(cache_data, 'Base->ajax 请求返回信息[缓存]');
 
-            // 请求数据追加openid等信息
-            _params.data.openid      = user.openid;
-            _params.data.open_id     = user.openid;
-            _params.data.unionid     = user.unionid;
-            _params.data.session_key = user.session_key;
+                // 隐藏加载提示框
+                self.toast(false);
 
-            // 服务器SESSIONID设置
-            _params.data.sessionid   = user.sessionid;
-            _params.header.Cookie    = 'PHPSESSID=' + user.sessionid;
+                resolve(cache_data);
+            } else {
+                self.getOpenId().then(function(ous){
+                    // 请求数据追加openid等信息
+                    _params.data.openid      = ous.openid;
+                    _params.data.open_id     = ous.openid;
+                    _params.data.unionid     = ous.unionid;
+                    _params.data.session_key = ous.session_key;
 
-            // formid 用于发送模板信息
-            if (typeof(_params.data.formid) == 'undefined') {
-                _params.data.formid = 'undefined';
-            }
+                    // 服务器SESSIONID设置
+                    _params.data.sessionid   = ous.sessionid;
+                    _params.header.Cookie    = 'PHPSESSID=' + ous.sessionid;
 
-            // 缓存开启，检查缓存是否存在
-            if (_params.cache) {
-                var cache_data = self.getCache(_params.url+_params.cache);
-                if (cache_data) {
-                    _callback(cache_data);
-
-                    // 输出调试信息
-                    self.log(_params, 'Base->ajax 请求参数[缓存]');
-                    self.log(cache_data, 'Base->ajax 请求返回信息[缓存]');
-
-                    // 隐藏加载提示框
-                    self.toast(false);
-                    return ;
-                }
-            }
-
-            wx.request({
-                url:      _params.url,
-                data:     _params.data,
-                header:   _params.header,
-                method:   _params.method,
-                dataType: 'json',
-                success: function (result)
-                {
-                    // 缓存数据
-                    if (_params.cache) {
-                        self.setCache(_params.url+_params.cache, result);
+                    // formid 用于发送模板信息
+                    if (typeof(_params.data.formid) == 'undefined') {
+                        _params.data.formid = 'undefined';
                     }
 
-                    _callback(result);
+                    wx.request({
+                        url:      _params.url,
+                        data:     _params.data,
+                        header:   _params.header,
+                        method:   _params.method,
+                        dataType: 'json',
+                        success: function (result)
+                        {
+                            // 缓存数据
+                            if (_params.cache) {
+                                self.setCache(_params.url+_params.cache, result);
+                            }
 
-                    // 输出调试信息
-                    self.log(_params, 'Base->ajax 请求参数');
-                    self.log(result, 'Base->ajax 请求返回信息');
+                            // 输出调试信息
+                            self.log(_params, 'Base->ajax 请求参数');
+                            self.log(result, 'Base->ajax 请求返回信息');
 
-                    // 隐藏加载提示框
-                    self.toast(false);
-                },
-                fail: function (result)
-                {
-                    self.error('Base->ajax::wx.request', result);
-                }
-            });
+                            // 隐藏加载提示框
+                            self.toast(false);
+
+                            resolve(result);
+                        },
+                        fail: function (result)
+                        {
+                            self.error('Base->ajax::wx.request', result);
+                        }
+                    });
+                })
+
+            }
         });
     }
 
     /**
      * 获取openID unionId session_key
      * 服务器需要返回sessionid[PHP:session_id();]
-     * @params func _callback
      */
-    getOpenId(_callback)
+    getOpenId()
     {
         var self = this;
-        var user = this.getCache('_user');
 
-        if (!user) {
-            if (typeof(this.config.openid) == 'undefined') {
-                this.error('Base->getOpenId 未定义OPENID请求URL地址[this.config.openid]', this.config);
-                return ;
-            }
-
-            wx.login({
-                success: function (login)
-                {
-                    wx.request({
-                        url:      self.config.openid,
-                        data:     {
-                            code: login.code
-                        },
-                        header:   {'Content-Type': 'application/x-www-form-urlencoded'},
-                        method:   'POST',
-                        dataType: 'json',
-                        success: function (result)
-                        {
-                            if (typeof(result.errcode) == 'undefined') {
-                                if (typeof(result.data.sessionid) == 'undefined') {
-                                    self.error('Base->getOpenId::wx.login 服务器未返回SESSIONID', result.data);
-                                }
-
-                                // 缓存OUS
-                                self.setCache('_user', result.data);
-                            }
-
-                            self.log(result.data, '获得用户信息');
-                            _callback(result.data);
-                        }
-                    });
+        return new Promise(function(resolve, reject){
+            var ous = self.getCache('_ous');
+            if (ous) {
+                if (typeof(ous.sessionid) == 'undefined') {
+                    self.error('Base->getOpenId::wx.login 服务器未返回SESSIONID', user);
                 }
-            });
-        } else {
-            if (typeof(user.sessionid) == 'undefined') {
-                this.error('Base->getOpenId::wx.login 服务器未返回SESSIONID', user);
+                self.log(ous, '获得用户信息[缓存]');
+
+                resolve(ous);
+            } else {
+                if (typeof(self.config.openid) == 'undefined') {
+                    self.error('Base->getOpenId 未定义OPENID请求URL地址[this.config.openid]', self.config);
+                } else {
+                    wx.login({
+                        success: function (login)
+                        {
+                            wx.request({
+                                url:      self.config.openid,
+                                data:     {
+                                    code: login.code
+                                },
+                                header:   {'Content-Type': 'application/x-www-form-urlencoded'},
+                                method:   'POST',
+                                dataType: 'json',
+                                success: function (result)
+                                {
+                                    if (typeof(result.errcode) == 'undefined') {
+                                        if (typeof(result.data.sessionid) == 'undefined') {
+                                            self.error('Base->getOpenId::wx.login 服务器未返回SESSIONID', result.data);
+                                        }
+
+                                        // 缓存OUS
+                                        self.setCache('_ous', result.data);
+                                    }
+
+                                    self.log(result.data, '获得用户信息');
+                                    resolve(result.data);
+                                }
+                            })
+                        }
+                    })
+                }
             }
-            this.log(user, '获得用户信息[缓存]');
-            _callback(user);
-        }
+        });
     }
 
     /**
@@ -435,7 +528,7 @@ export default class
      */
     setCache(_key, _data)
     {
-        if (this.config.cache.open) {
+        if (this.config.cache.open === true) {
             try {
                 var timestamp = Date.parse(new Date());
                 var expire    = timestamp + (this.config.cache.expire * 1000);
@@ -455,7 +548,7 @@ export default class
      */
     getCache(_key)
     {
-        if (this.config.cache.open) {
+        if (this.config.cache.open === true) {
             var timestamp = Date.parse(new Date());
             _key          = Md5(_key);
 
@@ -516,7 +609,7 @@ export default class
      */
     log(_data, _module = '请求返回信息')
     {
-        if (this.config.debug) {
+        if (this.config.debug === true) {
             console.group('信息');
             console.info(_module);
             if (typeof(_data) == 'object') {
@@ -537,7 +630,7 @@ export default class
      */
     error(_msg, _data)
     {
-        if (this.config.debug) {
+        if (this.config.debug === true) {
             console.group('错误');
             console.error(_msg);
             for (var index in _data) {

@@ -1,6 +1,6 @@
 {
     "pages": [
-        "application/demo/index/index"
+        "pages/index/index"
     ],
 
     "window": {
