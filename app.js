@@ -2,31 +2,22 @@ var {helper, ui} = require('/utils/Helper');
 
 App({
     data: {
-        test: {
-            ache: false
+        init: {
+            user: {}
         }
+    },
+
+    initialize: function()
+    {
+        var self = this;
+
+        helper.getUser().then(function(res){
+            self.data.init.user = res;
+        })
     },
 
     // 监听小程序初始化
     onLaunch: function (options) {
-        // 获取红包和数
-
-        helper.ajax({
-            url: helper.getData('config:host')+'account.php',
-            data: {method: 'getUserIntegral'},
-            method: "POST",
-            cache: 'app.onLaunch',
-        }).then(function(res){
-
-        }).then(
-            helper.getUser().then(function(res){
-
-            })
-        );
-
-        // helper.wxPromise();
-
-
     },
 
     // 监听小程序显示

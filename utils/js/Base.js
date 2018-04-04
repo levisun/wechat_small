@@ -9,8 +9,8 @@
  * @link      www.NiPHP.com
  * @since     2017/12
  */
-const Md5 = require('/Md5');
-const Promise = require('/bluebird.min.js');
+const Md5 = require('/Md5.js');
+const Promise = require('/bluebird.core.min.js');
 
 export default class
 {
@@ -262,6 +262,10 @@ export default class
                     success: function(result)
                     {
                         self.setCache('user', result.userInfo);
+
+                        // 输出调试信息
+                        self.log(result.userInfo, 'Base->getUser 请求返回信息');
+
                         resolve(result.userInfo);
                     },
                     fail: function(result)
