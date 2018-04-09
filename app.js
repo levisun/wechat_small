@@ -34,8 +34,4 @@ App({
     onError: function (options) {
 
     },
-
-    test: function () {
-        helper.bug('app_test');
-    }
 });

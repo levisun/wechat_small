@@ -325,37 +325,6 @@ export default class
                 }
             });
         });
-
-
-
-        // 创建支付订单
-        this.ajax({
-            url:    self.config.payment,
-            method: 'POST',
-            data:   _params
-        }, function(pay){
-            if (typeof(pay.data.paySign) == 'undefined') {
-                self.error('Base->pay 返回参数错误', pay);
-            } else {
-                // 发起支付请求
-                wx.requestPayment({
-                    timeStamp: pay.data.timeStamp,
-                    nonceStr:  pay.data.nonceStr,
-                    package:   pay.data.package,
-                    signType:  pay.data.signType,
-                    paySign:   pay.data.paySign,
-                    success: function(result)
-                    {
-                        _callback(result);
-                    },
-                    fail: function(result)
-                    {
-                        _callback(result);
-                        self.error('Base->pay::wx.requestPayment', result);
-                    }
-                });
-            }
-        });
     }
 
     /**
@@ -448,7 +417,6 @@ export default class
                         }
                     });
                 })
-
             }
         });
     }
