@@ -10,7 +10,7 @@
  * @since     2017/12
  */
 const Md5 = require('/Md5.js');
-const Promise = require('/bluebird.core.min.js');
+const WxPromise = require('/bluebird.core.min.js');
 
 export default class
 {
@@ -224,10 +224,10 @@ export default class
         }
     }
 
-    wxPromise(fn)
+    WxPromise(fn)
     {
         return function (obj = {}) {
-            return new Promise((resolve, reject) => {
+            return new WxPromise((resolve, reject) => {
                 obj.success = function (result) {
                     resolve(result);
                 }
@@ -248,7 +248,7 @@ export default class
     {
         var self = this;
 
-        return new Promise(function(resolve, reject){
+        return new WxPromise(function(resolve, reject){
             // 缓存开启，检查缓存是否存在
             var cache_data = self.getCache('user');
             if (cache_data) {
@@ -296,7 +296,7 @@ export default class
             this.error('Base->pay 支付金额未定义[amount]', _params);
             return ;
         }
-        return new Promise(function(resolve, reject){
+        return new WxPromise(function(resolve, reject){
             self.ajax({
                 url:    self.config.payment,
                 method: 'POST',
@@ -331,7 +331,7 @@ export default class
      * Ajax请求
      * @param array _params
      */
-    ajax(_params)
+    request(_params)
     {
         var self = this;
 
@@ -361,7 +361,7 @@ export default class
             _params.header = {'Content-Type': 'application/x-www-form-urlencoded'};
         }
 
-        return new Promise(function(resolve, reject){
+        return new WxPromise(function(resolve, reject){
             var cache_data = self.getCache(_params.url+_params.cache);
             if (cache_data) {
                 // 输出调试信息
@@ -376,7 +376,6 @@ export default class
                 self.getOpenId().then(function(ous){
                     // 请求数据追加openid等信息
                     _params.data.openid      = ous.openid;
-                    _params.data.open_id     = ous.openid;
                     _params.data.unionid     = ous.unionid;
                     _params.data.session_key = ous.session_key;
 
@@ -429,7 +428,7 @@ export default class
     {
         var self = this;
 
-        return new Promise(function(resolve, reject){
+        return new WxPromise(function(resolve, reject){
             var ous = self.getCache('_ous');
             if (ous) {
                 if (typeof(ous.sessionid) == 'undefined') {

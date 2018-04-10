@@ -11,9 +11,9 @@ App({
     {
         var self = this;
 
-        helper.getUser().then(function(res){
+        return helper.getUser().then(function(res){
             self.data.init.user = res;
-        })
+        });
     },
 
     // 监听小程序初始化
@@ -34,4 +34,12 @@ App({
     onError: function (options) {
 
     },
+
+    helper: function () {
+        return helper;
+    },
+
+    ui: function () {
+        return ui;
+    }
 });
