@@ -84,7 +84,7 @@ export default class
             type = 'page';
             name = array[0];
         } else {
-            this.error('Base->get 参数错误 格式[类型:变量名.二级变量名]名称');
+            this.error('Base->getData 参数错误 格式[类型:变量名.二级变量名]名称');
             return ;
         }
 
@@ -255,7 +255,7 @@ export default class
                 resolve(cache_data);
 
                 // 输出调试信息
-                self.log(cache_data, 'Base->getUser 请求返回信息[缓存]');
+                self.log(cache_data, 'Base->getUser 获得用户信息[缓存]');
             } else {
                 wx.getUserInfo({
                     withCredentials: true,
@@ -264,7 +264,7 @@ export default class
                         self.setCache('user', result.userInfo);
 
                         // 输出调试信息
-                        self.log(result.userInfo, 'Base->getUser 请求返回信息');
+                        self.log(result.userInfo, 'Base->getUser 获得用户信息');
 
                         resolve(result.userInfo);
                     },
@@ -337,7 +337,7 @@ export default class
 
         // 检查请求URL
         if (typeof(_params.url) == 'undefined') {
-            this.error('Base->ajax::wx.request URL 未定义', _params);
+            this.error('Base->request::wx.request URL 未定义', _params);
             return ;
         }
 
@@ -361,12 +361,17 @@ export default class
             _params.header = {'Content-Type': 'application/x-www-form-urlencoded'};
         }
 
+        // 请求数据
+        if (typeof(_params.data) == 'undefined') {
+            _params.data = {};
+        }
+
         return new WxPromise(function(resolve, reject){
             var cache_data = self.getCache(_params.url+_params.cache);
             if (cache_data) {
                 // 输出调试信息
-                self.log(_params, 'Base->ajax 请求参数[缓存]');
-                self.log(cache_data, 'Base->ajax 请求返回信息[缓存]');
+                self.log(_params, 'Base->request 请求参数[缓存]');
+                self.log(cache_data, 'Base->request 请求返回信息[缓存]');
 
                 // 隐藏加载提示框
                 self.toast(false);
@@ -380,12 +385,17 @@ export default class
                     _params.data.session_key = ous.session_key;
 
                     // 服务器SESSIONID设置
-                    _params.data.sessionid   = ous.sessionid;
-                    _params.header.Cookie    = 'PHPSESSID=' + ous.sessionid;
+                    if (typeof(ous.sessionid) != 'undefined') {
+                        _params.data.sessionid   = ous.sessionid;
+                        _params.header.Cookie    = 'PHPSESSID=' + ous.sessionid;
+                    } else {
+                        self.log(_params.data, '请求参数缺少sessionid,请检查getOpenId()方法返回值');
+                    }
 
                     // formid 用于发送模板信息
                     if (typeof(_params.data.formid) == 'undefined') {
                         _params.data.formid = 'undefined';
+                        self.log(_params.data, '请求参数缺少formid');
                     }
 
                     wx.request({
@@ -402,8 +412,8 @@ export default class
                             }
 
                             // 输出调试信息
-                            self.log(_params, 'Base->ajax 请求参数');
-                            self.log(result, 'Base->ajax 请求返回信息');
+                            self.log(_params, 'Base->request 请求参数');
+                            self.log(result, 'Base->request 请求返回信息');
 
                             // 隐藏加载提示框
                             self.toast(false);
@@ -412,7 +422,7 @@ export default class
                         },
                         fail: function (result)
                         {
-                            self.error('Base->ajax::wx.request', result);
+                            self.error('Base->request::wx.request', result);
                         }
                     });
                 })
@@ -432,9 +442,9 @@ export default class
             var ous = self.getCache('_ous');
             if (ous) {
                 if (typeof(ous.sessionid) == 'undefined') {
-                    self.error('Base->getOpenId::wx.login 服务器未返回SESSIONID', user);
+                    self.log(ous, 'Base->getOpenId::wx.login 服务器未返回SESSIONID');
                 }
-                self.log(ous, '获得用户信息[缓存]');
+                self.log(ous, 'Base->getOpenId 获得用户OpenId等信息[缓存]');
 
                 resolve(ous);
             } else {
@@ -456,14 +466,14 @@ export default class
                                 {
                                     if (typeof(result.errcode) == 'undefined') {
                                         if (typeof(result.data.sessionid) == 'undefined') {
-                                            self.error('Base->getOpenId::wx.login 服务器未返回SESSIONID', result.data);
+                                            self.log(result.data, 'Base->getOpenId::wx.login 服务器未返回SESSIONID', );
                                         }
 
                                         // 缓存OUS
                                         self.setCache('_ous', result.data);
                                     }
 
-                                    self.log(result.data, '获得用户信息');
+                                    self.log(result.data, 'Base->getOpenId 获得用户OpenId等信息');
                                     resolve(result.data);
                                 }
                             })
@@ -483,7 +493,7 @@ export default class
     {
         if (_tips !== false) {
             // 加载提示
-            wx.showLoading({title: _tips, _mask: true});
+            wx.showLoading({title: _tips, mask: _mask});
 
             // 请求超时隐藏加载提示框
             setTimeout(function(){wx.hideLoading();}, 30000);
@@ -526,12 +536,10 @@ export default class
             var expire = wx.getStorageSync(_key + '_expire');
             if (expire && expire >= timestamp) {
                 return wx.getStorageSync(_key);
-            } else {
-                return false;
             }
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     /**
@@ -601,13 +609,11 @@ export default class
      */
     error(_msg, _data)
     {
-        if (this.config.debug === true) {
-            console.group('错误');
-            console.error(_msg);
-            for (var index in _data) {
-                console.log(index+': ', _data[index]);
-            }
-            console.groupEnd();
+        console.group('错误');
+        console.error(_msg);
+        for (var index in _data) {
+            console.log(index+': ', _data[index]);
         }
+        console.groupEnd();
     }
 }
