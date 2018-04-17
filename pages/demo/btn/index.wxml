@@ -1,0 +1,54 @@
+<view class="ui-container">
+    <view class="ui-title">Button</view>
+
+    <view class="ui-panel-title">普通按钮</view>
+    <view class="ui-panel">
+        <view class="ui-btns">
+            <button class="ui-btn">取消订单</button>
+            <button class="ui-btn ui-btn--primary">确认付款</button>
+            <button class="ui-btn ui-btn--danger">确认付款</button>
+            <button class="ui-btn ui-btn--warn">确认付款</button>
+        </view>
+    </view>
+
+    <view class="ui-panel-title">大号按钮，没有边框线及圆角</view>
+    <view class="ui-panel">
+        <button class="ui-btn ui-btn--large ui-btn--primary">确认付款</button>
+        <button class="ui-btn ui-btn--large ui-btn--warn">立即购买</button>
+        <button class="ui-btn ui-btn--large ui-btn--danger">立即购买</button>
+    </view>
+
+    <view class="ui-panel-title">小号按钮</view>
+    <view class="ui-panel" style="padding: 15px;">
+        <button class="ui-btn ui-btn--small">取消订单</button>
+        <button class="ui-btn ui-btn--small ui-btn--primary">确认付款</button>
+    </view>
+
+    <view class="ui-panel-title">迷你按钮</view>
+    <view class="ui-panel" style="padding: 15px;">
+        <button class="ui-btn ui-btn--mini ui-btn--plain">取消订单</button>
+        <button class="ui-btn ui-btn--mini ui-btn--primary ui-btn--plain">确认付款</button>
+        <button class="ui-btn ui-btn--mini ui-btn--warn ui-btn--plain">确认付款</button>
+        <button class="ui-btn ui-btn--mini ui-btn--danger ui-btn--plain">确认付款</button>
+    </view>
+
+    <view class="ui-panel-title">Loading</view>
+    <view class="ui-panel">
+        <view class="ui-btns">
+            <button class="ui-btn ui-btn--loading">取消订单</button>
+            <button class="ui-btn ui-btn--loading ui-btn--primary">确认付款</button>
+            <button class="ui-btn ui-btn--loading ui-btn--danger">确认付款</button>
+            <button class="ui-btn ui-btn--loading ui-btn--warn">确认付款</button>
+        </view>
+    </view>
+
+    <view class="ui-panel-title">Disabled</view>
+    <view class="ui-panel">
+        <view class="ui-btns">
+            <button class="ui-btn ui-btn--disabled" disabled>取消订单</button>
+            <button class="ui-btn ui-btn--disabled ui-btn--primary" disabled>确认付款</button>
+            <button class="ui-btn ui-btn--disabled ui-btn--danger" disabled>确认付款</button>
+            <button class="ui-btn ui-btn--disabled ui-btn--warn" disabled>确认付款</button>
+        </view>
+    </view>
+</view>

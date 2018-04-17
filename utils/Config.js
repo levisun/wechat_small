@@ -16,7 +16,7 @@ let Config = {
     appsecret: '551e54e36c0410b9f231effe9c03b6fe',
 
     host:    'https://www.youtuiyou.cn/wxxcx/',
-    openid:  'https://www.youtuiyou.cn/wxxcx/openid.php',
+    openid:  'https://www.youtuiyou.cn/wxxcx/test_openid.php',
     payment: 'https://www.youtuiyou.cn/wxxcx/payment.php',
 
 
@@ -25,7 +25,7 @@ let Config = {
 
     // 缓存
     cache: {
-        open: true,
+        open: false,
         expire: 1140,
     },
 };

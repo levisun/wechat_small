@@ -1,45 +1,55 @@
 var {helper, ui} = require('/utils/Helper');
 
 App({
-    data: {
-        init: {
-            user: {}
-        }
-    },
+    data: {},
 
-    initialize: function()
+    initialize: function ()
     {
         var self = this;
 
-        return helper.getUser().then(function(res){
-            self.data.init.user = res;
+        return helper.getOpenId().then(function(result){
+            for (var index in result) {
+                self.data[index] = result[index];
+            }
+        }).then(function(){
+            return helper.getUser().then(function(result){
+                for (var index in result) {
+                    self.data[index] = result[index];
+                }
+            });
         });
     },
 
     // 监听小程序初始化
-    onLaunch: function (options) {
+    onLaunch: function (options)
+    {
     },
 
     // 监听小程序显示
-    onShow: function (options) {
+    onShow: function (options)
+    {
 
     },
 
     // 监听小程序隐藏
-    onHide: function (options) {
+    onHide: function (options)
+    {
 
     },
 
     // 错误监听函数
-    onError: function (options) {
+    onError: function (options)
+    {
 
     },
 
-    helper: function () {
+    helper: function ()
+    {
         return helper;
     },
 
-    ui: function () {
+    ui: function ()
+    {
         return ui;
     }
 });

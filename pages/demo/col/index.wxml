@@ -1,0 +1,33 @@
+<view class="ui-container">
+
+    <view class="ui-title">Col</view>
+
+    <view class="ui-panel-title">基础用法</view>
+    <view class="ui-description">Col 组件提供了12列栅格，添加 ui-col-x 可以设置元素所占宽度</view>
+    <view class="ui-panel">
+        <view class="ui-row">
+            <view class="ui-col-4">
+                span: 4
+            </view>
+            <view class="ui-col-4">
+                span: 4
+            </view>
+            <view class="ui-col-4">
+                span: 4
+            </view>
+        </view>
+    </view>
+
+    <view class="ui-panel-title">offset</view>
+    <view class="ui-description">添加 ui-col-offset-x 类可以设置列的偏移宽度，计算方式与 span 相同</view>
+    <view class="ui-panel">
+        <view class="ui-row">
+            <view class="ui-col-2">span: 2</view>
+            <view class="ui-col-5 ui-col-offset-2">offset: 2, span: 5</view>
+        </view>
+        <view class="ui-row">
+            <view class="ui-col-6 ui-col-offset-6">offset: 6, span: 6</view>
+        </view>
+    </view>
+
+</view>

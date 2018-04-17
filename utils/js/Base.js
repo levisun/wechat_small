@@ -328,7 +328,7 @@ export default class
     }
 
     /**
-     * Ajax请求
+     * request请求
      * @param array _params
      */
     request(_params)
@@ -466,7 +466,7 @@ export default class
                                 {
                                     if (typeof(result.errcode) == 'undefined') {
                                         if (typeof(result.data.sessionid) == 'undefined') {
-                                            self.log(result.data, 'Base->getOpenId::wx.login 服务器未返回SESSIONID', );
+                                            self.log(result.data, 'Base->getOpenId::wx.login 服务器未返回sessionid', );
                                         }
 
                                         // 缓存OUS
