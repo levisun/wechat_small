@@ -1,9 +1,0 @@
-<template name="ui-stepper">
-<view class="ui-stepper {{uiStepper.size === 'small' ? 'ui-stepper--small' : ''}}">
-    <view class="ui-stepper__minus {{uiStepper.stepper <= uiStepper.min ? 'ui-stepper--disabled' : ''}}" data-component-id="{{uiStepper.componentId}}" data-stepper="{{uiStepper.stepper}}" data-disabled="{{uiStepper.stepper <= uiStepper.min}}" bindtap="_handleUiStepperMinus"
-    >-</view>
-    <input class="ui-stepper__text {{uiStepper.min >= uiStepper.max ? 'ui-stepper--disabled' : ''}}" type="number" data-component-id="{{uiStepper.componentId}}" data-min="{{uiStepper.min}}" data-max="{{uiStepper.max}}" value="{{uiStepper.stepper}}" disabled="{{uiStepper.min >= uiStepper.max}}" bindblur="_handleUiStepperBlur"
-    ></input>
-    <view class="ui-stepper__plus {{uiStepper.stepper >= uiStepper.max ? 'ui-stepper--disabled' : ''}}" data-component-id="{{uiStepper.componentId}}" data-stepper="{{uiStepper.stepper}}" data-disabled="{{uiStepper.stepper >= max}}" bindtap="_handleUiStepperPlus">+</view>
-</view>
-</template>

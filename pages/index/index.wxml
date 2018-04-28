@@ -1,3 +1,0 @@
-<form report-submit="true" bindsubmit="formSubmit">
-    <button formType="submit">12321321</button>
-</form>

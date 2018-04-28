@@ -1,7 +1,0 @@
-<template name="ui-quantity">
-<view class="ui-quantity {{uiQuantity.size === 'small' ? 'ui-quantity--small' : ''}}">
-    <view class="ui-quantity__minus {{uiQuantity.quantity <= uiQuantity.min ? 'ui-quantity--disabled' : ''}}" data-component-id="{{uiQuantity.componentId}}" data-quantity="{{uiQuantity.quantity}}" data-disabled="{{uiQuantity.quantity <= uiQuantity.min}}" bindtap="_handleUiQuantityMinus">-</view>
-    <input class="ui-quantity__text {{uiQuantity.min >= uiQuantity.max ? 'ui-quantity--disabled' : ''}}" type="number" data-component-id="{{uiQuantity.componentId}}" data-min="{{uiQuantity.min}}" data-max="{{uiQuantity.max}}" value="{{uiQuantity.quantity}}" disabled="{{uiQuantity.min >= uiQuantity.max}}" bindblur="_handleUiQuantityBlur"></input>
-    <view class="ui-quantity__plus {{uiQuantity.quantity >= uiQuantity.max ? 'ui-quantity--disabled' : ''}}" data-component-id="{{uiQuantity.componentId}}" data-quantity="{{uiQuantity.quantity}}" data-disabled="{{uiQuantity.quantity >= uiQuantity.max}}" bindtap="_handleUiQuantityPlus">+</view>
-</view>
-</template>

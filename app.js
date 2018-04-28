@@ -2,6 +2,7 @@ var {helper, ui} = require('/utils/Helper');
 
 App({
     data: {},
+    helper: null,
 
     initialize: function ()
     {

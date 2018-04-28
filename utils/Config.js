@@ -25,7 +25,7 @@ let Config = {
 
     // 缓存
     cache: {
-        open: false,
+        open: true,
         expire: 1140,
     },
 };

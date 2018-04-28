@@ -224,7 +224,7 @@ export default class
         }
     }
 
-    WxPromise(fn)
+    promise(fn)
     {
         return function (obj = {}) {
             return new WxPromise((resolve, reject) => {
@@ -297,7 +297,7 @@ export default class
             return ;
         }
         return new WxPromise(function(resolve, reject){
-            self.ajax({
+            self.request({
                 url:    self.config.payment,
                 method: 'POST',
                 data:   _params
@@ -367,7 +367,16 @@ export default class
         }
 
         return new WxPromise(function(resolve, reject){
-            var cache_data = self.getCache(_params.url+_params.cache);
+            var cache_data = false;
+            if (_params.cache) {
+                var cache_key = '';
+                for(var index in _params.data) {
+                    cache_key += index;
+                    cache_key += _params.data[index];
+                }
+                var cache_data = self.getCache(_params.url+cache_key);
+            }
+
             if (cache_data) {
                 // 输出调试信息
                 self.log(_params, 'Base->request 请求参数[缓存]');
@@ -408,7 +417,12 @@ export default class
                         {
                             // 缓存数据
                             if (_params.cache) {
-                                self.setCache(_params.url+_params.cache, result);
+                                var cache_key = '';
+                                for(var index in _params.data) {
+                                    cache_key += index;
+                                    cache_key += _params.data[index];
+                                }
+                                self.setCache(_params.url+cache_key, result);
                             }
 
                             // 输出调试信息

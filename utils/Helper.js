@@ -9,12 +9,12 @@
  * @link      www.NiPHP.com
  * @since     2017/12
  */
-let Config = require('/Config');
+var Config = require('/Config');
 import Base from '/js/Base';
 import Ui from '/js/Ui';
 
-let helper = new Base(Config);
-let ui = new Ui();
+var helper = new Base(Config);
+var ui     = new Ui();
 
 module.exports = {helper, ui};
 

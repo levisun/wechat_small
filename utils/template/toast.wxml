@@ -1,6 +1,0 @@
-<template name="ui-toast">
-    <view class="ui-mask" wx:if="{{uiToast.show}}" bindtap="clearZanToast"></view>
-    <view class="ui-toast" wx:if="{{uiToast.show}}" bindtap="clearZanToast">
-        {{uiToast.title}}
-    </view>
-</template>
