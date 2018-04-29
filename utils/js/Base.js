@@ -14,8 +14,7 @@ const WxPromise = require('/bluebird.core.min.js');
 
 export default class
 {
-    config = [];
-    app;
+    config = {};
 
     /**
      * 构造方法
