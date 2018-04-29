@@ -20,9 +20,9 @@ export default class
     /**
      * 构造方法
      */
-    constructor(_config)
+    constructor()
     {
-        this.config = _config;
+        this.config = require('/../Config.js');
 
         if (typeof(this.config.appid) == 'undefined') {
             this.error('Base->constructor 未定义APPID[this.config.appid]', this.config);
@@ -53,174 +53,6 @@ export default class
         // 关闭缓存时清空缓存
         if (this.config.cache.open === false) {
             this.clearCache();
-        }
-    }
-
-    /**
-     * 获得APP
-     * 可直接用[getApp()]使用实现
-     * 不建议使用此方法
-     */
-    getApp()
-    {
-        return getApp();
-    }
-
-    /**
-     * 获得变量值
-     * 不建议使用
-     */
-    getData(_params)
-    {
-        // var self   = this;
-        var string = _params.toString();
-        var array  = string.split(':');
-        var type   = name = '';
-
-        if (array.length == 2) {
-            type = array[0];
-            name = array[1];
-        } else if (array.length == 1) {
-            type = 'page';
-            name = array[0];
-        } else {
-            this.error('Base->getData 参数错误 格式[类型:变量名.二级变量名]名称');
-            return ;
-        }
-
-        name = name.toString();
-        var arr_name = name.split('.');
-
-        // App
-        if (type == 'app') {
-            var App = getApp();
-            var value = '';
-            for (var i = 0; i < arr_name.length; i++) {
-                if (i == 0) {
-                    value = App.data[arr_name[i]];
-                } else {
-                    value = value[arr_name[i]];
-                }
-            }
-            return value;
-        }
-
-        // 配置
-        else if (type == 'config') {
-            var value = '';
-            for (var i = 0; i < arr_name.length; i++) {
-                if (i == 0) {
-                    value = this.config[arr_name[i]];
-                } else {
-                    value = value[arr_name[i]];
-                }
-            }
-            return value;
-        }
-
-        // ...
-        else if (type == 'page') {
-            var that = getCurrentPages()[getCurrentPages().length-1];
-            var value = '';
-            for (var i = 0; i < arr_name.length; i++) {
-                if (i == 0) {
-                    value = that['data'][arr_name[i]];
-                } else {
-                    value = value[arr_name[i]];
-                }
-            }
-            return value;
-        }
-    }
-
-    /**
-     * 重定向
-     * @param array _params
-     * @param func  _callback
-     */
-    redirect(_params)
-    {
-        var self = this;
-
-        // 检查请求URL
-        if (typeof(_params.url) == 'undefined') {
-            this.error('Base->redirect URL 未定义', _params);
-            return ;
-        }
-
-        // 未设置跳转方法，默认为跳转非tabBar页面
-        if (typeof(_params.method) == 'undefined') {
-            _params.method = 'redirect';
-        }
-
-        if (_params.method == 'redirect') {
-            // 未设置跳转类型，默认为redirectTo
-            if (typeof(_params.type) == 'undefined') {
-                _params.type = 'redirectTo';
-            }
-
-            if (_params.type == 'redirectTo') {
-                // 关闭当前页面
-                 wx.redirectTo({
-                    url: _params.url,
-                    fail: function (result)
-                    {
-                        self.error('Base->redirect::wx.redirectTo', result);
-                    }
-                });
-            } else {
-                // 关闭所有页面
-                wx.reLaunch({
-                    url: _params.url,
-                    fail: function (result)
-                    {
-                        self.error('Base->redirect::wx.reLaunch', result);
-                    }
-                });
-            }
-        }
-
-        // 跳转tabBar的页面
-        else if (_params.method == 'tap') {
-            wx.switchTab({
-                url: _params.url,
-                fail: function (result)
-                {
-                    // 输出调试信息
-                    self.log(result);
-                }
-            });
-        }
-
-        else if (_params.method == 'navigate') {
-            // 未设置跳转类型，默认为to
-            if (typeof(_params.type) == 'undefined') {
-                _params.type = 'to';
-            }
-
-            if (_params.type == 'to') {
-                // 跳转非tabBar的页面
-                wx.navigateTo({
-                    url: _params.url,
-                    fail: function (result)
-                    {
-                        self.error('Base->redirect::wx.navigateTo', result);
-                    }
-                });
-            } else {
-                // 未设置返回页面数，默认为1
-                if (typeof(_params.delta) == 'undefined') {
-                    _params.delta = 1;
-                }
-                // 返回
-                wx.navigateBack({
-                    delta: _params.delta,
-                    fail: function (result)
-                    {
-                        self.error('Base->redirect::wx.navigateBack', result);
-                    }
-                });
-            }
         }
     }
 
@@ -255,7 +87,7 @@ export default class
                 resolve(cache_data);
 
                 // 输出调试信息
-                self.log(cache_data, 'Base->getUser 获得用户信息[缓存]');
+                self.log(cache_data, 'Base->getUser 获得用户信息[缓存]', '返回数据[缓存]');
             } else {
                 wx.getUserInfo({
                     withCredentials: true,
@@ -264,7 +96,7 @@ export default class
                         self.setCache('user', result.userInfo);
 
                         // 输出调试信息
-                        self.log(result.userInfo, 'Base->getUser 获得用户信息');
+                        self.log(result.userInfo, 'Base->getUser 获得用户信息', '返回数据');
 
                         resolve(result.userInfo);
                     },
@@ -379,8 +211,8 @@ export default class
 
             if (cache_data) {
                 // 输出调试信息
-                self.log(_params, 'Base->request 请求参数[缓存]');
-                self.log(cache_data, 'Base->request 请求返回信息[缓存]');
+                self.log(_params, 'Base->request 请求参数[缓存]', '请求参数[缓存]');
+                self.log(cache_data, 'Base->request 请求返回信息[缓存]', '返回数据[缓存]');
 
                 // 隐藏加载提示框
                 self.toast(false);
@@ -404,7 +236,7 @@ export default class
                     // formid 用于发送模板信息
                     if (typeof(_params.data.formid) == 'undefined') {
                         _params.data.formid = 'undefined';
-                        self.log(_params.data, '请求参数缺少formid');
+                        self.log(_params.data, '请求参数缺少formid', '请求参数缺少值');
                     }
 
                     wx.request({
@@ -426,8 +258,8 @@ export default class
                             }
 
                             // 输出调试信息
-                            self.log(_params, 'Base->request 请求参数');
-                            self.log(result, 'Base->request 请求返回信息');
+                            self.log(_params, 'Base->request 请求参数', '请求参数');
+                            self.log(result, 'Base->request 请求返回信息', '返回数据');
 
                             // 隐藏加载提示框
                             self.toast(false);
@@ -458,7 +290,7 @@ export default class
                 if (typeof(ous.sessionid) == 'undefined') {
                     self.log(ous, 'Base->getOpenId::wx.login 服务器未返回SESSIONID');
                 }
-                self.log(ous, 'Base->getOpenId 获得用户OpenId等信息[缓存]');
+                self.log(ous, 'Base->getOpenId 获得用户OpenId等信息[缓存]', '返回数据[缓存]');
 
                 resolve(ous);
             } else {
@@ -487,7 +319,7 @@ export default class
                                         self.setCache('_ous', result.data);
                                     }
 
-                                    self.log(result.data, 'Base->getOpenId 获得用户OpenId等信息');
+                                    self.log(result.data, 'Base->getOpenId 获得用户OpenId等信息', '返回数据');
                                     resolve(result.data);
                                 }
                             })
@@ -600,10 +432,10 @@ export default class
      * 信息
      * @param mixed _data 输出数据
      */
-    log(_data, _module = '请求返回信息')
+    log(_data, _module = '请求返回信息', _tit = '信息')
     {
         if (this.config.debug === true) {
-            console.group('信息');
+            console.group(_tit);
             console.info(_module);
             if (typeof(_data) == 'object') {
                 for (var index in _data) {

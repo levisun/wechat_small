@@ -2,11 +2,12 @@ var {helper, ui} = require('/utils/Helper');
 
 App({
     data: {},
-    helper: null,
+    config: {},
 
     initialize: function ()
     {
         var self = this;
+        this.config = helper.config;
 
         return helper.getOpenId().then(function(result){
             for (var index in result) {
@@ -19,6 +20,31 @@ App({
                 }
             });
         });
+    },
+
+    request: function (_params)
+    {
+        return helper.request(_params);
+    },
+
+    pay: function (_params)
+    {
+        return helper.pay(_params);
+    },
+
+    promise: function (fn)
+    {
+        return helper.promise(fn);
+    },
+
+    toast: function (_tips = '加载中...', _mask = true)
+    {
+        return helper.toast(_tips, _mask);
+    },
+
+    bug: function bug(_data, _module = '自定义调试信息')
+    {
+        return helper.bug(_data, _module);
     },
 
     // 监听小程序初始化
@@ -43,14 +69,4 @@ App({
     {
 
     },
-
-    helper: function ()
-    {
-        return helper;
-    },
-
-    ui: function ()
-    {
-        return ui;
-    }
 });
